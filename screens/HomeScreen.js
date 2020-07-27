@@ -16,7 +16,7 @@ const HomeScreen = props => {
   const dispatch = useDispatch()
 
   const categories = useSelector(state => state.data.categories)
-  const products = useSelector(state => state.products.products)
+  const products = useSelector(state => state.products.filteredProducts)
 
   const [error, setError] = useState()
   const [loading, setLoading] = useState(false)

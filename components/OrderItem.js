@@ -37,7 +37,12 @@ const OrderItem = props => {
           source={{uri: props.order.products[0].img}}
         />
         <View>
-          <CustomText bold>{props.order.clientData.name}</CustomText>
+          <CustomText bold>
+            {props.order.clientData.name.length > 15 ? 
+              props.order.clientData.name.substr(0, 15-1) + '...' :
+              props.order.clientData.name
+            }
+          </CustomText>
           <CustomText bold>₡{total}</CustomText>
           {props.order.clientData.express === 1 ? 
             <CustomText bold>Express</CustomText> : <></>

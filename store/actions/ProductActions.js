@@ -4,6 +4,7 @@ import { createDocument, getAllDocuments } from './FirestoreActions'
 import { productCollection } from '../../constants/FirestoreCollections'
 
 export const CREATE_PRODUCT = 'CREATE_PRODUCT'
+export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
 export const SET_PRODUTS = 'SET_PRODUTS'
 export const UPDATE_CART = 'UPDATE_CART'
 export const DELETE_CART = 'DELETE_CART'
@@ -114,6 +115,15 @@ export const createProduct = (title, description, category, price, img) => {
         price,
         img
       }
+    })
+  }
+}
+
+export const filterProducts = (filteredProducts) => {
+  return async dispatch => {
+    dispatch({
+      type: FILTER_PRODUCTS,
+      filteredProducts: filteredProducts
     })
   }
 }

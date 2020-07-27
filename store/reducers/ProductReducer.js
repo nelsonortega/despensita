@@ -1,9 +1,10 @@
 import Product from '../../models/product'
 import CartItem from '../../models/cartItem'
 
-import { CREATE_PRODUCT, SET_PRODUTS, ADD_CART, UPDATE_CART, DELETE_CART, EDIT_CART, RESET_CART } from '../actions/ProductActions'
+import { CREATE_PRODUCT, SET_PRODUTS, ADD_CART, UPDATE_CART, DELETE_CART, EDIT_CART, RESET_CART, FILTER_PRODUCTS } from '../actions/ProductActions'
 
 const initialState = {
+  filteredProducts: [],
   totalPrice: 0,
   products: [],
   cart: []
@@ -20,7 +21,13 @@ const ProductReducer = (state = initialState, action) => {
     case SET_PRODUTS:
       return {
         ...state,
+        filteredProducts: action.products,
         products: action.products
+      }
+    case FILTER_PRODUCTS:
+      return {
+        ...state,
+        filteredProducts: action.filteredProducts
       }
     case CREATE_PRODUCT:
       const newProduct = new Product(
@@ -33,6 +40,7 @@ const ProductReducer = (state = initialState, action) => {
       )
       return {
         ...state,
+        filteredProducts: [newProduct].concat(state.products),
         products: [newProduct].concat(state.products)
       }
     case ADD_CART:

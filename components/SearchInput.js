@@ -1,14 +1,27 @@
 import React from 'react'
+import * as ProductActions from '../store/actions/ProductActions'
 
 import { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
+import { useSelector, useDispatch } from 'react-redux'
 import { StyleSheet, View, TextInput } from 'react-native'
 
 const SearchInput = props => {
+  const dispatch = useDispatch()
+
+  const products = useSelector(state => state.products.products)
+
   const [searchText, setSearchText] = useState('')
 
   const handleSearchChange = text => {
     setSearchText(text)
+
+    if (text.trim().length === 0) {
+      dispatch(ProductActions.filterProducts(products))
+    } else {
+      let filteredProducts = products.filter(product => product.title.toLowerCase().includes(text.toLowerCase()))
+      dispatch(ProductActions.filterProducts(filteredProducts))
+    }
   }
 
   return (
