@@ -4,14 +4,33 @@ import CustomText from '../components/CustomText'
 import HeaderIcon from '../components/HeaderIcon'
 import * as AuthActions from '../store/actions/AuthActions'
 
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { View, StyleSheet, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 
 const ProfileScreen = props => {
   const dispatch = useDispatch()
+  const auth = useSelector(state => state.auth)
+
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [direction, setDirection] = useState('')
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem('userProfileData' + auth.userId)
+
+    if (userData !== null) {
+      const transformedData = JSON.parse(userData)
+      const { name, phone, direction } = transformedData
+
+      setName(name)
+      setPhone(phone)
+      setDirection(direction)
+    }
+  }
 
   const tryLogin = async () => {
+    getUserData()
     const userData = await AsyncStorage.getItem('userData')
     if (!userData) {
       props.navigation.navigate('Auth')
@@ -53,8 +72,21 @@ const ProfileScreen = props => {
     )
   }
 
+  const updateUserInformation = () => {
+    props.navigation.navigate('UpdateUser')
+  }
+
   return (
     <View style={styles.screen}>
+      <View style={styles.userContainer}>
+        <CustomText bold style={styles.userTitle}>Mi información predeterminada</CustomText>
+        <CustomText bold style={styles.userText}>Nombre: {name}</CustomText>
+        <CustomText bold style={styles.userText}>Teléfono: {phone}</CustomText>
+        <CustomText bold style={styles.userText}>Dirección: {direction}</CustomText>
+        <TouchableOpacity style={styles.updateButton} onPress={updateUserInformation}>
+          <CustomText style={styles.updateButtonText}>Actualizar</CustomText>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity style={styles.buttonContainer} onPress={logout}>
         <View style={styles.button}>
           <CustomText style={styles.buttonText}>Cerrar Sesión</CustomText>
@@ -75,7 +107,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
+  },
+  userContainer: {
+    marginTop: '10%',
+    borderColor: 'grey',
+    marginHorizontal: '5%'
+  },
+  userTitle: {
+    fontSize: 18,
+    marginBottom: 20
+  },
+  userText: {
+    marginBottom: 5
   },
   buttonContainer: {
     height: '10%',
@@ -93,6 +137,16 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     textAlign: 'center'
+  },
+  updateButton: {
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    marginVertical: 20,
+    borderRadius: 7,
+    paddingVertical: 10
+  },
+  updateButtonText: {
+    color: 'white'
   }
 }) 
 

@@ -2,24 +2,29 @@ import React from 'react'
 import Colors from '../constants/Colors'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
-import * as OrderActions from '../store/actions/OrderActions'
-import * as ProductActions from '../store/actions/ProductActions'
 
+import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { View, StyleSheet, TouchableOpacity, Alert, Picker, AsyncStorage } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 
-const UserInformationScreen = props => {
-  const dispatch = useDispatch()
+const UpdateUserScreen = props => {
   const auth = useSelector(state => state.auth)
-  const cart = useSelector(state => state.products.cart)
-  const orderCreated = useSelector(state => state.orders.orderCreated)
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [notes, setNotes] = useState('')
-  const [express, setExpress] = useState(0)
   const [direction, setDirection] = useState('')
+
+  const confirmOrder = async () => {
+    if (validateInputs()) {
+      await AsyncStorage.setItem('userProfileData' + auth.userId, JSON.stringify({
+        name: name,
+        phone: phone,
+        direction: direction
+      }))
+
+      Alert.alert('Éxito', 'Campos actualizados correctamente', [{text: 'Ok'}])
+    }
+  }
 
   const getUserData = async () => {
     const userData = await AsyncStorage.getItem('userProfileData' + auth.userId)
@@ -34,11 +39,9 @@ const UserInformationScreen = props => {
     }
   }
 
-  const confirmOrder = async () => {
-    if (validateInputs()) {
-      dispatch(OrderActions.createOrder(cart, name, phone, express, direction, notes))
-    }
-  }
+  useEffect(() => {
+    getUserData()
+  }, [])
 
   const validateInputs = () => {
     if (name.trim().length < 10) {
@@ -47,35 +50,12 @@ const UserInformationScreen = props => {
     } else if (phone.trim().length !== 8) {
       Alert.alert('Campos requeridos', 'Teléfono inválido', [{text: 'Ok'}])
       return false
-    } else if (express === 0) {
-      Alert.alert('Campos requeridos', 'Por favor seleccione si desea servicio express', [{text: 'Ok'}])
-      return false
-    } else if (direction.trim().length < 20 && express === 1) {
+    } else if (direction.trim().length < 20) {
       Alert.alert('Campos requeridos', 'La dirección ingresada es muy corta', [{text: 'Ok'}])
       return false
     } else {
       return true
     }
-  }
-
-  useEffect(() => {
-    if (orderCreated) {
-      Alert.alert(
-        'Éxito', 'Su orden ha sido creada', [
-          { text: "Volver a Inicio", onPress: finishOrder }
-        ]
-      )
-    }
-  }, [orderCreated])
-
-  useEffect(() => {
-    getUserData()
-  }, [])
-
-  const finishOrder = () => {
-    dispatch(OrderActions.finishOrder())
-    dispatch(ProductActions.resetCart())
-    props.navigation.popToTop()
   }
 
   return (
@@ -95,35 +75,16 @@ const UserInformationScreen = props => {
           onChangeText={text => setPhone(text.replace(/[^0-9]/g, ''))}
         />
         <CustomInput 
-          placeholder='Notas' 
+          placeholder='Dirección' 
           placeholderTextColor="grey" 
-          value={notes} 
-          onChangeText={text => setNotes(text)}
+          value={direction} 
+          onChangeText={text => setDirection(text)}
         />
-        <View style={styles.pickerContainer}>
-          <Picker
-            style={styles.picker}
-            selectedValue={express}
-            onValueChange={itemValue => setExpress(itemValue)}
-          >
-            <Picker.Item label="Desea Express?" value={0} />
-            <Picker.Item label="Sí" value={1} />
-            <Picker.Item label="No" value={2} />
-          </Picker>
-        </View>
-        {express === 1 ? 
-          <CustomInput 
-            placeholder='Dirección' 
-            placeholderTextColor="grey" 
-            value={direction} 
-            onChangeText={text => setDirection(text)}
-          /> : <View/>
-        }
       </View> 
       <View style={styles.loginContainer}> 
         <TouchableOpacity style={styles.loginContainer} onPress={confirmOrder}>
           <View style={styles.loginButton}>
-            <CustomText style={styles.buttonText}>Finalizar pedido</CustomText>
+            <CustomText style={styles.buttonText}>Actualizar Información</CustomText>
           </View>
         </TouchableOpacity>
       </View>
@@ -160,19 +121,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     paddingVertical: 20
-  },
-  pickerContainer: {
-    height: 60,
-    paddingLeft: 10,
-    borderRadius: 7,
-    width: '90%',
-    backgroundColor: Colors.secondary,
-    marginBottom: 20
-  },
-  picker: {
-    height: 60,
-    color: 'grey'
   }
 }) 
 
-export default UserInformationScreen
+export default UpdateUserScreen

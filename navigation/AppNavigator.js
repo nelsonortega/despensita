@@ -7,6 +7,7 @@ import OrdersScreen from '../screens/OrdersScreen'
 import AboutUsScreen from '../screens/AboutUsScreen'
 import ContactScreen from '../screens/ContactScreen'
 import ProfileScreen from '../screens/ProfileScreen'
+import UpdateUserScreen from '../screens/UpdateUserScreen'
 import OrderDetailScreen from '../screens/OrderDetailScreen'
 import CreateProductScreen from '../screens/CreateProductScreen'
 import AuthenticationScreen from '../screens/AuthenticationScreen'
@@ -77,7 +78,8 @@ const AboutUsNavigator = createStackNavigator({
 }, { defaultNavigationOptions: navigationOptions })
 
 const ProfileNavigator = createStackNavigator({
-  Profile: ProfileScreen
+  Profile: ProfileScreen,
+  UpdateUser: UpdateUserScreen
 }, { defaultNavigationOptions: navigationOptions })
 
 const CreateAuthNavigator = name => {
