@@ -32,7 +32,7 @@ const AuthenticationScreen = props => {
       return
     }
     const transformedData = JSON.parse(userData)
-    const { token, userId, expiryDate } = transformedData
+    const { token, userId, expiryDate, isUserAdmin } = transformedData
     const expirationDate = new Date(expiryDate)
 
     if (expirationDate <= new Date() || !token || !userId) {
@@ -41,7 +41,7 @@ const AuthenticationScreen = props => {
     }
 
     props.navigation.navigate(props.navigation.state.params.route)
-    dispatch(AuthActions.autoAuthenticate(userId, token))
+    dispatch(AuthActions.autoAuthenticate(userId, token, isUserAdmin))
   }
 
   useEffect(() => {

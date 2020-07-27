@@ -31,7 +31,9 @@ export const fetchOrders = () => {
 }
 
 export const createOrder = (cart, name, phone, express, direction, notes) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId
+
     let cartData = cart.map(item => ({
       id: item.id,
       img: item.img,
@@ -42,7 +44,7 @@ export const createOrder = (cart, name, phone, express, direction, notes) => {
 
     let newOrder = {
       "products": cartData, 
-      "clientData": {name, phone, direction, express, notes}, 
+      "clientData": {name, phone, direction, express, notes, userId}, 
       "state": 1
     }
 

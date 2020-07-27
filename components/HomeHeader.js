@@ -3,24 +3,28 @@ import CustomText from './CustomText'
 import SearchInput from './SearchInput'
 import Colors from '../constants/Colors'
 
+import { useSelector } from 'react-redux'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 
 const HomeHeader = props => {
+  const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
+
   return (
     <View>
       <SearchInput />
-      <TouchableOpacity style={styles.buttonContainer} onPress={props.createProduct}>
-        <View style={styles.button}>
-          <CustomText style={styles.buttonText}>Crear Producto</CustomText>
-        </View>
-      </TouchableOpacity>
+      {isUserAdmin ? 
+        <TouchableOpacity style={styles.buttonContainer} onPress={props.createProduct}>
+          <View style={styles.button}>
+            <CustomText style={styles.buttonText}>Crear Producto</CustomText>
+          </View>
+        </TouchableOpacity> : <></>
+      }
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginTop: 20,
     width: '100%',
     alignItems: 'center'
   },

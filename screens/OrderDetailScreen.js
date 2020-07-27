@@ -13,6 +13,7 @@ const OrderDetailScreen = props => {
   
   const { order } = props.navigation.state.params
   const orderStates = useSelector(state => state.data.states)
+  const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
 
   const [totalPrice, setTotalPrice] = useState(0)
   const [orderState, setOrderState] = useState(order.state)
@@ -64,16 +65,21 @@ const OrderDetailScreen = props => {
         <CustomText bold style={styles.title}>Productos</CustomText>
         {productsList}
       </View>
-      <CustomText bold style={styles.title}>Actualizar estado</CustomText>
-      <View style={styles.pickerContainer}>
-        <Picker
-          style={styles.picker}
-          selectedValue={orderState}
-          onValueChange={handleStateChange}
-        >
-          {pickerList}
-        </Picker>
-      </View>
+      {isUserAdmin ? 
+        <>
+          <CustomText bold style={styles.title}>Actualizar estado</CustomText>
+          <View style={styles.pickerContainer}>
+            <Picker
+              style={styles.picker}
+              selectedValue={orderState}
+              onValueChange={handleStateChange}
+            >
+              {pickerList}
+            </Picker>
+          </View>
+        </> : <></>
+      }
+      
     </ScrollView>
   )
 }

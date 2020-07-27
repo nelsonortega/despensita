@@ -59,10 +59,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     borderRadius: 10,
     marginLeft: '5%',
-    paddingHorizontal: 10,
-    marginVertical: 5,
+    marginBottom: 15,
     alignItems: 'center',
     flexDirection: 'row',
+    paddingHorizontal: 10,
     backgroundColor: 'white',
     justifyContent: 'space-between'
   },

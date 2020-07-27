@@ -1,6 +1,8 @@
 import FirebaseKey from '../../constants/FirebaseKey'
 
 import { AsyncStorage } from 'react-native'
+import { getAllDocuments } from './FirestoreActions'
+import { userCollection } from '../../constants/FirestoreCollections'
 
 export const LOGOUT = 'LOGOUT'
 export const AUTHENTICATE = 'AUTHENTICATE'
@@ -8,8 +10,8 @@ export const AUTHENTICATE = 'AUTHENTICATE'
 const REGISTER_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + FirebaseKey.FirebaseConfig.apiKey
 const LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + FirebaseKey.FirebaseConfig.apiKey
 
-export const autoAuthenticate = (userId, token) => {
-  return { type: AUTHENTICATE, userId: userId, token: token }
+export const autoAuthenticate = (userId, token, isUserAdmin) => {
+  return { type: AUTHENTICATE, userId: userId, token: token, isUserAdmin: isUserAdmin }
 }
 
 export const authenticate = (email, password, login) => {
@@ -52,9 +54,12 @@ export const authenticate = (email, password, login) => {
     }
   
     const responseData = await response.json()
-    dispatch({ type: AUTHENTICATE, token: responseData.idToken, userId: responseData.localId })
+    const adminUsersResponse = await getAllDocuments(userCollection)
+    const isUserAdmin = adminUsersResponse.find(userAdmin => userAdmin.userid === responseData.localId)
+
+    dispatch({ type: AUTHENTICATE, token: responseData.idToken, userId: responseData.localId, isUserAdmin: isUserAdmin !== undefined })
     const expirationDate = new Date(new Date().getTime() + parseInt(responseData.expiresIn) * 1000)
-    saveDataToStorage(responseData.idToken, responseData.localId, expirationDate)
+    saveDataToStorage(responseData.idToken, responseData.localId, expirationDate, isUserAdmin !== undefined)
   }
 }
 
@@ -63,10 +68,11 @@ export const logout = () => {
   return { type: LOGOUT }
 }
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (token, userId, expirationDate, isUserAdmin) => {
   AsyncStorage.setItem('userData', JSON.stringify({
     token: token,
     userId: userId,
+    isUserAdmin: isUserAdmin,
     expirationDate: expirationDate.toISOString()
   }))
 }

@@ -4,6 +4,7 @@ import Product from '../components/Product'
 import CustomText from '../components/CustomText'
 import HeaderIcon from '../components/HeaderIcon'
 import HomeHeader from '../components/HomeHeader'
+import * as AuthActions from '../store/actions/AuthActions'
 import * as ProductActions from '../store/actions/ProductActions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
@@ -16,7 +17,7 @@ const HomeScreen = props => {
 
   const categories = useSelector(state => state.data.categories)
   const products = useSelector(state => state.products.products)
-  
+
   const [error, setError] = useState()
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -54,7 +55,7 @@ const HomeScreen = props => {
       return
     }
     const transformedData = JSON.parse(userData)
-    const { token, userId, expiryDate } = transformedData
+    const { token, userId, expiryDate, isUserAdmin } = transformedData
     const expirationDate = new Date(expiryDate)
 
     if (expirationDate <= new Date() || !token || !userId) {
@@ -64,6 +65,7 @@ const HomeScreen = props => {
     }
 
     setRoute('CreateProduct')
+    dispatch(AuthActions.autoAuthenticate(userId, token, isUserAdmin))
     setLoginLoading(false)
   }
 

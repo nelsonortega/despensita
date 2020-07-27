@@ -12,7 +12,10 @@ import { View, StyleSheet, AsyncStorage, FlatList } from 'react-native'
 const OrdersScreen = props => {
   const dispatch = useDispatch()
 
-  const orders = useSelector(state => state.orders.orders.filter(order => order.state != "4"))
+  const auth = useSelector(state => state.auth)
+  const orders = auth.isUserAdmin ? 
+    useSelector(state => state.orders.orders.filter(order => order.state !== "4")) :
+    useSelector(state => state.orders.orders.filter(order => order.state !== "4" && order.clientData.userId === auth.userId))
 
   const [error, setError] = useState()
   const [loading, setLoading] = useState(false)
@@ -37,6 +40,7 @@ const OrdersScreen = props => {
       return
     }
 
+    loadOrders()
     setLoginLoading(false)
   }
 
@@ -76,8 +80,10 @@ const OrdersScreen = props => {
   
   return (
     <View style={styles.screen}>
-      <CustomText bold style={styles.title}>Órdenes</CustomText>
       <FlatList
+        ListHeaderComponent={
+          <CustomText bold style={styles.title}>Órdenes</CustomText>
+        }
         onRefresh={loadOrders}
         refreshing={refreshing}
         keyExtractor={item => item.id}
@@ -113,7 +119,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    marginVertical: 15
+    marginLeft: '5%',
+    marginVertical: 20
   },
   list: {
     width: '100%'
