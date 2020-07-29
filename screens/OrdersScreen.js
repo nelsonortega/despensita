@@ -40,7 +40,6 @@ const OrdersScreen = props => {
       return
     }
 
-    loadOrders()
     setLoginLoading(false)
   }
 

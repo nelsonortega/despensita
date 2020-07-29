@@ -13,22 +13,19 @@ import CreateProductScreen from '../screens/CreateProductScreen'
 import AuthenticationScreen from '../screens/AuthenticationScreen'
 import UserInformationScreen from '../screens/UserInformationScreen'
 
-import { Dimensions } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 
-const deviceWidth = Dimensions.get('window').width
-
 const navigationOptions = {
   title: 'La Despensita',
   headerTintColor: 'white',
+  headerTitleAlign: 'center',
   headerTitleStyle: {
     color: 'white',
     alignSelf: 'center',
     textAlign: 'center',
-    marginLeft: deviceWidth/7,
     fontFamily: 'open-sans-bold'
   },
   headerStyle: {
