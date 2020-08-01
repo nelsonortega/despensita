@@ -13,13 +13,14 @@ import CreateProductScreen from '../screens/CreateProductScreen'
 import AuthenticationScreen from '../screens/AuthenticationScreen'
 import UserInformationScreen from '../screens/UserInformationScreen'
 
+import { I18N } from '../i18n/I18N'
 import { Ionicons } from '@expo/vector-icons'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 
 const navigationOptions = {
-  title: 'La Despensita',
+  title: I18N.get("title"),
   headerTintColor: 'white',
   headerTitleAlign: 'center',
   headerTitleStyle: {
