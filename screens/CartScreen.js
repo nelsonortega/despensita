@@ -3,17 +3,57 @@ import Colors from '../constants/Colors'
 import CartItem from '../components/CartItem'
 import CustomText from '../components/CustomText'
 import * as ProductActions from '../store/actions/ProductActions'
+import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, FlatList, Alert, AsyncStorage } from 'react-native'
 
 const CartScreen = props => {
   const dispatch = useDispatch()
 
   const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(false)
+
   const cart = useSelector(state => state.products.cart)
   const totalPrice = useSelector(state => state.products.totalPrice)
+
+  const tryLogin = async () => {
+    setLoading(true)
+    const userData = await AsyncStorage.getItem('userData')
+    if (!userData) {
+      props.navigation.navigate('Authentication', {
+        'route': 'Cart', 
+        'hideIcon': true
+      })
+      return
+    }
+    const transformedData = JSON.parse(userData)
+    const { token, userId, expiryDate } = transformedData
+    const expirationDate = new Date(expiryDate)
+
+    if (expirationDate <= new Date() || !token || !userId) {
+      props.navigation.navigate('Authentication', {
+        'route': 'Cart', 
+        'hideIcon': true
+      })
+      return
+    }
+
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    tryLogin()
+  }, [])
+
+  useEffect(() => {
+    const willFocus = props.navigation.addListener('willFocus', tryLogin)
+
+    return () => {
+      willFocus.remove()
+    }
+  }, [tryLogin])
 
   useEffect(() => {
     let totalPrice = 0
@@ -46,6 +86,9 @@ const CartScreen = props => {
       Alert.alert('Atención', 'No hay productos en el carrito', [{text: 'Ok'}])
     }
   }
+
+  if (loading)
+    return <CustomActivityIndicator />
 
   return (
     <View style={styles.screen}>
