@@ -1,4 +1,4 @@
 export default {
-  primary: '#a97033',
+  primary: '#dc881d',
   secondary: '#d1d2d8'
 }
