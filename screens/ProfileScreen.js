@@ -2,8 +2,10 @@ import React from 'react'
 import Colors from '../constants/Colors'
 import CustomText from '../components/CustomText'
 import HeaderIcon from '../components/HeaderIcon'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import * as AuthActions from '../store/actions/AuthActions'
 
+import { Button } from 'react-native-paper'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { View, StyleSheet, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
@@ -77,22 +79,30 @@ const ProfileScreen = props => {
   }
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.userContainer}>
+    <React.Fragment>
+      <View style={styles.header}>
+        <Icon name="user-o" size={90} color={'black'} />
         <CustomText bold style={styles.userTitle}>Mi información predeterminada</CustomText>
-        <CustomText bold style={styles.userText}>Nombre: {name}</CustomText>
-        <CustomText bold style={styles.userText}>Teléfono: {phone}</CustomText>
-        <CustomText bold style={styles.userText}>Dirección: {direction}</CustomText>
-        <TouchableOpacity style={styles.updateButton} onPress={updateUserInformation}>
-          <CustomText style={styles.updateButtonText}>Actualizar</CustomText>
-        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.buttonContainer} onPress={logout}>
-        <View style={styles.button}>
-          <CustomText style={styles.buttonText}>Cerrar Sesión</CustomText>
+      <View style={styles.screen}>
+        <View style={styles.userContainer}>
+          <CustomText bold style={styles.userText}>Nombre</CustomText>
+          <CustomText style={styles.userTextInfo}>{name.length === 0 ? 'No hay información' : name}</CustomText>
+          <CustomText bold style={styles.userText}>Teléfono</CustomText>
+          <CustomText style={styles.userTextInfo}>{phone.length === 0 ? 'No hay información' : phone}</CustomText>
+          <CustomText bold style={styles.userText}>Dirección</CustomText>
+          <CustomText style={styles.userTextInfo}>{direction.length === 0 ? 'No hay información' : direction}</CustomText>
+          <View style={styles.updateUserButtonContainer}>
+            <Button style={styles.updateUserButton} mode="contained" onPress={updateUserInformation} color={Colors.primary} dark uppercase={false}>
+              <CustomText>Actualizar</CustomText>
+            </Button>
+          </View>
         </View>
-      </TouchableOpacity>
-    </View>
+        <Button style={styles.buttonContainer} mode="contained" onPress={logout} color={Colors.primary} dark uppercase={false}>
+          <CustomText>Cerrar Sesión</CustomText>
+        </Button>
+      </View>
+    </React.Fragment>
   )
 }
 
@@ -103,50 +113,43 @@ ProfileScreen.navigationOptions = navData => {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    paddingTop: 20,
+    alignItems: 'center',
+    backgroundColor: 'lightgrey'
+  },
   screen: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#fff',
     justifyContent: 'space-between'
   },
   userContainer: {
-    marginTop: '10%',
+    marginTop: '5%',
     borderColor: 'grey',
     marginHorizontal: '5%'
   },
   userTitle: {
     fontSize: 18,
-    marginBottom: 20
+    marginVertical: 20
   },
   userText: {
+    fontSize: 18,
     marginBottom: 5
   },
+  userTextInfo: {
+    fontSize: 18,
+    marginBottom: 15
+  },
   buttonContainer: {
-    height: '10%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginBottom: '5%',
+    marginHorizontal: '5%'
   },
-  button: {
-    width: '90%',
-    height: '60%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    backgroundColor: Colors.primary
+  updateUserButtonContainer: {
+    marginTop: 20,
+    alignItems: 'center'
   },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center'
-  },
-  updateButton: {
-    backgroundColor: Colors.primary,
-    alignItems: 'center',
-    marginVertical: 20,
-    borderRadius: 7,
-    paddingVertical: 10
-  },
-  updateButtonText: {
-    color: 'white'
+  updateUserButton: {
+    width: '50%'
   }
 }) 
 

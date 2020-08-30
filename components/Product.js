@@ -2,15 +2,20 @@ import React from 'react'
 import CustomText from './CustomText'
 import Colors from '../constants/Colors'
 import ChangeQuantity from './ChangeQuantity'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import * as ProductActions from '../store/actions/ProductActions'
 
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, View, TouchableOpacity, Image, Modal } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { StyleSheet, View, Modal, Alert } from 'react-native'
+import { Button, Card, Title, Paragraph  } from 'react-native-paper'
 
 const Product = props => {
   const dispatch = useDispatch()
+
+  const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
+  
   const [quantity, setQuantity] = useState(1)
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -45,26 +50,50 @@ const Product = props => {
     }
   }
 
+  const deleteProduct = (id) => {
+    Alert.alert(
+      'Atención', '¿Desea eliminar este producto?', [
+        { text: "Sí", onPress: () => dispatch(ProductActions.deleteProduct(id)) },
+        { text: "No" }
+      ]
+    )
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.productContainer}>
-        <Image 
-          style={styles.imageStyle}
-          source={{uri: props.productItem.item.img}}
-        />
-        <View style={styles.lineSeparator} />
-        <View>
-          <CustomText bold style={styles.title}>{props.productItem.item.title}</CustomText>
-          <CustomText numberOfLines={2} style={styles.description}>{props.productItem.item.description}</CustomText>
-          {props.productItem.item.price === '0' ?
-            <CustomText bold style={styles.free}>Gratis</CustomText> :
-            <CustomText bold style={styles.price}>₡{props.productItem.item.price}</CustomText> 
-          }
-        </View>
-      </View>
-      <TouchableOpacity style={styles.floatingButton} onPress={openModal}>
-        <Ionicons size={30} color='white' name='md-add' style={styles.icon}/>
-      </TouchableOpacity>
+      <Card>
+        <Card.Cover source={{ uri: props.productItem.item.img }} />
+        <Card.Content style={{marginTop: 10, display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
+          <View>
+            <Title>
+              <CustomText bold>{props.productItem.item.title}</CustomText>
+            </Title>
+            <Paragraph>
+              <CustomText numberOfLines={2} style={styles.description}>{props.productItem.item.description}</CustomText>
+            </Paragraph>
+            <Paragraph>
+              {props.productItem.item.price === '0' ?
+                <CustomText bold style={styles.free}>Gratis</CustomText> :
+                <CustomText bold>₡{props.productItem.item.price}</CustomText> 
+              }
+            </Paragraph>
+          </View>
+
+          <View style={styles.actionButtons}>
+            {isUserAdmin ? 
+              <Button style={styles.deleteButton} mode="contained" onPress={() => deleteProduct(props.productItem.item.id)} color={'red'} dark uppercase={false}>
+                <Icon name='trash-o' size={28} />
+              </Button>
+              : <></>
+            }
+            
+            <Button mode="contained" onPress={openModal} color={Colors.primary} dark uppercase={false}>
+              <Ionicons size={30} color='white' name='md-add' style={styles.icon}/>
+            </Button>
+          </View>
+        </Card.Content>
+      </Card>
+
       <Modal visible={modalVisible} animationType="fade" transparent={true}>
         <ChangeQuantity
           lessQuantity={lessQuantity}
@@ -80,60 +109,20 @@ const Product = props => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '97%'
+    marginBottom: 30,
+    marginHorizontal: 20
   },
-  productContainer: {
-    flex: 1,
-    margin: 20,
-    borderWidth: 0.5,
-    borderRadius: 20,
-    borderColor: 'grey',
-    backgroundColor: 'white'
+  actionButtons: {
+    flexDirection: 'row'
   },
-  lineSeparator: {
-    borderBottomColor: 'grey',
-    borderBottomWidth: 0.2,
-    opacity: 0.5
-  },
-  imageStyle: {
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    width: '100%',
-    height: 170
-  },
-  title: {
-    marginTop: 10,
-    marginHorizontal: 15,
-    fontSize: 20
+  deleteButton: {
+    marginRight: 10
   },
   description: {
-    marginHorizontal: 15,
-    fontSize: 14,
     color: 'grey'
   },
-  price: {
-    marginRight: 30,
-    marginVertical: 20,
-    fontSize: 13,
-    textAlign: 'right'
-  },
   free: {
-    marginRight: 30,
-    marginVertical: 20,
-    fontSize: 13,
-    textAlign: 'right',
     color: 'green'
-  },
-  floatingButton: {
-    top: 0,
-    right: 0,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.primary
   }
 })
 

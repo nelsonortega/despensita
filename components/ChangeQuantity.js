@@ -2,6 +2,7 @@ import React from 'react'
 import CustomText from './CustomText'
 import Colors from '../constants/Colors'
 
+import { Button  } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 
@@ -19,12 +20,12 @@ const ChangeQuantity = props => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={props.addItemToCart}>
-            <CustomText style={styles.buttonText}>Agregar</CustomText>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={props.closeModal}>
-            <CustomText style={styles.buttonText}>Cancelar</CustomText>
-          </TouchableOpacity>
+          <Button color={Colors.primary} onPress={props.addItemToCart}>
+            <CustomText bold>Agregar</CustomText>
+          </Button>
+          <Button color={Colors.primary} onPress={props.closeModal}>
+            <CustomText bold>Cancelar</CustomText>
+          </Button>
         </View>
       </View>
     </View>
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     padding: 20, 
-    borderRadius: 10, 
+    width: '80%',
     alignItems: 'center',
     backgroundColor: 'white', 
     justifyContent: 'center'
@@ -68,22 +69,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 20,
-    alignItems: 'center', 
-    flexDirection: 'row'
-  },
-  button: {
-    height: 50,
-    width: 140, 
-    borderRadius: 5, 
-    marginHorizontal: 5, 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    backgroundColor: Colors.primary
-  },
-  buttonText: {
-    fontSize: 15, 
-    color: 'white',
-    marginHorizontal: 20,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   }
 })
 

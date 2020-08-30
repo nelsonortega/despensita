@@ -1,7 +1,7 @@
 import Product from '../../models/product'
 import CartItem from '../../models/cartItem'
 
-import { CREATE_PRODUCT, SET_PRODUTS, ADD_CART, UPDATE_CART, DELETE_CART, EDIT_CART, RESET_CART, FILTER_PRODUCTS } from '../actions/ProductActions'
+import { CREATE_PRODUCT, SET_PRODUTS, ADD_CART, UPDATE_CART, DELETE_CART, EDIT_CART, RESET_CART, FILTER_PRODUCTS, DELETE_PRODUCT } from '../actions/ProductActions'
 
 const initialState = {
   filteredProducts: [],
@@ -66,6 +66,13 @@ const ProductReducer = (state = initialState, action) => {
         ...state,
         totalPrice: price,
         cart: filteredCart
+      }
+    case DELETE_PRODUCT:
+      let filterProducts = state.products.filter(product => product.id !== action.id)
+      return {
+        ...state,
+        products: filterProducts,
+        filteredProducts: filterProducts
       }
     case EDIT_CART:
       let priceEdit = 0

@@ -1,6 +1,7 @@
 import React from 'react'
 import * as Font from 'expo-font'
 import ReduxThunk from 'redux-thunk'
+import Colors from './constants/Colors'
 import AppNavigator from './navigation/AppNavigator'
 import AuthReducer from './store/reducers/AuthReducer'
 import DataReducer from './store/reducers/DataReducer'
@@ -10,6 +11,8 @@ import ProductReducer from './store/reducers/ProductReducer'
 import { useState } from 'react'
 import { AppLoading } from 'expo'
 import { Provider } from 'react-redux'
+import { StatusBar } from 'react-native'
+import { Provider as PaperProvider } from 'react-native-paper'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 const rootReducer = combineReducers({
@@ -43,7 +46,10 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <AppNavigator testProp={true}/>  
+      <PaperProvider>
+        <AppNavigator testProp={true}/>  
+        <StatusBar backgroundColor={Colors.primary} />
+      </PaperProvider>
     </Provider>
   )
 }

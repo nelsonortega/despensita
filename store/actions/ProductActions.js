@@ -1,16 +1,17 @@
 import Product from '../../models/product'
 
-import { createDocument, getAllDocuments } from './FirestoreActions'
 import { productCollection } from '../../constants/FirestoreCollections'
+import { createDocument, getAllDocuments, deleteDocument } from './FirestoreActions'
 
-export const CREATE_PRODUCT = 'CREATE_PRODUCT'
-export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
+export const ADD_CART = 'ADD_CART'
+export const EDIT_CART = 'EDIT_CART'
+export const RESET_CART = 'RESET_CART'
 export const SET_PRODUTS = 'SET_PRODUTS'
 export const UPDATE_CART = 'UPDATE_CART'
 export const DELETE_CART = 'DELETE_CART'
-export const RESET_CART = 'RESET_CART'
-export const EDIT_CART = 'EDIT_CART'
-export const ADD_CART = 'ADD_CART'
+export const CREATE_PRODUCT = 'CREATE_PRODUCT'
+export const DELETE_PRODUCT = 'DELETE_PRODUCT'
+export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
 
 export const resetCart = () => {
   return async dispatch => {
@@ -115,6 +116,18 @@ export const createProduct = (title, description, category, price, img) => {
         price,
         img
       }
+    })
+  }
+}
+
+export const deleteProduct = (id) => {
+  return async dispatch => {
+
+    deleteDocument(productCollection, id)
+
+    dispatch({
+      type: DELETE_PRODUCT,
+      id
     })
   }
 }

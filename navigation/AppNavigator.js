@@ -7,6 +7,7 @@ import OrdersScreen from '../screens/OrdersScreen'
 import AboutUsScreen from '../screens/AboutUsScreen'
 import ContactScreen from '../screens/ContactScreen'
 import ProfileScreen from '../screens/ProfileScreen'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import UpdateUserScreen from '../screens/UpdateUserScreen'
 import OrderDetailScreen from '../screens/OrderDetailScreen'
 import CreateProductScreen from '../screens/CreateProductScreen'
@@ -14,7 +15,6 @@ import AuthenticationScreen from '../screens/AuthenticationScreen'
 import UserInformationScreen from '../screens/UserInformationScreen'
 
 import { I18N } from '../i18n/I18N'
-import { Ionicons } from '@expo/vector-icons'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
@@ -108,35 +108,35 @@ const MainSideNavigator = createDrawerNavigator({
     screen: HomeNavigator,
     navigationOptions: {
       title: 'Inicio',
-      drawerIcon: ({tintColor}) => <Ionicons size={20} color={tintColor} name='md-home' />
+      drawerIcon: ({tintColor}) => <Icon name="home" size={20} color={tintColor} />
     }
   },
   Orders: {
     screen: OrdersSwitchNavigator,
     navigationOptions: {
       title: 'Pedidos',
-      drawerIcon: ({tintColor}) => <Ionicons size={20} color={tintColor} name='ios-cart' />
+      drawerIcon: ({tintColor}) => <Icon name="shopping-cart" size={20} color={tintColor} />
     }
   },
   Contact: {
     screen: ContactNavigator,
     navigationOptions: {
       title: 'Contacto',
-      drawerIcon: ({tintColor}) => <Ionicons size={20} color={tintColor} name='ios-phone-portrait' />
+      drawerIcon: ({tintColor}) => <Icon name="phone" size={20} color={tintColor} />
     }
   },
   AboutUs: {
     screen: AboutUsNavigator,
     navigationOptions: {
       title: 'Quienes somos',
-      drawerIcon: ({tintColor}) => <Ionicons size={20} color={tintColor} name='ios-information-circle-outline' />
+      drawerIcon: ({tintColor}) => <Icon name="info" size={20} color={tintColor} />
     }
   },
   Profile: {
     screen: ProfileSwitchNavigator,
     navigationOptions: {
       title: 'Perfil',
-      drawerIcon: ({tintColor}) => <Ionicons size={20} color={tintColor} name='ios-man' />
+      drawerIcon: ({tintColor}) => <Icon name="user-o" size={20} color={tintColor} />
     }
   }
 }, {
