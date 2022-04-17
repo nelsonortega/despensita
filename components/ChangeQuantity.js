@@ -1,7 +1,5 @@
-import React from 'react'
 import CustomText from './CustomText'
 import Colors from '../constants/Colors'
-
 import { Button  } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'

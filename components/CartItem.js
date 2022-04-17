@@ -1,9 +1,7 @@
-import React from 'react'
-import CustomText from './CustomText'
-import ChangeQuantity from './ChangeQuantity'
-
 import { useState } from 'react'
+import CustomText from './CustomText'
 import { Ionicons } from '@expo/vector-icons'
+import ChangeQuantity from './ChangeQuantity'
 import { StyleSheet, View, Image, TouchableOpacity, Modal } from 'react-native'
 
 const CartItem = props => {
@@ -64,7 +62,7 @@ const CartItem = props => {
         </View>        
       </View>
       <View style={styles.lineSeparator} />
-      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+      <Modal visible={modalVisible} animationType='fade' transparent={true}>
         <ChangeQuantity
           lessQuantity={lessQuantity}
           moreQuantity={moreQuantity}

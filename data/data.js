@@ -1,5 +1,5 @@
-import Category from '../models/category'
 import State from '../models/state'
+import Category from '../models/category'
 
 export const CATEGORIES = [
   new Category('1', 'Alimentos'),

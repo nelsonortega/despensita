@@ -1,14 +1,11 @@
-import React from 'react'
 import Colors from '../constants/Colors'
+import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
-import HeaderIcon from '../components/HeaderIcon'
 import CustomInput from '../components/CustomInput'
 import * as AuthActions from '../store/actions/AuthActions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
-
-import { useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
-import { StyleSheet, View, KeyboardAvoidingView, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
+import { StyleSheet, View, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
 
 const AuthenticationScreen = props => {
   const dispatch = useDispatch()
@@ -17,44 +14,11 @@ const AuthenticationScreen = props => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginScreen, setLoginScreen] = useState(true)
-  const [loginLoading, setLoginLoading] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const switchLoginRegisterScreen = () => {
     setLoginScreen(!loginScreen)
   }
-
-  const tryLogin = async () => {
-    setLoginLoading(true)
-    const userData = await AsyncStorage.getItem('userData')
-    if (!userData) {
-      setLoginLoading(false)
-      return
-    }
-    const transformedData = JSON.parse(userData)
-    const { token, userId, expiryDate, isUserAdmin } = transformedData
-    const expirationDate = new Date(expiryDate)
-
-    if (expirationDate <= new Date() || !token || !userId) {
-      setLoginLoading(false)
-      return
-    }
-
-    props.navigation.navigate(props.navigation.state.params.route)
-    dispatch(AuthActions.autoAuthenticate(userId, token, isUserAdmin))
-  }
-
-  useEffect(() => {
-    tryLogin()
-  }, [dispatch])
-
-  useEffect(() => {
-    const willFocus = props.navigation.addListener('willFocus', tryLogin)
-
-    return () => {
-      willFocus.remove()
-    }
-  }, [tryLogin])
 
   useEffect(() => {
     if (error) {
@@ -66,8 +30,7 @@ const AuthenticationScreen = props => {
     setLoading(true)
     setError(null)
     try {
-      await dispatch(AuthActions.authenticate(email, password, true))
-      props.navigation.navigate(props.navigation.state.params.route)
+      dispatch(AuthActions.authenticate(email, password, true))
     } catch (error) {
       setError(error.message)
       setLoading(false)
@@ -83,8 +46,7 @@ const AuthenticationScreen = props => {
       setLoading(true)
       setError(null)
       try {
-        await dispatch(AuthActions.authenticate(email, password, false))
-        props.navigation.navigate(props.navigation.state.params.route)
+        dispatch(AuthActions.authenticate(email, password, false))
       } catch (error) {
         setError(error.message)
         setLoading(false)
@@ -92,23 +54,20 @@ const AuthenticationScreen = props => {
     }
   }
 
-  if (loginLoading)
-    return <CustomActivityIndicator />
-
   return (
     <KeyboardAvoidingView keyboardVerticalOffset={30} style={styles.screen}>
       <CustomText bold style={styles.title}>{loginScreen ? 'Iniciar Sesión' : 'Regístrate'}</CustomText>
       <View style={styles.formContainer}>
         <CustomInput 
           placeholder='Correo electrónico' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={email} 
           onChangeText={text => setEmail(text.replace(/\s/g, ''))}
         />
         <CustomInput 
           password
           placeholder='Contraseña' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={password} 
           onChangeText={text => setPassword(text.replace(/\s/g, ''))}
         />
@@ -116,7 +75,7 @@ const AuthenticationScreen = props => {
           <CustomInput 
             password
             placeholder='Confirmar contraseña' 
-            placeholderTextColor="grey" 
+            placeholderTextColor='grey' 
             value={confirmPassword} 
             onChangeText={text => setConfirmPassword(text.replace(/\s/g, ''))}
           />
@@ -136,18 +95,6 @@ const AuthenticationScreen = props => {
       </View> 
     </KeyboardAvoidingView>
   )
-}
-
-AuthenticationScreen.navigationOptions = navData => {
-  if (navData.navigation.state.params.hideIcon) {
-    return {
-      headerLeft: () => <HeaderIcon back navData={navData} iconName={'md-arrow-back'}/>
-    }
-  } else {
-    return {
-      headerLeft: () => <HeaderIcon navData={navData} iconName={'md-menu'}/>
-    }
-  }
 }
 
 const styles = StyleSheet.create({

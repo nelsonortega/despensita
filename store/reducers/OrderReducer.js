@@ -1,5 +1,5 @@
 import OrderItem from '../../models/order'
-import { CREATE_ORDER, FINISH_ORDER, SET_ORDERS, UPDATE_ORDER } from "../actions/OrderActions"
+import { CREATE_ORDER, FINISH_ORDER, SET_ORDERS, UPDATE_ORDER } from '../actions/OrderActions'
 
 const initialState = {
   orders: [],

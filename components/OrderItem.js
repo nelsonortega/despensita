@@ -1,6 +1,4 @@
-import React from 'react'
 import CustomText from './CustomText'
-
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
@@ -21,7 +19,7 @@ const OrderItem = props => {
 
     let stateObject = orderStates.find(state => state.id === props.order.state.toString())
     setOrderState(stateObject.name)
-  }, [])
+  }, [props.order])
 
   const openDetail = () => {
     props.navigation.navigate('OrderDetail',  {

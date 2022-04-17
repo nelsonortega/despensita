@@ -1,11 +1,11 @@
-import React from 'react'
 import Colors from '../constants/Colors'
+import { useSelector } from 'react-redux'
+import { Button } from 'react-native-paper'
+import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
-
-import { useSelector } from 'react-redux'
-import { useState, useEffect } from 'react'
-import { View, StyleSheet, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 const UpdateUserScreen = props => {
   const auth = useSelector(state => state.auth)
@@ -63,7 +63,7 @@ const UpdateUserScreen = props => {
       <View style={styles.formContainer}>
         <CustomInput 
           placeholder='Nombre' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={name} 
           onChangeText={text => setName(text)}
         />
@@ -76,16 +76,16 @@ const UpdateUserScreen = props => {
         />
         <CustomInput 
           placeholder='Dirección' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={direction} 
           onChangeText={text => setDirection(text)}
         />
       </View> 
       <View style={styles.loginContainer}> 
         <TouchableOpacity style={styles.loginContainer} onPress={confirmOrder}>
-          <View style={styles.loginButton}>
-            <CustomText style={styles.buttonText}>Actualizar Información</CustomText>
-          </View>
+          <Button style={styles.loginButton} mode='contained' onPress={confirmOrder} color={Colors.primary} dark uppercase={false}>
+            <CustomText>Actualizar Información</CustomText>
+          </Button>
         </TouchableOpacity>
       </View>
     </View>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     marginTop: 20,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     alignItems: 'center'
   },
   loginContainer: {
@@ -116,11 +116,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     backgroundColor: Colors.primary
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    paddingVertical: 20
   }
 }) 
 

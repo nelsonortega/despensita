@@ -1,17 +1,17 @@
-import React from 'react'
 import Colors from '../constants/Colors'
+import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 import CustomText from '../components/CustomText'
 import HeaderIcon from '../components/HeaderIcon'
 import CustomInput from '../components/CustomInput'
+import { Picker } from '@react-native-picker/picker'
+import { firestoreStorage } from '../firebase/firebase'
 import * as ProductActions from '../store/actions/ProductActions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
-
-import { useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
-import { Ionicons } from '@expo/vector-icons'
-import { db_storage } from '../store/actions/FirestoreActions'
-import { View, StyleSheet, AsyncStorage, TouchableOpacity, Picker, Alert, Image, ScrollView } from 'react-native'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { View, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native'
 
 const CreateProductScreen = props => {
   const dispatch = useDispatch()
@@ -23,46 +23,6 @@ const CreateProductScreen = props => {
   const [category, setCategory] = useState(0)
   const [loading, setLoading] = useState(false)
   const [description, setDescription] = useState('')
-  const [loginLoading, setLoginLoading] = useState(false)
-
-  const tryLogin = async () => {
-    setLoginLoading(true)
-    const userData = await AsyncStorage.getItem('userData')
-    if (!userData) {
-      setLoginLoading(false)
-      props.navigation.navigate('Authentication', {
-        'route': 'CreateProduct', 
-        'hideIcon': true
-      })
-      return
-    }
-    const transformedData = JSON.parse(userData)
-    const { token, userId, expiryDate } = transformedData
-    const expirationDate = new Date(expiryDate)
-
-    if (expirationDate <= new Date() || !token || !userId) {
-      setLoginLoading(false)
-      props.navigation.navigate('Authentication', {
-        'route': 'CreateProduct', 
-        'hideIcon': true
-      })
-      return
-    }
-
-    setLoginLoading(false)
-  }
-
-  useEffect(() => {
-    tryLogin()
-  }, [])
-
-  useEffect(() => {
-    const willFocus = props.navigation.addListener('willFocus', tryLogin)
-
-    return () => {
-      willFocus.remove()
-    }
-  }, [tryLogin])
 
   useEffect(() => {
     if (error) {
@@ -74,14 +34,27 @@ const CreateProductScreen = props => {
     const response = await fetch(uri)
     const blob = await response.blob()
 
-    var ref = db_storage.ref().child('images/' + Math.round(new Date().valueOf()).toString())
-    await ref.put(blob)
-    var imageUri = await ref.getDownloadURL()
-    dispatch(ProductActions.createProduct(title, description, category, price, imageUri))
+    const storageRef = ref(firestoreStorage, 'images/' + Math.round(new Date().valueOf()).toString())
+    const uploadTask = uploadBytesResumable(storageRef, blob)
+
+    uploadTask.on('state_changed', (snapshot) => {
+      // const prog = Math.round(
+      //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      // )
+      // console.log(prog)
+    }, 
+    (err) => console.log(err),
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref)
+      .then(url => {
+        dispatch(ProductActions.createProduct(title, description, category, price, url))
+      })
+    }
+    )
   }
 
   const validateInputs = () => {
-    if (title.trim() === "" || description.trim() === "") {
+    if (title.trim() === '' || description.trim() === '') {
       Alert.alert('Error', 'Ingrese un título y descripción válidos')
       return true
     } else if (image.length <= 0) {
@@ -109,8 +82,8 @@ const CreateProductScreen = props => {
         setLoading(false)
         Alert.alert(
           'Éxito', 'Producto añadido correctamente', [
-            { text: "Agregar otro", onPress: addOtherProduct },
-            { text: "Volver a Inicio", onPress: () => { props.navigation.popToTop() } }
+            { text: 'Agregar otro', onPress: addOtherProduct },
+            { text: 'Volver a Inicio', onPress: () => { props.navigation.popToTop() } }
           ]
         )
       } catch (error) {
@@ -133,8 +106,8 @@ const CreateProductScreen = props => {
     Alert.alert(
       'Atención', 'Seleccione una opción',
       [
-        { text: "Galería", onPress: () => openCamera(false) },
-        { text: "Cámara", onPress: () => openCamera(true) }
+        { text: 'Galería', onPress: () => openCamera(false) },
+        { text: 'Cámara', onPress: () => openCamera(true) }
       ]
     )
   }
@@ -159,15 +132,12 @@ const CreateProductScreen = props => {
     Alert.alert(
       'Atención', 'Desea cambiar la imagen?',
       [
-        { text: "Eliminar", onPress: () => {setImage('')} },
-        { text: "Sí", onPress: addImage },
-        { text: "No" }
+        { text: 'Eliminar', onPress: () => {setImage('')} },
+        { text: 'Sí', onPress: addImage },
+        { text: 'No' }
       ]
     )
   }
-  
-  if (loginLoading)
-    return <CustomActivityIndicator />
 
   return (
     <ScrollView style={styles.screen}>
@@ -175,20 +145,20 @@ const CreateProductScreen = props => {
       <View style={styles.center}>
         <CustomInput 
           placeholder='Título del producto' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={title} 
           onChangeText={text => setTitle(text)}
         />
         <CustomInput 
           placeholder='Descripción del producto' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={description} 
           onChangeText={text => setDescription(text)}
         />
         <CustomInput 
           placeholder='Precio' 
           keyboardType='numeric'
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={price} 
           onChangeText={text => setPrice(text.replace(/[^0-9]/g, ''))}
         />
@@ -198,11 +168,11 @@ const CreateProductScreen = props => {
             selectedValue={category}
             onValueChange={itemValue => setCategory(itemValue)}
           >
-            <Picker.Item label="Selecciona una categoría" value={0} />
-            <Picker.Item label="Alimentos" value={1} />
-            <Picker.Item label="Bebidas" value={2} />
-            <Picker.Item label="Higiene" value={3} />
-            <Picker.Item label="Mascotas" value={4} />
+            <Picker.Item label='Selecciona una categoría' value={0} />
+            <Picker.Item label='Alimentos' value={1} />
+            <Picker.Item label='Bebidas' value={2} />
+            <Picker.Item label='Higiene' value={3} />
+            <Picker.Item label='Mascotas' value={4} />
 
           </Picker>
         </View>

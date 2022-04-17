@@ -1,30 +1,20 @@
-import React from 'react'
-
-import { DrawerNavigatorItems } from 'react-navigation-drawer'
-import { StyleSheet, View, ScrollView, Image } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
+import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 
 const SideMenu = props => {
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View>
-        <View style={styles.container}>
-          <Image source={require('../assets/icon.png')} style={styles.icon} />
-        </View>
-        <DrawerNavigatorItems {...props}/>
+    <DrawerContentScrollView {...props}>
+      <View style={styles.container}>
+        <Image source={require('../assets/icon.png')} style={styles.icon} />
       </View>
-    </ScrollView>
+      <DrawerItemList {...props}/>
+    </DrawerContentScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
   container: {
     height: 190,
-    marginTop: 30,
     paddingLeft: 10,
     borderRadius: 7,
     marginHorizontal: 8,

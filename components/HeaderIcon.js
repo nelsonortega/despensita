@@ -1,23 +1,24 @@
-import React from 'react'
-
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const HeaderIcon = props => {
+  const navigation = useNavigation()
+
   const toggleDrawer = () => {
-    props.navData.navigation.toggleDrawer()
+    navigation.toggleDrawer()
   }
 
   const openCart = () => {
-    props.navData.navigation.navigate('Cart')
+    navigation.navigate('Cart')
   }
 
   const goBack = () => {
-    props.navData.navigation.popToTop()
+    navigation.popToTop()
   }
 
   return (
-    <TouchableOpacity style={styles.icon} onPress={props.cart ? openCart : props.back ? goBack : toggleDrawer}>
+    <TouchableOpacity onPress={props.cart ? openCart : props.back ? goBack : toggleDrawer}>
       <Ionicons 
         size={props.back ? 24 : 30} 
         color='white' 
@@ -26,11 +27,5 @@ const HeaderIcon = props => {
     </TouchableOpacity>
   )
 }
-
-const styles = StyleSheet.create({
-  icon: {
-    marginHorizontal: 15
-  }
-})
 
 export default HeaderIcon

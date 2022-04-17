@@ -1,14 +1,13 @@
-import React from 'react'
 import Colors from '../constants/Colors'
+import { Button } from 'react-native-paper'
 import CustomText from '../components/CustomText'
 import HeaderIcon from '../components/HeaderIcon'
+import { useState, useEffect, Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { View, StyleSheet, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import * as AuthActions from '../store/actions/AuthActions'
-
-import { Button } from 'react-native-paper'
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { View, StyleSheet, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const ProfileScreen = props => {
   const dispatch = useDispatch()
@@ -31,45 +30,21 @@ const ProfileScreen = props => {
     }
   }
 
-  const tryLogin = async () => {
-    getUserData()
-    const userData = await AsyncStorage.getItem('userData')
-    if (!userData) {
-      props.navigation.navigate('Auth')
-      return
-    }
-    const transformedData = JSON.parse(userData)
-    const { token, userId, expiryDate } = transformedData
-    const expirationDate = new Date(expiryDate)
-
-    if (expirationDate <= new Date() || !token || !userId) {
-      props.navigation.navigate('Auth')
-      return
-    }
-  }
-
   useEffect(() => {
-    tryLogin()
-  }, [])
+    const focus = props.navigation.addListener('focus', getUserData)
 
-  useEffect(() => {
-    const willFocus = props.navigation.addListener('willFocus', tryLogin)
-
-    return () => {
-      willFocus.remove()
-    }
-  }, [tryLogin])
+    return focus
+  }, [getUserData])
 
   const logout = () => {
     Alert.alert(
       'Atención',
       'Desea cerrar su sesión?',
       [
-        { text: "Cancelar", style: "cancel" },
-        { text: "Sí", onPress: () => {
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Sí', onPress: () => {
           dispatch(AuthActions.logout())
-          props.navigation.navigate('Auth')
-        } }
+        }}
       ]
     )
   }
@@ -79,9 +54,9 @@ const ProfileScreen = props => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <View style={styles.header}>
-        <Icon name="user-o" size={90} color={'black'} />
+        <Icon name='user-o' size={90} color={'black'} />
         <CustomText bold style={styles.userTitle}>Mi información predeterminada</CustomText>
       </View>
       <View style={styles.screen}>
@@ -93,16 +68,16 @@ const ProfileScreen = props => {
           <CustomText bold style={styles.userText}>Dirección</CustomText>
           <CustomText style={styles.userTextInfo}>{direction.length === 0 ? 'No hay información' : direction}</CustomText>
           <View style={styles.updateUserButtonContainer}>
-            <Button style={styles.updateUserButton} mode="contained" onPress={updateUserInformation} color={Colors.primary} dark uppercase={false}>
+            <Button style={styles.updateUserButton} mode='contained' onPress={updateUserInformation} color={Colors.primary} dark uppercase={false}>
               <CustomText>Actualizar</CustomText>
             </Button>
           </View>
         </View>
-        <Button style={styles.buttonContainer} mode="contained" onPress={logout} color={Colors.primary} dark uppercase={false}>
+        <Button style={styles.buttonContainer} mode='contained' onPress={logout} color={Colors.primary} dark uppercase={false}>
           <CustomText>Cerrar Sesión</CustomText>
         </Button>
       </View>
-    </React.Fragment>
+    </Fragment>
   )
 }
 
