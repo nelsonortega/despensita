@@ -1,6 +1,4 @@
-import React from 'react'
 import CustomText from '../components/CustomText'
-
 import { View, StyleSheet, Image } from 'react-native'
 
 const ProductItem = props => {

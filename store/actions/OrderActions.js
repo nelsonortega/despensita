@@ -1,7 +1,6 @@
 import Order from '../../models/order'
-
-import { orderCollection } from '../../constants/FirestoreCollections'
-import { createDocument, getAllDocuments, updateDocument } from './FirestoreActions'
+import { orderCollection } from '../../firebase/FirestoreCollections'
+import { createDocument, getAllDocuments, updateDocument } from '../../firebase/FirestoreActions'
 
 export const SET_ORDERS = 'SET_ORDERS'
 export const CREATE_ORDER = 'CREATE_ORDER'
@@ -43,9 +42,9 @@ export const createOrder = (cart, name, phone, express, direction, notes) => {
     }))
 
     let newOrder = {
-      "products": cartData, 
-      "clientData": {name, phone, direction, express, notes, userId}, 
-      "state": 1
+      'products': cartData, 
+      'clientData': {name, phone, direction, express, notes, userId}, 
+      'state': 1
     }
 
     await createDocument(orderCollection, newOrder)
@@ -59,7 +58,7 @@ export const updateOrderState = (order, newState) => {
 
     let orderUpdated = {
       ...order,
-      "state": newState
+      'state': newState
     }
 
     await updateDocument(orderCollection, order.id, orderUpdated)

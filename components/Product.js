@@ -1,14 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 import CustomText from './CustomText'
 import Colors from '../constants/Colors'
 import ChangeQuantity from './ChangeQuantity'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import * as ProductActions from '../store/actions/ProductActions'
-
-import { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from 'react-redux'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { StyleSheet, View, Modal, Alert } from 'react-native'
+import * as ProductActions from '../store/actions/ProductActions'
 import { Button, Card, Title, Paragraph  } from 'react-native-paper'
 
 const Product = props => {
@@ -53,8 +51,8 @@ const Product = props => {
   const deleteProduct = (id) => {
     Alert.alert(
       'Atención', '¿Desea eliminar este producto?', [
-        { text: "Sí", onPress: () => dispatch(ProductActions.deleteProduct(id)) },
-        { text: "No" }
+        { text: 'Sí', onPress: () => dispatch(ProductActions.deleteProduct(id)) },
+        { text: 'No' }
       ]
     )
   }
@@ -81,20 +79,20 @@ const Product = props => {
 
           <View style={styles.actionButtons}>
             {isUserAdmin ? 
-              <Button style={styles.deleteButton} mode="contained" onPress={() => deleteProduct(props.productItem.item.id)} color={'red'} dark uppercase={false}>
+              <Button style={styles.deleteButton} mode='contained' onPress={() => deleteProduct(props.productItem.item.id)} color={'red'} dark uppercase={false}>
                 <Icon name='trash-o' size={28} />
               </Button>
               : <></>
             }
             
-            <Button mode="contained" onPress={openModal} color={Colors.primary} dark uppercase={false}>
+            <Button mode='contained' onPress={openModal} color={Colors.primary} dark uppercase={false}>
               <Ionicons size={30} color='white' name='md-add' style={styles.icon}/>
             </Button>
           </View>
         </Card.Content>
       </Card>
 
-      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+      <Modal visible={modalVisible} animationType='fade' transparent={true}>
         <ChangeQuantity
           lessQuantity={lessQuantity}
           moreQuantity={moreQuantity}

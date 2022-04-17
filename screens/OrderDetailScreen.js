@@ -1,17 +1,16 @@
-import React from 'react'
 import Colors from '../constants/Colors'
+import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import ProductItem from '../components/ProductItem'
-import * as OrderActions from '../store/actions/OrderActions'
-
-import { useState, useEffect } from 'react'
+import { Picker } from '@react-native-picker/picker'
 import { useSelector, useDispatch } from 'react-redux'
-import { View, StyleSheet, Picker, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
+import * as OrderActions from '../store/actions/OrderActions'
 
 const OrderDetailScreen = props => {
   const dispatch = useDispatch()
   
-  const { order } = props.navigation.state.params
+  const { order } = props.route.params
   const orderStates = useSelector(state => state.data.states)
   const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
 
@@ -49,7 +48,7 @@ const OrderDetailScreen = props => {
         </View>
         <View style={styles.totalContainer}>
           <CustomText bold style={styles.total}>Express</CustomText>
-          <CustomText bold style={styles.total}>{order.clientData.express === 1 ? "Sí" : "No"}</CustomText>
+          <CustomText bold style={styles.total}>{order.clientData.express === 1 ? 'Sí' : 'No'}</CustomText>
         </View>
       </View>
       <View>
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     flexDirection: 'row',
     marginHorizontal: '5%',
-    justifyContent: "space-between"
+    justifyContent: 'space-between'
   },
   clientText: {
     fontSize: 16,

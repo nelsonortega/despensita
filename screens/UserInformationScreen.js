@@ -1,13 +1,14 @@
-import React from 'react'
 import Colors from '../constants/Colors'
+import { Button } from 'react-native-paper'
+import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
+import { Picker } from '@react-native-picker/picker'
+import { View, StyleSheet, Alert } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import * as OrderActions from '../store/actions/OrderActions'
 import * as ProductActions from '../store/actions/ProductActions'
-
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { View, StyleSheet, TouchableOpacity, Alert, Picker, AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const UserInformationScreen = props => {
   const dispatch = useDispatch()
@@ -62,7 +63,7 @@ const UserInformationScreen = props => {
     if (orderCreated) {
       Alert.alert(
         'Éxito', 'Su orden ha sido creada', [
-          { text: "Volver a Inicio", onPress: finishOrder }
+          { text: 'Volver a Inicio', onPress: finishOrder }
         ]
       )
     }
@@ -83,7 +84,7 @@ const UserInformationScreen = props => {
       <View style={styles.formContainer}>
         <CustomInput 
           placeholder='Nombre' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={name} 
           onChangeText={text => setName(text)}
         />
@@ -96,7 +97,7 @@ const UserInformationScreen = props => {
         />
         <CustomInput 
           placeholder='Notas' 
-          placeholderTextColor="grey" 
+          placeholderTextColor='grey' 
           value={notes} 
           onChangeText={text => setNotes(text)}
         />
@@ -106,26 +107,29 @@ const UserInformationScreen = props => {
             selectedValue={express}
             onValueChange={itemValue => setExpress(itemValue)}
           >
-            <Picker.Item label="Desea Express?" value={0} />
-            <Picker.Item label="Sí" value={1} />
-            <Picker.Item label="No" value={2} />
+            <Picker.Item label='Desea Express?' value={0} />
+            <Picker.Item label='Sí' value={1} />
+            <Picker.Item label='No' value={2} />
           </Picker>
         </View>
         {express === 1 ? 
           <CustomInput 
             placeholder='Dirección' 
-            placeholderTextColor="grey" 
+            placeholderTextColor='grey' 
             value={direction} 
             onChangeText={text => setDirection(text)}
           /> : <View/>
         }
       </View> 
       <View style={styles.loginContainer}> 
-        <TouchableOpacity style={styles.loginContainer} onPress={confirmOrder}>
-          <View style={styles.loginButton}>
+        {/* <TouchableOpacity style={styles.loginContainer} onPress={confirmOrder}> */}
+          <Button style={styles.loginButton} mode='contained' onPress={confirmOrder} color={Colors.primary} dark uppercase={false}>
+            <CustomText>Finalizar pedido</CustomText>
+          </Button>
+          {/* <View style={styles.loginButton}>
             <CustomText style={styles.buttonText}>Finalizar pedido</CustomText>
-          </View>
-        </TouchableOpacity>
+          </View> */}
+        {/* </TouchableOpacity> */}
       </View>
     </View>
   )
@@ -141,7 +145,7 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     marginTop: 20,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     alignItems: 'center'
   },
   loginContainer: {

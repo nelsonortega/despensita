@@ -1,10 +1,8 @@
-import React from 'react'
-import * as ProductActions from '../store/actions/ProductActions'
-
 import { useState } from 'react'
 import { Searchbar } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import * as ProductActions from '../store/actions/ProductActions'
 
 const SearchInput = props => {
   const dispatch = useDispatch()
@@ -28,7 +26,7 @@ const SearchInput = props => {
     <View style={styles.container}>
       <Searchbar
         value={searchText}
-        placeholder="Buscar"
+        placeholder='Buscar'
         inputStyle={styles.textInput}
         onChangeText={handleSearchChange}
       />

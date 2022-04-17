@@ -1,17 +1,14 @@
-import React from 'react'
+import { useState } from 'react'
 import * as Font from 'expo-font'
 import ReduxThunk from 'redux-thunk'
-import Colors from './constants/Colors'
-import AppNavigator from './navigation/AppNavigator'
+import { Provider } from 'react-redux'
+import AppLoading from 'expo-app-loading'
+import { StatusBar } from 'expo-status-bar'
+import RootNavigator from './navigation/RootNavigator'
 import AuthReducer from './store/reducers/AuthReducer'
 import DataReducer from './store/reducers/DataReducer'
 import OrderReducer from './store/reducers/OrderReducer'
 import ProductReducer from './store/reducers/ProductReducer'
-
-import { useState } from 'react'
-import { AppLoading } from 'expo'
-import { Provider } from 'react-redux'
-import { StatusBar } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
@@ -24,7 +21,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
-export default function App() {
+const App = () => {
   const [fontLoaded, setFontLoaded] = useState(false)
 
   const fetchFonts = () => {
@@ -36,7 +33,7 @@ export default function App() {
 
   if (!fontLoaded) {
     return (
-      <AppLoading 
+      <AppLoading
         startAsync={fetchFonts} 
         onFinish={() => setFontLoaded(true)} 
         onError={error => console.log(error)}
@@ -47,9 +44,11 @@ export default function App() {
   return (
     <Provider store={store}>
       <PaperProvider>
-        <AppNavigator testProp={true}/>  
-        <StatusBar backgroundColor={Colors.primary} />
+        <StatusBar style='light' />
+        <RootNavigator />
       </PaperProvider>
     </Provider>
   )
 }
+
+export default App

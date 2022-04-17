@@ -1,7 +1,4 @@
-import React from 'react'
 import CustomText from '../components/CustomText'
-import HeaderIcon from '../components/HeaderIcon'
-
 import { View, StyleSheet, Image } from 'react-native'
 
 const ContactScreen = props => {
@@ -12,12 +9,6 @@ const ContactScreen = props => {
       <CustomText>Llámanos al 2234-1060</CustomText>
     </View>
   )
-}
-
-ContactScreen.navigationOptions = navData => {
-  return {
-    headerLeft: () => <HeaderIcon navData={navData} iconName={'md-menu'}/>
-  }
 }
 
 const styles = StyleSheet.create({

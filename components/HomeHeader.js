@@ -1,8 +1,6 @@
-import React from 'react'
 import CustomText from './CustomText'
 import SearchInput from './SearchInput'
 import Colors from '../constants/Colors'
-
 import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
@@ -14,7 +12,7 @@ const HomeHeader = props => {
     <View>
       <SearchInput />
       {isUserAdmin ? 
-        <Button style={styles.button} mode="contained" onPress={props.createProduct} color={Colors.primary} dark uppercase={false}>
+        <Button style={styles.button} mode='contained' onPress={props.createProduct} color={Colors.primary} dark uppercase={false}>
           <CustomText>Crear Producto</CustomText>
         </Button>
         : <></>

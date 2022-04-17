@@ -1,14 +1,13 @@
-import FirebaseKey from '../../constants/FirebaseKey'
-
-import { AsyncStorage } from 'react-native'
-import { getAllDocuments } from './FirestoreActions'
-import { userCollection } from '../../constants/FirestoreCollections'
+import FirebaseKey from '../../firebase/FirebaseKey'
+import { getAllDocuments } from '../../firebase/FirestoreActions'
+import { userCollection } from '../../firebase/FirestoreCollections'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const LOGOUT = 'LOGOUT'
 export const AUTHENTICATE = 'AUTHENTICATE'
 
-const REGISTER_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + FirebaseKey.FirebaseConfig.apiKey
-const LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + FirebaseKey.FirebaseConfig.apiKey
+const REGISTER_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + FirebaseKey.apiKey
+const LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + FirebaseKey.apiKey
 
 export const autoAuthenticate = (userId, token, isUserAdmin) => {
   return { type: AUTHENTICATE, userId: userId, token: token, isUserAdmin: isUserAdmin }

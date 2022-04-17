@@ -1,7 +1,6 @@
 import Product from '../../models/product'
-
-import { productCollection } from '../../constants/FirestoreCollections'
-import { createDocument, getAllDocuments, deleteDocument } from './FirestoreActions'
+import { productCollection } from '../../firebase/FirestoreCollections'
+import { createDocument, getAllDocuments, deleteDocument } from '../../firebase/FirestoreActions'
 
 export const ADD_CART = 'ADD_CART'
 export const EDIT_CART = 'EDIT_CART'
@@ -97,11 +96,11 @@ export const fetchProducts = () => {
 export const createProduct = (title, description, category, price, img) => {
   return async dispatch => {
     let newProduct = {
-      "title": title, 
-      "description": description, 
-      "category": category, 
-      "price": price, 
-      "img": img
+      'title': title, 
+      'description': description, 
+      'category': category, 
+      'price': price, 
+      'img': img
     }
 
     const response = await createDocument(productCollection, newProduct)
