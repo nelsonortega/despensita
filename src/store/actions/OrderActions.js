@@ -1,6 +1,6 @@
 import Order from '../../models/order'
 import { orderCollection } from '../../firebase/FirestoreCollections'
-import { createDocument, getAllDocuments, updateDocument } from '../../firebase/FirestoreActions'
+import { createDocument, getAllDocuments, updateDocument } from '../../firebase/FirestoreFunctions'
 
 export const SET_ORDERS = 'SET_ORDERS'
 export const CREATE_ORDER = 'CREATE_ORDER'

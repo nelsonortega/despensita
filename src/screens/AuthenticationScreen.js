@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
-import { loginUser, registerUser } from '../firebase/controllers/FirebaseFunctions'
+import { loginUser, registerUser } from '../firebase/functions/FirebaseFunctions'
 import { StyleSheet, View, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
 
 const AuthenticationScreen = props => {

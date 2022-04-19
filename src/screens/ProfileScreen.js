@@ -7,7 +7,7 @@ import { useState, useEffect, Fragment } from 'react'
 import { View, StyleSheet, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { logoutUser } from '../firebase/controllers/FirebaseFunctions'
+import { logoutUser } from '../firebase/functions/FirebaseFunctions'
 
 const ProfileScreen = props => {
   const auth = useSelector(state => state.auth)

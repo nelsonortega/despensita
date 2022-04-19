@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '../firebase/firebase'
 import * as AuthActions from '../store/actions/AuthActions'
-import { getAllDocuments } from '../firebase/FirestoreActions'
+import { getAllDocuments } from '../firebase/FirestoreFunctions'
 import { userCollection } from '../firebase/FirestoreCollections'
 
 const useLogin = () => {
