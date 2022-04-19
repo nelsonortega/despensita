@@ -14,13 +14,13 @@ const RootNavigator = () => {
   const Drawer = createDrawerNavigator()
   const [loading] = useLogin()
 
-   if (loading) {
+  if (loading) {
     return <CustomActivityIndicator />
   }
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator screenOptions={drawerScreenOptions} drawerContent={props => <SideMenu {...props}/>}>
+      <Drawer.Navigator screenOptions={drawerScreenOptions} drawerContent={props => <SideMenu {...props} />}>
         <Drawer.Screen name='Home' component={HomeStack} options={drawerHomeOptions} />
         <Drawer.Screen name='Orders' component={OrdersStack} options={drawerOrdersOptions} />
         <Drawer.Screen name='Contact' component={ContactScreen} options={drawerContactOptions} />

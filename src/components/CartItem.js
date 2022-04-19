@@ -28,23 +28,23 @@ const CartItem = props => {
 
   const moreQuantity = () => {
     if (quantity < 10) {
-      setQuantity(quantity+1)
+      setQuantity(quantity + 1)
     }
   }
 
   const lessQuantity = () => {
     if (quantity > 0) {
-      setQuantity(quantity-1)
+      setQuantity(quantity - 1)
     }
   }
 
   return (
     <View>
-      <View style={styles.container}> 
+      <View style={styles.container}>
         <View style={styles.productContainer}>
-          <Image 
+          <Image
             style={styles.productImage}
-            source={{uri: props.cartItem.item.img}}
+            source={{ uri: props.cartItem.item.img }}
           />
           <View style={styles.detailsContainer}>
             <CustomText bold style={styles.title}>{props.cartItem.item.title}</CustomText>
@@ -59,10 +59,10 @@ const CartItem = props => {
           <TouchableOpacity style={styles.deleteButton} onPress={() => props.delete(props.cartItem.item.id)}>
             <Ionicons size={20} color='white' name='md-trash' />
           </TouchableOpacity>
-        </View>        
+        </View>
       </View>
       <View style={styles.lineSeparator} />
-      <Modal visible={modalVisible} animationType='fade' transparent={true}>
+      <Modal visible={modalVisible} animationType='fade' transparent>
         <ChangeQuantity
           lessQuantity={lessQuantity}
           moreQuantity={moreQuantity}
@@ -77,20 +77,20 @@ const CartItem = props => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 100, 
-    padding: 10, 
-    borderRadius: 7, 
+    height: 100,
+    padding: 10,
+    borderRadius: 7,
     alignItems: 'center',
-    flexDirection: 'row', 
-    justifyContent: 'space-between' 
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   productContainer: {
     flexDirection: 'row'
   },
   productImage: {
     width: 80,
-    height: 80, 
-    marginRight: 10, 
+    height: 80,
+    marginRight: 10,
     borderRadius: 7
   },
   detailsContainer: {

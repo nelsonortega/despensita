@@ -6,7 +6,7 @@ import UpdateUserScreen from '../../screens/UpdateUserScreen'
 import AuthenticationScreen from '../../screens/AuthenticationScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
- const ProfileStack = () => {
+const ProfileStack = () => {
   const ProfileStack = createNativeStackNavigator()
   const isUserLoggedIn = useSelector(state => state.auth.userId)
 
@@ -15,17 +15,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
       {isUserLoggedIn ?
         <>
           <ProfileStack.Screen name='ProfileScreen' component={ProfileScreen} options={{
-            headerLeft: () => <HeaderIcon iconName={'md-menu'} />
+            headerLeft: () => <HeaderIcon iconName='md-menu' />
           }} />
           <ProfileStack.Screen name='UpdateUser' component={UpdateUserScreen} />
         </>
         :
         <ProfileStack.Screen name='Authentication' component={AuthenticationScreen} options={{
-          headerLeft: () => <HeaderIcon iconName={'md-menu'} />
+          headerLeft: () => <HeaderIcon iconName='md-menu' />
         }} />
       }
-      
-      
     </ProfileStack.Navigator>
   )
 }

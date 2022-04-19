@@ -34,8 +34,8 @@ const App = () => {
   if (!fontLoaded) {
     return (
       <AppLoading
-        startAsync={fetchFonts} 
-        onFinish={() => setFontLoaded(true)} 
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
         onError={error => console.log(error)}
       />
     )

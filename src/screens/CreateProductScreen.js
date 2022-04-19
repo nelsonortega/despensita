@@ -26,7 +26,7 @@ const CreateProductScreen = props => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Ocurrió un error', error, [{text: 'Ok'}])
+      Alert.alert('Ocurrió un error', error, [{ text: 'Ok' }])
     }
   }, [error])
 
@@ -42,13 +42,13 @@ const CreateProductScreen = props => {
       //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       // )
       // console.log(prog)
-    }, 
+    },
     (err) => console.log(err),
     () => {
       getDownloadURL(uploadTask.snapshot.ref)
-      .then(url => {
-        dispatch(ProductActions.createProduct(title, description, category, price, url))
-      })
+        .then(url => {
+          dispatch(ProductActions.createProduct(title, description, category, price, url))
+        })
     }
     )
   }
@@ -119,9 +119,9 @@ const CreateProductScreen = props => {
       quality: 0.5
     }
 
-    let imageResult = value ? 
-      await ImagePicker.launchCameraAsync(imagePickerOptions) :
-      await ImagePicker.launchImageLibraryAsync(imagePickerOptions)
+    const imageResult = value
+      ? await ImagePicker.launchCameraAsync(imagePickerOptions)
+      : await ImagePicker.launchImageLibraryAsync(imagePickerOptions)
 
     if (!imageResult.cancelled) {
       setImage(imageResult.uri)
@@ -132,7 +132,7 @@ const CreateProductScreen = props => {
     Alert.alert(
       'Atención', 'Desea cambiar la imagen?',
       [
-        { text: 'Eliminar', onPress: () => {setImage('')} },
+        { text: 'Eliminar', onPress: () => { setImage('') } },
         { text: 'Sí', onPress: addImage },
         { text: 'No' }
       ]
@@ -143,23 +143,23 @@ const CreateProductScreen = props => {
     <ScrollView style={styles.screen}>
       <CustomText style={styles.text}>Publicar un producto</CustomText>
       <View style={styles.center}>
-        <CustomInput 
-          placeholder='Título del producto' 
-          placeholderTextColor='grey' 
-          value={title} 
+        <CustomInput
+          placeholder='Título del producto'
+          placeholderTextColor='grey'
+          value={title}
           onChangeText={text => setTitle(text)}
         />
-        <CustomInput 
-          placeholder='Descripción del producto' 
-          placeholderTextColor='grey' 
-          value={description} 
+        <CustomInput
+          placeholder='Descripción del producto'
+          placeholderTextColor='grey'
+          value={description}
           onChangeText={text => setDescription(text)}
         />
-        <CustomInput 
-          placeholder='Precio' 
+        <CustomInput
+          placeholder='Precio'
           keyboardType='numeric'
-          placeholderTextColor='grey' 
-          value={price} 
+          placeholderTextColor='grey'
+          value={price}
           onChangeText={text => setPrice(text.replace(/[^0-9]/g, ''))}
         />
         <View style={styles.pickerContainer}>
@@ -178,10 +178,10 @@ const CreateProductScreen = props => {
         </View>
       </View>
       <CustomText style={styles.imageText}>Añade una imagen</CustomText>
-      
-      {image.length > 0 ? 
+
+      {image.length > 0 ?
         <TouchableOpacity onPress={changeImage}>
-          <Image source={{uri: image}} style={styles.image} />
+          <Image source={{ uri: image }} style={styles.image} />
         </TouchableOpacity>
         : (
         <TouchableOpacity onPress={addImage}>
@@ -199,12 +199,6 @@ const CreateProductScreen = props => {
       )}
     </ScrollView>
   )
-}
-
-CreateProductScreen.navigationOptions = navData => {
-  return {
-    headerLeft: () => <HeaderIcon back navData={navData} iconName={'md-arrow-back'}/>
-  }
 }
 
 const styles = StyleSheet.create({
@@ -245,7 +239,7 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.secondary
   },
   buttonContainer: {
     marginVertical: 20,
@@ -266,8 +260,8 @@ const styles = StyleSheet.create({
     height: 170,
     width: '90%',
     borderRadius: 7,
-    marginLeft: '5%',
+    marginLeft: '5%'
   }
-}) 
+})
 
 export default CreateProductScreen

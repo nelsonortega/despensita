@@ -2,7 +2,6 @@ import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
 import CustomText from '../components/CustomText'
-import HeaderIcon from '../components/HeaderIcon'
 import { useState, useEffect, Fragment } from 'react'
 import { View, StyleSheet, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -39,7 +38,7 @@ const ProfileScreen = props => {
     const response = await logoutUser()
 
     if (response) {
-      Alert.alert('Error', 'Hubo un error', [{text: 'Ok'}])
+      Alert.alert('Error', 'Hubo un error', [{ text: 'Ok' }])
     }
   }
 
@@ -49,7 +48,7 @@ const ProfileScreen = props => {
       'Desea cerrar su sesión?',
       [
         { text: 'Cancelar', style: 'cancel' },
-        { text: 'Sí', onPress: logout}
+        { text: 'Sí', onPress: logout }
       ]
     )
   }
@@ -59,9 +58,9 @@ const ProfileScreen = props => {
   }
 
   return (
-    <Fragment>
+    <>
       <View style={styles.header}>
-        <Icon name='user-o' size={90} color={'black'} />
+        <Icon name='user-o' size={90} color='black' />
         <CustomText bold style={styles.userTitle}>Mi información predeterminada</CustomText>
       </View>
       <View style={styles.screen}>
@@ -82,14 +81,8 @@ const ProfileScreen = props => {
           <CustomText>Cerrar Sesión</CustomText>
         </Button>
       </View>
-    </Fragment>
+    </>
   )
-}
-
-ProfileScreen.navigationOptions = navData => {
-  return {
-    headerLeft: () => <HeaderIcon navData={navData} iconName={'md-menu'}/>
-  }
 }
 
 const styles = StyleSheet.create({
@@ -131,6 +124,6 @@ const styles = StyleSheet.create({
   updateUserButton: {
     width: '50%'
   }
-}) 
+})
 
 export default ProfileScreen

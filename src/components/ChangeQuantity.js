@@ -1,6 +1,6 @@
 import CustomText from './CustomText'
 import Colors from '../constants/Colors'
-import { Button  } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 
@@ -32,16 +32,16 @@ const ChangeQuantity = props => {
 
 const styles = StyleSheet.create({
   modalBackground: {
-    flex: 1, 
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   modal: {
-    padding: 20, 
+    padding: 20,
     width: '80%',
     alignItems: 'center',
-    backgroundColor: 'white', 
+    backgroundColor: 'white',
     justifyContent: 'center'
   },
   quantityContainer: {
@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   circleButton: {
-    width: 50, 
-    height: 50, 
-    borderRadius: 25, 
-    alignItems: 'center', 
-    justifyContent: 'center', 
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.primary
   },
   minusIcon: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   quantityText: {
-    fontSize: 20, 
+    fontSize: 20,
     marginHorizontal: 20
   },
   buttonContainer: {

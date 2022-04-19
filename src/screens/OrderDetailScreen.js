@@ -9,7 +9,7 @@ import * as OrderActions from '../store/actions/OrderActions'
 
 const OrderDetailScreen = props => {
   const dispatch = useDispatch()
-  
+
   const { order } = props.route.params
   const orderStates = useSelector(state => state.data.states)
   const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
@@ -26,11 +26,11 @@ const OrderDetailScreen = props => {
   }, [])
 
   const pickerList = orderStates.map(state =>
-    <Picker.Item label={state.name} value={state.id} key={state.id}/>
+    <Picker.Item label={state.name} value={state.id} key={state.id} />
   )
 
-  const productsList = order.products.map(product => 
-    <ProductItem product={product}  key={product.id}/>
+  const productsList = order.products.map(product =>
+    <ProductItem product={product} key={product.id} />
   )
 
   const handleStateChange = itemValue => {
@@ -56,7 +56,7 @@ const OrderDetailScreen = props => {
         <CustomText style={styles.clientText}>Nombre: {order.clientData.name}</CustomText>
         <CustomText style={styles.clientText}>Teléfono: {order.clientData.phone}</CustomText>
         <CustomText style={styles.clientText}>Notas: {order.clientData.notes}</CustomText>
-        {order.clientData.express === 1 ? 
+        {order.clientData.express === 1 ?
           <CustomText style={styles.clientText}>Dirección: {order.clientData.direction}</CustomText> : <></>
         }
       </View>
@@ -64,7 +64,7 @@ const OrderDetailScreen = props => {
         <CustomText bold style={styles.title}>Productos</CustomText>
         {productsList}
       </View>
-      {isUserAdmin ? 
+      {isUserAdmin ?
         <>
           <CustomText bold style={styles.title}>Actualizar estado</CustomText>
           <View style={styles.pickerContainer}>
@@ -78,7 +78,7 @@ const OrderDetailScreen = props => {
           </View>
         </> : <></>
       }
-      
+
     </ScrollView>
   )
 }
@@ -124,6 +124,6 @@ const styles = StyleSheet.create({
     height: 60,
     color: 'grey'
   }
-}) 
+})
 
 export default OrderDetailScreen

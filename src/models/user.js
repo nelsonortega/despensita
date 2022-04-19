@@ -1,5 +1,5 @@
 class User {
-  constructor(name, phone, email, direction) {
+  constructor (name, phone, email, direction) {
     this.name = name
     this.phone = phone
     this.email = email

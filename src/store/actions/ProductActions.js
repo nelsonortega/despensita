@@ -21,7 +21,7 @@ export const resetCart = () => {
 export const addItemToCart = (id, title, quantity, price, img) => {
   return async (dispatch, getState) => {
     const cartState = getState().products.cart
-    let filteredCart = cartState.filter(item => item.id === id)
+    const filteredCart = cartState.filter(item => item.id === id)
 
     if (filteredCart.length > 0) {
       dispatch({
@@ -95,12 +95,12 @@ export const fetchProducts = () => {
 
 export const createProduct = (title, description, category, price, img) => {
   return async dispatch => {
-    let newProduct = {
-      'title': title, 
-      'description': description, 
-      'category': category, 
-      'price': price, 
-      'img': img
+    const newProduct = {
+      title: title,
+      description: description,
+      category: category,
+      price: price,
+      img: img
     }
 
     const response = await createDocument(productCollection, newProduct)
@@ -121,7 +121,6 @@ export const createProduct = (title, description, category, price, img) => {
 
 export const deleteProduct = (id) => {
   return async dispatch => {
-
     deleteDocument(productCollection, id)
 
     dispatch({

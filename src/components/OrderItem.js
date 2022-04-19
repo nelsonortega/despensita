@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const OrderItem = props => {
   const orderStates = useSelector(state => state.data.states)
-  
+
   const [total, setTotal] = useState(0)
   const [orderState, setOrderState] = useState()
 
@@ -17,12 +17,12 @@ const OrderItem = props => {
     })
     setTotal(totalPrice)
 
-    let stateObject = orderStates.find(state => state.id === props.order.state.toString())
+    const stateObject = orderStates.find(state => state.id === props.order.state.toString())
     setOrderState(stateObject.name)
   }, [props.order])
 
   const openDetail = () => {
-    props.navigation.navigate('OrderDetail',  {
+    props.navigation.navigate('OrderDetail', {
       order: props.order
     })
   }
@@ -30,9 +30,9 @@ const OrderItem = props => {
   return (
     <TouchableOpacity style={styles.orderContainer} onPress={openDetail}>
       <View style={styles.container}>
-        <Image 
+        <Image
           style={styles.productImage}
-          source={{uri: props.order.products[0].img}}
+          source={{ uri: props.order.products[0].img }}
         />
         <View>
           <CustomText bold>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: 70,
-    height: 70, 
+    height: 70,
     marginRight: 10,
     borderRadius: 7
   }

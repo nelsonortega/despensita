@@ -20,7 +20,7 @@ const AuthenticationScreen = props => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Ocurrió un error', error, [{text: 'Ok', onPress: () => setError(null)}])
+      Alert.alert('Ocurrió un error', error, [{ text: 'Ok', onPress: () => setError(null) }])
     }
   }, [error])
 
@@ -49,7 +49,7 @@ const AuthenticationScreen = props => {
     const validationError = validateRegister()
 
     if (validationError) {
-      Alert.alert('Error', validationError, [{text: 'Ok'}])
+      Alert.alert('Error', validationError, [{ text: 'Ok' }])
       return
     }
 
@@ -67,30 +67,30 @@ const AuthenticationScreen = props => {
     <KeyboardAvoidingView keyboardVerticalOffset={30} style={styles.screen}>
       <CustomText bold style={styles.title}>{loginScreen ? 'Iniciar Sesión' : 'Regístrate'}</CustomText>
       <View style={styles.formContainer}>
-        <CustomInput 
-          placeholder='Correo electrónico' 
-          placeholderTextColor='grey' 
-          value={email} 
+        <CustomInput
+          placeholder='Correo electrónico'
+          placeholderTextColor='grey'
+          value={email}
           onChangeText={text => setEmail(text.replace(/\s/g, ''))}
         />
-        <CustomInput 
+        <CustomInput
           password
-          placeholder='Contraseña' 
-          placeholderTextColor='grey' 
-          value={password} 
+          placeholder='Contraseña'
+          placeholderTextColor='grey'
+          value={password}
           onChangeText={text => setPassword(text.replace(/\s/g, ''))}
         />
         {loginScreen ? <View /> : (
           <CustomInput 
             password
-            placeholder='Confirmar contraseña' 
-            placeholderTextColor='grey' 
-            value={confirmPassword} 
+            placeholder='Confirmar contraseña'
+            placeholderTextColor='grey'
+            value={confirmPassword}
             onChangeText={text => setConfirmPassword(text.replace(/\s/g, ''))}
           />
         )}
         {loading ? <CustomActivityIndicator small /> : (
-          <View style={styles.loginContainer}> 
+          <View style={styles.loginContainer}>
             <TouchableOpacity style={styles.loginContainer} onPress={loginScreen ? login : register}>
               <View style={styles.loginButton}>
                 <CustomText style={styles.buttonText}>{loginScreen ? 'Iniciar Sesión' : 'Registrarme'}</CustomText>
@@ -101,7 +101,7 @@ const AuthenticationScreen = props => {
             </TouchableOpacity>
           </View>
         )}
-      </View> 
+      </View>
     </KeyboardAvoidingView>
   )
 }
@@ -139,6 +139,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center'
   }
-}) 
+})
 
 export default AuthenticationScreen

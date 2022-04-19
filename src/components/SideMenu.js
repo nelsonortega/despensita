@@ -7,7 +7,7 @@ const SideMenu = props => {
       <View style={styles.container}>
         <Image source={require('../assets/icon.png')} style={styles.icon} />
       </View>
-      <DrawerItemList {...props}/>
+      <DrawerItemList {...props} />
     </DrawerContentScrollView>
   )
 }
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140
   }
-}) 
+})
 
 export default SideMenu

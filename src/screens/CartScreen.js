@@ -26,7 +26,7 @@ const CartScreen = props => {
 
   const deleteCartItem = id => {
     dispatch(ProductActions.deleteItemFromCart(id))
-    let product = cart.filter(product => product.id === id)
+    const product = cart.filter(product => product.id === id)
     setTotal(total - (parseInt(product[0].price) * product[0].quantity))
   }
 
@@ -42,14 +42,14 @@ const CartScreen = props => {
     if (cart.length !== 0) {
       props.navigation.navigate('UserInformation')
     } else {
-      Alert.alert('Atención', 'No hay productos en el carrito', [{text: 'Ok'}])
+      Alert.alert('Atención', 'No hay productos en el carrito', [{ text: 'Ok' }])
     }
   }
 
   return (
     <View style={styles.screen}>
-      <View style={{width: '100%', height: '90%', alignItems: 'center'}}>
-        <View style={{height: '4%'}}/>
+      <View style={{ width: '100%', height: '90%', alignItems: 'center' }}>
+        <View style={{ height: '4%' }} />
         <View style={styles.container}>
           <View style={styles.textContainer}>
             <CustomText bold style={styles.totalText}>Total</CustomText>
@@ -57,9 +57,9 @@ const CartScreen = props => {
           </View>
         </View>
         {cart.length === 0 ? 
-          <View style={{marginTop: '50%'}}>
-            <CustomText bold style={styles.emptyCart}>No has añadido productos al carrito</CustomText>  
-          </View> : 
+          <View style={{ marginTop: '50%' }}>
+            <CustomText bold style={styles.emptyCart}>No has añadido productos al carrito</CustomText>
+          </View> :
           <View style={styles.ListContainer}>
             <FlatList
               keyExtractor={item => item.id}
@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center'
   }
-}) 
+})
 
 export default CartScreen

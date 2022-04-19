@@ -19,10 +19,10 @@ const HeaderIcon = props => {
 
   return (
     <TouchableOpacity onPress={props.cart ? openCart : props.back ? goBack : toggleDrawer}>
-      <Ionicons 
-        size={props.back ? 24 : 30} 
-        color='white' 
-        name={props.iconName} 
+      <Ionicons
+        size={props.back ? 24 : 30}
+        color='white'
+        name={props.iconName}
       />
     </TouchableOpacity>
   )

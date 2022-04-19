@@ -4,7 +4,7 @@ import { View, StyleSheet, Image } from 'react-native'
 const AboutUsScreen = props => {
   return (
     <View style={styles.screen}>
-      <Image source={require('../assets/about_us.jpg')} style={styles.icon}/>
+      <Image source={require('../assets/about_us.jpg')} style={styles.icon} />
       <CustomText bold style={styles.title}>La Despensita</CustomText>
       <CustomText style={styles.description}>Somos un negocio familiar con más de 60 años de estar brindándole a las familias facilidad, innovación y amistad. Queremos solucionar su día a día con nuestros productos y servicios.</CustomText>
     </View>
@@ -15,22 +15,22 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   icon: {
     width: '100%',
     height: 200
   },
-  title:{
+  title: {
     fontSize: 17,
     marginTop: 30
   },
-  description:{
+  description: {
     textAlign: 'justify',
     marginRight: 20,
     marginLeft: 20,
     marginTop: 10
   }
-}) 
+})
 
 export default AboutUsScreen

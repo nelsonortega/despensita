@@ -11,7 +11,7 @@ const HomeHeader = props => {
   return (
     <View>
       <SearchInput />
-      {isUserAdmin ? 
+      {isUserAdmin ?
         <Button style={styles.button} mode='contained' onPress={props.createProduct} color={Colors.primary} dark uppercase={false}>
           <CustomText>Crear Producto</CustomText>
         </Button>

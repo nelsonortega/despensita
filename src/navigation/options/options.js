@@ -5,7 +5,7 @@ export const screenOptions = {
   title: 'La Despensita',
   headerTitleAlign: 'center',
   headerStyle: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.primary
   },
   headerTitleStyle: {
     color: 'white',
@@ -25,32 +25,32 @@ export const drawerScreenOptions = {
 }
 
 export const drawerHomeOptions = {
-  headerShown: false, 
-  drawerLabel: 'Inicio', 
-  drawerIcon: ({color}) => <Icon name={'home'} size={20} color={color} />
+  headerShown: false,
+  drawerLabel: 'Inicio',
+  drawerIcon: ({ color }) => <Icon name='home' size={20} color={color} />
 }
 
 export const drawerOrdersOptions = {
-  headerShown: false, 
-  drawerLabel: 'Pedidos', 
-  drawerIcon: ({color}) => <Icon name={'shopping-cart'} size={20} color={color} />
+  headerShown: false,
+  drawerLabel: 'Pedidos',
+  drawerIcon: ({ color }) => <Icon name='shopping-cart' size={20} color={color} />
 }
 
 export const drawerContactOptions = {
-  drawerLabel: 'Contacto', 
-  drawerIcon: ({color}) => <Icon name={'phone'} size={24} color={color} />
+  drawerLabel: 'Contacto',
+  drawerIcon: ({ color }) => <Icon name='phone' size={24} color={color} />
 }
 
 export const drawerAboutUsOptions = {
-  drawerLabel: 'Quienes somos', 
-  drawerIcon: ({color}) => <Icon name={'info'} size={20} color={color} />,
+  drawerLabel: 'Quienes somos',
+  drawerIcon: ({ color }) => <Icon name='info' size={20} color={color} />,
   drawerItemStyle: {
     paddingLeft: 10
   }
 }
 
 export const drawerProfileOptions = {
-  headerShown: false, 
-  drawerLabel: 'Perfil', 
-  drawerIcon: ({color}) => <Icon name={'user-o'} size={20} color={color} />
+  headerShown: false,
+  drawerLabel: 'Perfil',
+  drawerIcon: ({ color }) => <Icon name='user-o' size={20} color={color} />
 }

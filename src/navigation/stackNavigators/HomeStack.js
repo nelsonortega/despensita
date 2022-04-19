@@ -8,13 +8,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const HomeStack = () => {
   const HomeStack = createNativeStackNavigator()
-  
+
   return (
     <HomeStack.Navigator screenOptions={screenOptions}>
       <HomeStack.Screen name='HomeScreen' component={HomeScreen} options={{
-        headerLeft: () => <HeaderIcon iconName={'md-menu'} />,
-        headerRight: () => <HeaderIcon cart iconName={'md-cart'} />
-      }}/>
+        headerLeft: () => <HeaderIcon iconName='md-menu' />,
+        headerRight: () => <HeaderIcon cart iconName='md-cart' />
+      }}
+      />
       <HomeStack.Screen name='Cart' component={CartScreen} />
       <HomeStack.Screen name='CreateProduct' component={CreateProductScreen} />
       <HomeStack.Screen name='UserInformation' component={UserInformationStack} />

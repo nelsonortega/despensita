@@ -17,7 +17,7 @@ const SearchInput = props => {
     if (text.trim().length === 0) {
       dispatch(ProductActions.filterProducts(products))
     } else {
-      let filteredProducts = products.filter(product => product.title.toLowerCase().includes(text.toLowerCase()))
+      const filteredProducts = products.filter(product => product.title.toLowerCase().includes(text.toLowerCase()))
       dispatch(ProductActions.filterProducts(filteredProducts))
     }
   }

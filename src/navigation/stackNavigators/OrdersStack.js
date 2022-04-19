@@ -15,15 +15,15 @@ const OrdersStack = () => {
       {isUserLoggedIn ?
         <>
           <OrdersStack.Screen name='OrdersScreen' component={OrdersScreen} options={{
-            headerLeft: () => <HeaderIcon iconName={'md-menu'} />
+            headerLeft: () => <HeaderIcon iconName='md-menu' />
           }} />
           <OrdersStack.Screen name='OrderDetail' component={OrderDetailScreen} />
         </>
         :
         <OrdersStack.Screen name='Authentication' component={AuthenticationScreen} options={{
-          headerLeft: () => <HeaderIcon iconName={'md-menu'} />
+          headerLeft: () => <HeaderIcon iconName='md-menu' />
         }} />
-      }      
+      }
     </OrdersStack.Navigator>
   )
 }

@@ -9,9 +9,9 @@ const OrdersScreen = props => {
   const dispatch = useDispatch()
 
   const auth = useSelector(state => state.auth)
-  const orders = auth.isUserAdmin ? 
-    useSelector(state => state.orders.orders.filter(order => order.state !== '4')) :
-    useSelector(state => state.orders.orders.filter(order => order.state !== '4' && order.clientData.userId === auth.userId))
+  const orders = auth.isUserAdmin
+    ? useSelector(state => state.orders.orders.filter(order => order.state !== '4'))
+    : useSelector(state => state.orders.orders.filter(order => order.state !== '4' && order.clientData.userId === auth.userId))
 
   const [error, setError] = useState()
   const [loading, setLoading] = useState(false)
@@ -29,7 +29,7 @@ const OrdersScreen = props => {
     setRefreshing(false)
     setLoading(false)
   }, [dispatch, setError, setRefreshing])
-  
+
   useEffect(() => {
     loadOrders()
   }, [])
@@ -37,7 +37,7 @@ const OrdersScreen = props => {
   const renderOrderItem = orderItem => {
     return <OrderItem order={orderItem.item} navigation={props.navigation} />
   }
-  
+
   return (
     <View style={styles.screen}>
       <FlatList
@@ -51,9 +51,9 @@ const OrdersScreen = props => {
         renderItem={renderOrderItem}
         style={styles.list}
       />
-      {orders.length === 0 && !error && !loading ? 
-        <View style={styles.center}> 
-          <CustomText bold>No hay órdenes pendientes</CustomText> 
+      {orders.length === 0 && !error && !loading ?
+        <View style={styles.center}>
+          <CustomText bold>No hay órdenes pendientes</CustomText>
         </View> : <></>
       }
     </View>
@@ -79,6 +79,6 @@ const styles = StyleSheet.create({
   list: {
     width: '100%'
   }
-}) 
+})
 
 export default OrdersScreen

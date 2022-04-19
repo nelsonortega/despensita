@@ -22,7 +22,7 @@ const UpdateUserScreen = props => {
         direction: direction
       }))
 
-      Alert.alert('Éxito', 'Campos actualizados correctamente', [{text: 'Ok'}])
+      Alert.alert('Éxito', 'Campos actualizados correctamente', [{ text: 'Ok' }])
     }
   }
 
@@ -45,13 +45,13 @@ const UpdateUserScreen = props => {
 
   const validateInputs = () => {
     if (name.trim().length < 10) {
-      Alert.alert('Campos requeridos', 'El nombre ingresado es muy corto', [{text: 'Ok'}])
+      Alert.alert('Campos requeridos', 'El nombre ingresado es muy corto', [{ text: 'Ok' }])
       return false
     } else if (phone.trim().length !== 8) {
-      Alert.alert('Campos requeridos', 'Teléfono inválido', [{text: 'Ok'}])
+      Alert.alert('Campos requeridos', 'Teléfono inválido', [{ text: 'Ok' }])
       return false
     } else if (direction.trim().length < 20) {
-      Alert.alert('Campos requeridos', 'La dirección ingresada es muy corta', [{text: 'Ok'}])
+      Alert.alert('Campos requeridos', 'La dirección ingresada es muy corta', [{ text: 'Ok' }])
       return false
     } else {
       return true
@@ -61,27 +61,27 @@ const UpdateUserScreen = props => {
   return (
     <View style={styles.screen}>
       <View style={styles.formContainer}>
-        <CustomInput 
-          placeholder='Nombre' 
-          placeholderTextColor='grey' 
-          value={name} 
+        <CustomInput
+          placeholder='Nombre'
+          placeholderTextColor='grey'
+          value={name}
           onChangeText={text => setName(text)}
         />
-        <CustomInput 
-          placeholder='Teléfono' 
-          placeholderTextColor='grey' 
-          value={phone} 
+        <CustomInput
+          placeholder='Teléfono'
+          placeholderTextColor='grey'
+          value={phone}
           keyboardType='numeric'
           onChangeText={text => setPhone(text.replace(/[^0-9]/g, ''))}
         />
-        <CustomInput 
-          placeholder='Dirección' 
-          placeholderTextColor='grey' 
-          value={direction} 
+        <CustomInput
+          placeholder='Dirección'
+          placeholderTextColor='grey'
+          value={direction}
           onChangeText={text => setDirection(text)}
         />
-      </View> 
-      <View style={styles.loginContainer}> 
+      </View>
+      <View style={styles.loginContainer}>
         <TouchableOpacity style={styles.loginContainer} onPress={confirmOrder}>
           <Button style={styles.loginButton} mode='contained' onPress={confirmOrder} color={Colors.primary} dark uppercase={false}>
             <CustomText>Actualizar Información</CustomText>
@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Colors.primary
   }
-}) 
+})
 
 export default UpdateUserScreen

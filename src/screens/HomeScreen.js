@@ -49,8 +49,9 @@ const HomeScreen = props => {
     props.navigation.navigate('CreateProduct')
   }
 
-  if (loading)
+  if (loading) {
     return <CustomActivityIndicator />
+  }
 
   const renderGridItem = productItem => {
     return <Product productItem={productItem} />
@@ -62,7 +63,7 @@ const HomeScreen = props => {
         <CustomText bold style={styles.text}>Error al cargar los productos</CustomText>
         <Button title='Intentar de nuevo' color={Colors.primary} onPress={loadProductsError} />
       </View>
-    )  
+    )
   }
 
   return (
@@ -76,10 +77,10 @@ const HomeScreen = props => {
         renderItem={renderGridItem}
         style={styles.screen}
       />
-      {products.length === 0 && !error ? 
-        <View style={styles.center}> 
-          <CustomText bold style={styles.text}>No hay productos registrados</CustomText> 
-        </View> : 
+      {products.length === 0 && !error ?
+        <View style={styles.center}>
+          <CustomText bold style={styles.text}>No hay productos registrados</CustomText>
+        </View> :
         <View />
       }
     </View>
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     marginTop: '50%',
     alignItems: 'center'
   },
-  text:{
+  text: {
     fontSize: 16,
     marginTop: 50,
     marginBottom: 10
@@ -100,6 +101,6 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: 'white'
   }
-}) 
+})
 
 export default HomeScreen

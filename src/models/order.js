@@ -1,5 +1,5 @@
 class Order {
-  constructor(id, products, clientData, state) {
+  constructor (id, products, clientData, state) {
     this.id = id
     this.products = products
     this.clientData = clientData

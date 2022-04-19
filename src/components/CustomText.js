@@ -1,9 +1,9 @@
 import { StyleSheet, Text } from 'react-native'
 
 const CustomText = props => {
-  const fontStyle = !props.bold ? 
-    {...styles.customFont, ...props.style } :
-    {...styles.customFontBold, ...props.style }
+  const fontStyle = !props.bold
+    ? { ...styles.customFont, ...props.style }
+    : { ...styles.customFontBold, ...props.style }
 
   return (
     <Text {...props} style={fontStyle}>

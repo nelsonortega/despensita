@@ -1,7 +1,7 @@
 import { firebaseAuth } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
-export async function loginUser(email, password) {
+export async function loginUser (email, password) {
   let loginResponse = {
     success: false,
     errorMessage: '',
@@ -11,7 +11,7 @@ export async function loginUser(email, password) {
   try {
     loginResponse.userResponse = await signInWithEmailAndPassword(firebaseAuth, email, password)
     loginResponse.success = true
-    
+
     return loginResponse
   } catch (error) {
     loginResponse.errorMessage = error.message
@@ -19,7 +19,7 @@ export async function loginUser(email, password) {
   }
 }
 
-export async function registerUser(email, password) {
+export async function registerUser (email, password) {
   let registerResponse = {
     success: false,
     errorMessage: '',
@@ -29,7 +29,7 @@ export async function registerUser(email, password) {
   try {
     registerResponse.userResponse = await createUserWithEmailAndPassword(firebaseAuth, email, password)
     registerResponse.success = true
-    
+
     return registerResponse
   } catch (error) {
     registerResponse.errorMessage = error.message
@@ -37,7 +37,7 @@ export async function registerUser(email, password) {
   }
 }
 
-export async function logoutUser() {
+export async function logoutUser () {
   try {
     await signOut(firebaseAuth)
   } catch (error) {
@@ -45,6 +45,6 @@ export async function logoutUser() {
   }
 }
 
-export async function isUserAdmin() {
-  //TO DO
+export async function isUserAdmin () {
+  // TO DO
 }

@@ -5,9 +5,9 @@ const ProductItem = props => {
   return (
     <View style={styles.productContainer}>
       <View style={styles.container}>
-        <Image 
+        <Image
           style={styles.productImage}
-          source={{uri: props.product.img}}
+          source={{ uri: props.product.img }}
         />
         <CustomText style={styles.text}>{props.product.title}</CustomText>
       </View>
@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: 50,
-    height: 50, 
+    height: 50,
     borderRadius: 7,
     marginRight: 10
   },
   text: {
     fontSize: 16
   }
-}) 
+})
 
 export default ProductItem

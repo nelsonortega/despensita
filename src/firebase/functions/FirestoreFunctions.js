@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc, getDocs, deleteDoc } from 'firebase/firestore'
 
-export async function createDocument(collection, newDocument) {
+export async function createDocument (collection, newDocument) {
   try {
     const documentRefId = doc(collection).id
     const documentRef = doc(collection, documentRefId)
@@ -18,17 +18,17 @@ export async function createDocument(collection, newDocument) {
   }
 }
 
-export async function getDocument(collection, documentId) {
+export async function getDocument (collection, documentId) {
   try {
     const document = await getDoc(doc(collection, documentId))
-   
+
     return document.data()
   } catch (error) {
     console.log(error)
   }
 }
 
-export async function updateDocument(collection, documentId, newDocument) {
+export async function updateDocument (collection, documentId, newDocument) {
   try {
     const documentRef = doc(collection, documentId)
     const document = await getDoc(documentRef)
@@ -36,9 +36,9 @@ export async function updateDocument(collection, documentId, newDocument) {
     if (!document.exists()) {
       return undefined
     }
-    
+
     await setDoc(documentRef, newDocument, { merge: true })
-    
+
     return {
       ...document.data(),
       ...newDocument
@@ -48,7 +48,7 @@ export async function updateDocument(collection, documentId, newDocument) {
   }
 }
 
-export async function deleteDocument(collection, documentId) {
+export async function deleteDocument (collection, documentId) {
   try {
     const documentRef = doc(collection, documentId)
     await deleteDoc(documentRef)
@@ -59,7 +59,7 @@ export async function deleteDocument(collection, documentId) {
   }
 }
 
-export async function getAllDocuments(collection) {
+export async function getAllDocuments (collection) {
   let documents = []
 
   try {
