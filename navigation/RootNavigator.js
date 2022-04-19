@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import useLogin from '../hooks/useLogin'
 import SideMenu from '../components/SideMenu'
 import HomeStack from './stackNavigators/HomeStack'
@@ -13,13 +12,9 @@ import { drawerAboutUsOptions, drawerContactOptions, drawerHomeOptions, drawerOr
 
 const RootNavigator = () => {
   const Drawer = createDrawerNavigator()
-  const [tryLogin, loading] = useLogin()
+  const [loading] = useLogin()
 
-  useEffect(() => {
-    tryLogin()
-  }, [])
-
-  if (loading) {
+   if (loading) {
     return <CustomActivityIndicator />
   }
 

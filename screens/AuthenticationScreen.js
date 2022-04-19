@@ -1,14 +1,12 @@
 import Colors from '../constants/Colors'
-import { useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
-import * as AuthActions from '../store/actions/AuthActions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { loginUser, registerUser } from '../firebase/controllers/FirebaseFunctions'
 import { StyleSheet, View, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
 
 const AuthenticationScreen = props => {
-  const dispatch = useDispatch()
   const [error, setError] = useState()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,35 +20,46 @@ const AuthenticationScreen = props => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Ocurrió un error', error, [{text: 'Ok'}])
+      Alert.alert('Ocurrió un error', error, [{text: 'Ok', onPress: () => setError(null)}])
     }
   }, [error])
 
+  const validateRegister = () => {
+    if (password.length < 6) {
+      return 'La contraseña debe tener al menos 6 caracteres'
+    } else if (password !== confirmPassword) {
+      return 'Las contraseñas no coinciden'
+    }
+
+    return ''
+  }
+
   const login = async () => {
     setLoading(true)
-    setError(null)
-    try {
-      dispatch(AuthActions.authenticate(email, password, true))
-    } catch (error) {
-      setError(error.message)
+
+    const response = await loginUser(email, password)
+
+    if (!response.success) {
+      setError(response.errorMessage)
       setLoading(false)
     }
   }
 
   const register = async () => {
-    if (password.length < 6) {
-      Alert.alert('Error', 'La contraseña debe tener al menos 6 caracteres', [{text: 'Ok'}])
-    } else if (password !== confirmPassword) {
-      Alert.alert('Error', 'Las contraseñas no coinciden', [{text: 'Ok'}])
-    } else {
-      setLoading(true)
-      setError(null)
-      try {
-        dispatch(AuthActions.authenticate(email, password, false))
-      } catch (error) {
-        setError(error.message)
-        setLoading(false)
-      }
+    const validationError = validateRegister()
+
+    if (validationError) {
+      Alert.alert('Error', validationError, [{text: 'Ok'}])
+      return
+    }
+
+    setLoading(true)
+
+    const response = await registerUser(email, password)
+
+    if (!response.success) {
+      setError(response.errorMessage)
+      setLoading(false)
     }
   }
 

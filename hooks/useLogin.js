@@ -1,35 +1,37 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { onAuthStateChanged } from 'firebase/auth'
+import { firebaseAuth } from '../firebase/firebase'
 import * as AuthActions from '../store/actions/AuthActions'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getAllDocuments } from '../firebase/FirestoreActions'
+import { userCollection } from '../firebase/FirestoreCollections'
 
 const useLogin = () => {
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  const tryLogin = async () => {
-    setLoading(true)
-    const userData = await AsyncStorage.getItem('userData')
+  const authenticateUser = async (user) => {
+    const adminUsersResponse = await getAllDocuments(userCollection)
+    const isUserAdmin = adminUsersResponse.find(userAdmin => userAdmin.userid === user.uid)
 
-    if (!userData) {
-      setLoading(false)
-      return
-    }
-
-    const transformedData = JSON.parse(userData)
-    const { token, userId, expiryDate, isUserAdmin } = transformedData
-    const expirationDate = new Date(expiryDate)
-
-    if (expirationDate <= new Date() || !token || !userId) {
-      setLoading(false)
-      return
-    }
-
-    dispatch(AuthActions.autoAuthenticate(userId, token, isUserAdmin))
-    setLoading(false)
+    dispatch(AuthActions.autoAuthenticate(user.uid, user.stsTokenManager.accessToken, isUserAdmin !== undefined))
   }
 
-  return [tryLogin, loading]
+  const logoutUser = () => {
+    dispatch(AuthActions.logout())
+  }
+
+  onAuthStateChanged(firebaseAuth, async (user) => {
+    if (user) {
+      await authenticateUser(user)
+    } else {
+      logoutUser()
+    }
+
+    setLoading(false)
+  })
+
+  return [loading]
 }
 
 export default useLogin

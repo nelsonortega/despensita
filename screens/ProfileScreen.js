@@ -1,16 +1,15 @@
 import Colors from '../constants/Colors'
+import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
 import CustomText from '../components/CustomText'
 import HeaderIcon from '../components/HeaderIcon'
 import { useState, useEffect, Fragment } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { View, StyleSheet, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import * as AuthActions from '../store/actions/AuthActions'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { logoutUser } from '../firebase/controllers/FirebaseFunctions'
 
 const ProfileScreen = props => {
-  const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
 
   const [name, setName] = useState('')
@@ -36,15 +35,21 @@ const ProfileScreen = props => {
     return focus
   }, [getUserData])
 
-  const logout = () => {
+  const logout = async () => {
+    const response = await logoutUser()
+
+    if (response) {
+      Alert.alert('Error', 'Hubo un error', [{text: 'Ok'}])
+    }
+  }
+
+  const logoutAlert = () => {
     Alert.alert(
       'Atención',
       'Desea cerrar su sesión?',
       [
         { text: 'Cancelar', style: 'cancel' },
-        { text: 'Sí', onPress: () => {
-          dispatch(AuthActions.logout())
-        }}
+        { text: 'Sí', onPress: logout}
       ]
     )
   }
@@ -73,7 +78,7 @@ const ProfileScreen = props => {
             </Button>
           </View>
         </View>
-        <Button style={styles.buttonContainer} mode='contained' onPress={logout} color={Colors.primary} dark uppercase={false}>
+        <Button style={styles.buttonContainer} mode='contained' onPress={logoutAlert} color={Colors.primary} dark uppercase={false}>
           <CustomText>Cerrar Sesión</CustomText>
         </Button>
       </View>
