@@ -4,12 +4,12 @@ import ReduxThunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import AppLoading from 'expo-app-loading'
 import { StatusBar } from 'expo-status-bar'
-import RootNavigator from './navigation/RootNavigator'
-import AuthReducer from './store/reducers/AuthReducer'
-import DataReducer from './store/reducers/DataReducer'
-import OrderReducer from './store/reducers/OrderReducer'
-import ProductReducer from './store/reducers/ProductReducer'
+import AuthReducer from './src/store/reducers/AuthReducer'
+import DataReducer from './src/store/reducers/DataReducer'
+import RootNavigator from './src/navigation/RootNavigator'
+import OrderReducer from './src/store/reducers/OrderReducer'
 import { Provider as PaperProvider } from 'react-native-paper'
+import ProductReducer from './src/store/reducers/ProductReducer'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 const rootReducer = combineReducers({
@@ -26,8 +26,8 @@ const App = () => {
 
   const fetchFonts = () => {
     return Font.loadAsync({
-      'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-      'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+      'open-sans': require('./src/assets/fonts/OpenSans-Regular.ttf'),
+      'open-sans-bold': require('./src/assets/fonts/OpenSans-Bold.ttf')
     })
   }
 
