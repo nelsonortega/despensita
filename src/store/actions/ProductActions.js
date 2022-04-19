@@ -1,6 +1,6 @@
 import Product from '../../models/product'
 import { productCollection } from '../../firebase/FirestoreCollections'
-import { createDocument, getAllDocuments, deleteDocument } from '../../firebase/FirestoreFunctions'
+import { createDocument, getAllDocuments, deleteDocument } from '../../firebase/functions/FirestoreFunctions'
 
 export const ADD_CART = 'ADD_CART'
 export const EDIT_CART = 'EDIT_CART'
