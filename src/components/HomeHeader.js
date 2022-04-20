@@ -11,12 +11,17 @@ const HomeHeader = props => {
   return (
     <View>
       <SearchInput />
-      {isUserAdmin ?
-        <Button style={styles.button} mode='contained' onPress={props.createProduct} color={Colors.primary} dark uppercase={false}>
+      {isUserAdmin &&
+        <Button
+          dark
+          mode='contained'
+          uppercase={false}
+          style={styles.button}
+          color={Colors.primary}
+          onPress={props.handleCreateProduct}
+        >
           <CustomText>Crear Producto</CustomText>
-        </Button>
-        : <></>
-      }
+        </Button>}
     </View>
   )
 }

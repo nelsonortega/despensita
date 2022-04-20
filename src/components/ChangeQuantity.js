@@ -9,19 +9,19 @@ const ChangeQuantity = props => {
     <View style={styles.modalBackground}>
       <View style={styles.modal}>
         <View style={styles.quantityContainer}>
-          <TouchableOpacity style={styles.circleButton} onPress={props.lessQuantity}>
+          <TouchableOpacity style={styles.circleButton} onPress={props.handleLessQuantity}>
             <CustomText style={styles.minusIcon}>-</CustomText>
           </TouchableOpacity>
           <CustomText bold style={styles.quantityText}>{props.quantity}</CustomText>
-          <TouchableOpacity style={styles.circleButton} onPress={props.moreQuantity}>
-            <Ionicons size={30} color='white' name='md-add'/>
+          <TouchableOpacity style={styles.circleButton} onPress={props.handleMoreQuantity}>
+            <Ionicons size={30} color='white' name='md-add' />
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <Button color={Colors.primary} onPress={props.addItemToCart}>
+          <Button color={Colors.primary} onPress={props.handleAddItemToCart}>
             <CustomText bold>Agregar</CustomText>
           </Button>
-          <Button color={Colors.primary} onPress={props.closeModal}>
+          <Button color={Colors.primary} onPress={props.handleCloseModal}>
             <CustomText bold>Cancelar</CustomText>
           </Button>
         </View>

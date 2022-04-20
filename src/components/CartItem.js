@@ -64,11 +64,11 @@ const CartItem = props => {
       <View style={styles.lineSeparator} />
       <Modal visible={modalVisible} animationType='fade' transparent>
         <ChangeQuantity
-          lessQuantity={lessQuantity}
-          moreQuantity={moreQuantity}
-          closeModal={closeModal}
+          handleLessQuantity={lessQuantity}
+          handleMoreQuantity={moreQuantity}
+          handleCloseModal={closeModal}
           quantity={quantity}
-          addItemToCart={editCartItem}
+          handleAddItemToCart={editCartItem}
         />
       </Modal>
     </View>

@@ -71,7 +71,7 @@ const HomeScreen = props => {
       <FlatList
         onRefresh={loadProducts}
         refreshing={refreshing}
-        ListHeaderComponent={<HomeHeader createProduct={createProduct} />}
+        ListHeaderComponent={<HomeHeader handleCreateProduct={createProduct} />}
         keyExtractor={item => item.id}
         data={products}
         renderItem={renderGridItem}

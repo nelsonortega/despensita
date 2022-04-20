@@ -12,7 +12,7 @@ const OrderItem = props => {
 
   useEffect(() => {
     let totalPrice = 0
-    props.order.products.map(product => {
+    props.order.products.forEach(product => {
       totalPrice = totalPrice + (parseInt(product.price) * product.quantity)
     })
     setTotal(totalPrice)
@@ -36,15 +36,13 @@ const OrderItem = props => {
         />
         <View>
           <CustomText bold>
-            {props.order.clientData.name.length > 15 ? 
-              props.order.clientData.name.substr(0, 15-1) + '...' :
-              props.order.clientData.name
-            }
+            {props.order.clientData.name.length > 15
+              ? props.order.clientData.name.substr(0, 15 - 1) + '...'
+              : props.order.clientData.name}
           </CustomText>
           <CustomText bold>₡{total}</CustomText>
-          {props.order.clientData.express === 1 ? 
-            <CustomText bold>Express</CustomText> : <></>
-          }
+          {props.order.clientData.express === 1 &&
+            <CustomText bold>Express</CustomText>}
         </View>
       </View>
       <View style={styles.container}>

@@ -61,7 +61,7 @@ const Product = props => {
     <View style={styles.container}>
       <Card>
         <Card.Cover source={{ uri: props.productItem.item.img }} />
-        <Card.Content style={{marginTop: 10, display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
+        <Card.Content style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
           <View>
             <Title>
               <CustomText bold>{props.productItem.item.title}</CustomText>
@@ -70,21 +70,17 @@ const Product = props => {
               <CustomText numberOfLines={2} style={styles.description}>{props.productItem.item.description}</CustomText>
             </Paragraph>
             <Paragraph>
-              {props.productItem.item.price === '0' ?
-                <CustomText bold style={styles.free}>Gratis</CustomText> :
-                <CustomText bold>₡{props.productItem.item.price}</CustomText>
-              }
+              {props.productItem.item.price === '0'
+                ? <CustomText bold style={styles.free}>Gratis</CustomText>
+                : <CustomText bold>₡{props.productItem.item.price}</CustomText>}
             </Paragraph>
           </View>
 
           <View style={styles.actionButtons}>
-            {isUserAdmin ?
-              <Button style={styles.deleteButton} mode='contained' onPress={() => deleteProduct(props.productItem.item.id)} color={'red'} dark uppercase={false}>
+            {isUserAdmin &&
+              <Button style={styles.deleteButton} mode='contained' onPress={() => deleteProduct(props.productItem.item.id)} color='red' dark uppercase={false}>
                 <Icon name='trash-o' size={28} />
-              </Button>
-              : <></>
-            }
-
+              </Button>}
             <Button mode='contained' onPress={openModal} color={Colors.primary} dark uppercase={false}>
               <Ionicons size={30} color='white' name='md-add' style={styles.icon} />
             </Button>
@@ -94,11 +90,11 @@ const Product = props => {
 
       <Modal visible={modalVisible} animationType='fade' transparent>
         <ChangeQuantity
-          lessQuantity={lessQuantity}
-          moreQuantity={moreQuantity}
-          closeModal={closeModal}
+          handleLessQuantity={lessQuantity}
+          handleMoreQuantity={moreQuantity}
+          handleCloseModal={closeModal}
           quantity={quantity}
-          addItemToCart={addItemToCart}
+          handleAddItemToCart={addItemToCart}
         />
       </Modal>
     </View>
