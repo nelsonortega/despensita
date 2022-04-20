@@ -1,5 +1,4 @@
 import Colors from '../constants/Colors'
-import { useState, useEffect } from 'react'
 import CartItem from '../components/CartItem'
 import CustomText from '../components/CustomText'
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,25 +8,11 @@ import { View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-nativ
 const CartScreen = props => {
   const dispatch = useDispatch()
 
-  const [total, setTotal] = useState(0)
-
   const cart = useSelector(state => state.products.cart)
   const totalPrice = useSelector(state => state.products.totalPrice)
 
-  useEffect(() => {
-    let totalPrice = 0
-    if (cart.length !== 0) {
-      cart.map(product => {
-        totalPrice = totalPrice + (parseInt(product.price) * product.quantity)
-      })
-    }
-    setTotal(totalPrice)
-  }, [])
-
   const deleteCartItem = id => {
     dispatch(ProductActions.deleteItemFromCart(id))
-    const product = cart.filter(product => product.id === id)
-    setTotal(total - (parseInt(product[0].price) * product[0].quantity))
   }
 
   const editCartItem = async (id, quantity) => {
@@ -56,18 +41,18 @@ const CartScreen = props => {
             <CustomText bold style={styles.totalText}>₡{totalPrice}</CustomText>
           </View>
         </View>
-        {cart.length === 0 ? 
+        {cart.length === 0 &&
           <View style={{ marginTop: '50%' }}>
             <CustomText bold style={styles.emptyCart}>No has añadido productos al carrito</CustomText>
-          </View> :
+          </View>}
+        {cart.length !== 0 &&
           <View style={styles.ListContainer}>
             <FlatList
               keyExtractor={item => item.id}
               data={cart}
               renderItem={renderCartItem}
             />
-          </View>
-        }
+          </View>}
       </View>
       <TouchableOpacity style={styles.buttonContainer} onPress={continueOrder}>
         <View style={styles.button}>

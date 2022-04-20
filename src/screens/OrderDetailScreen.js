@@ -19,7 +19,7 @@ const OrderDetailScreen = props => {
 
   useEffect(() => {
     let total = 0
-    order.products.map(product => {
+    order.products.forEach(product => {
       total = total + (parseInt(product.price) * product.quantity)
     })
     setTotalPrice(total)
@@ -56,15 +56,14 @@ const OrderDetailScreen = props => {
         <CustomText style={styles.clientText}>Nombre: {order.clientData.name}</CustomText>
         <CustomText style={styles.clientText}>Teléfono: {order.clientData.phone}</CustomText>
         <CustomText style={styles.clientText}>Notas: {order.clientData.notes}</CustomText>
-        {order.clientData.express === 1 ?
-          <CustomText style={styles.clientText}>Dirección: {order.clientData.direction}</CustomText> : <></>
-        }
+        {order.clientData.express === 1 &&
+          <CustomText style={styles.clientText}>Dirección: {order.clientData.direction}</CustomText>}
       </View>
       <View>
         <CustomText bold style={styles.title}>Productos</CustomText>
         {productsList}
       </View>
-      {isUserAdmin ?
+      {isUserAdmin &&
         <>
           <CustomText bold style={styles.title}>Actualizar estado</CustomText>
           <View style={styles.pickerContainer}>
@@ -76,9 +75,7 @@ const OrderDetailScreen = props => {
               {pickerList}
             </Picker>
           </View>
-        </> : <></>
-      }
-
+        </>}
     </ScrollView>
   )
 }

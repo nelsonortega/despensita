@@ -2,7 +2,7 @@ import { firebaseAuth } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export async function loginUser (email, password) {
-  let loginResponse = {
+  const loginResponse = {
     success: false,
     errorMessage: '',
     userResponse: {}
@@ -20,7 +20,7 @@ export async function loginUser (email, password) {
 }
 
 export async function registerUser (email, password) {
-  let registerResponse = {
+  const registerResponse = {
     success: false,
     errorMessage: '',
     userResponse: {}

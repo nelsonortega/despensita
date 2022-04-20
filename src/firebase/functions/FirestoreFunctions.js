@@ -60,7 +60,7 @@ export async function deleteDocument (collection, documentId) {
 }
 
 export async function getAllDocuments (collection) {
-  let documents = []
+  const documents = []
 
   try {
     const documentsFetched = await getDocs(collection)

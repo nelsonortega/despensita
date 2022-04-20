@@ -77,20 +77,17 @@ const HomeScreen = props => {
         renderItem={renderGridItem}
         style={styles.screen}
       />
-      {products.length === 0 && !error ?
+      {products.length === 0 && !error &&
         <View style={styles.center}>
           <CustomText bold style={styles.text}>No hay productos registrados</CustomText>
-        </View> :
-        <View />
-      }
+        </View>}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   center: {
-    flex: 1,
-    marginTop: '50%',
+    marginTop: '40%',
     alignItems: 'center'
   },
   text: {

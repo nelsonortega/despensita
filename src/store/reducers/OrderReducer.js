@@ -18,8 +18,8 @@ const OrderReducer = (state = initialState, action) => {
         ...state,
         orderCreated: true
       }
-    case UPDATE_ORDER:
-      let updatedOrders = state.orders.map(order => {
+    case UPDATE_ORDER: {
+      const updatedOrders = state.orders.map(order => {
         if (order.id === action.updatedOrder.id) {
           return new OrderItem(
             action.updatedOrder.id,
@@ -31,10 +31,12 @@ const OrderReducer = (state = initialState, action) => {
           return order
         }
       })
+
       return {
         ...state,
         orders: updatedOrders
       }
+    }
     case FINISH_ORDER:
       return {
         ...state,

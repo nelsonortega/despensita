@@ -51,11 +51,10 @@ const OrdersScreen = props => {
         renderItem={renderOrderItem}
         style={styles.list}
       />
-      {orders.length === 0 && !error && !loading ?
+      {orders.length === 0 && !error && !loading &&
         <View style={styles.center}>
           <CustomText bold>No hay órdenes pendientes</CustomText>
-        </View> : <></>
-      }
+        </View>}
     </View>
   )
 }

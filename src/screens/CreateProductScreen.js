@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 import CustomText from '../components/CustomText'
-import HeaderIcon from '../components/HeaderIcon'
 import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { firestoreStorage } from '../firebase/firebase'
@@ -74,22 +73,22 @@ const CreateProductScreen = props => {
   const createProduct = async () => {
     if (validateInputs()) {
       return
-    } else {
-      setError(null)
-      setLoading(true)
-      try {
-        await uploadImage(image)
-        setLoading(false)
-        Alert.alert(
-          'Éxito', 'Producto añadido correctamente', [
-            { text: 'Agregar otro', onPress: addOtherProduct },
-            { text: 'Volver a Inicio', onPress: () => { props.navigation.popToTop() } }
-          ]
-        )
-      } catch (error) {
-        setError(error.message)
-        setLoading(false)
-      }
+    }
+
+    setError(null)
+    setLoading(true)
+    try {
+      await uploadImage(image)
+      setLoading(false)
+      Alert.alert(
+        'Éxito', 'Producto añadido correctamente', [
+          { text: 'Agregar otro', onPress: addOtherProduct },
+          { text: 'Volver a Inicio', onPress: () => { props.navigation.popToTop() } }
+        ]
+      )
+    } catch (error) {
+      setError(error.message)
+      setLoading(false)
     }
   }
 
@@ -113,7 +112,7 @@ const CreateProductScreen = props => {
   }
 
   const openCamera = async value => {
-    let imagePickerOptions = {
+    const imagePickerOptions = {
       allowsEditing: true,
       aspect: [16, 9],
       quality: 0.5
@@ -178,25 +177,23 @@ const CreateProductScreen = props => {
         </View>
       </View>
       <CustomText style={styles.imageText}>Añade una imagen</CustomText>
-
-      {image.length > 0 ?
+      {image.length > 0 &&
         <TouchableOpacity onPress={changeImage}>
           <Image source={{ uri: image }} style={styles.image} />
-        </TouchableOpacity>
-        : (
+        </TouchableOpacity>}
+      {image.length <= 0 &&
         <TouchableOpacity onPress={addImage}>
           <View style={styles.addImageButton}>
             <Ionicons size={35} color='grey' name='md-add' />
           </View>
-        </TouchableOpacity>
-      )}
-      {loading ? <CustomActivityIndicator small /> : (
+        </TouchableOpacity>}
+      {loading && <CustomActivityIndicator small />}
+      {!loading &&
         <TouchableOpacity style={styles.buttonContainer} onPress={createProduct}>
           <View style={styles.button}>
             <CustomText style={styles.buttonText}>Crear Producto</CustomText>
           </View>
-        </TouchableOpacity>
-      )}
+        </TouchableOpacity>}
     </ScrollView>
   )
 }

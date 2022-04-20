@@ -40,7 +40,10 @@
     "standard": "^16.0.4"
   },
   "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json"
+    "extends": "./node_modules/standard/eslintrc.json",
+    "globals": { 
+      "fetch": false 
+    }
   },
   "private": true
 }

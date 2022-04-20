@@ -1,4 +1,5 @@
 import Colors from '../../constants/Colors'
+import HeaderIcon from '../../components/HeaderIcon'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export const screenOptions = {
@@ -53,4 +54,8 @@ export const drawerProfileOptions = {
   headerShown: false,
   drawerLabel: 'Perfil',
   drawerIcon: ({ color }) => <Icon name='user-o' size={20} color={color} />
+}
+
+export const headerIcon = {
+  headerLeft: () => <HeaderIcon iconName='md-menu' />
 }

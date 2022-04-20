@@ -80,16 +80,17 @@ const AuthenticationScreen = props => {
           value={password}
           onChangeText={text => setPassword(text.replace(/\s/g, ''))}
         />
-        {loginScreen ? <View /> : (
-          <CustomInput 
-            password
-            placeholder='Confirmar contraseña'
-            placeholderTextColor='grey'
-            value={confirmPassword}
-            onChangeText={text => setConfirmPassword(text.replace(/\s/g, ''))}
-          />
-        )}
-        {loading ? <CustomActivityIndicator small /> : (
+        {loginScreen
+          ? <View />
+          : <CustomInput
+              password
+              placeholder='Confirmar contraseña'
+              placeholderTextColor='grey'
+              value={confirmPassword}
+              onChangeText={text => setConfirmPassword(text.replace(/\s/g, ''))}
+            />}
+        {loading && <CustomActivityIndicator small />}
+        {!loading &&
           <View style={styles.loginContainer}>
             <TouchableOpacity style={styles.loginContainer} onPress={loginScreen ? login : register}>
               <View style={styles.loginButton}>
@@ -99,8 +100,7 @@ const AuthenticationScreen = props => {
             <TouchableOpacity style={styles.registerContainer} onPress={switchLoginRegisterScreen}>
               <CustomText>{loginScreen ? 'No tienes una cuenta?' : 'Ya tengo una cuenta'}</CustomText>
             </TouchableOpacity>
-          </View>
-        )}
+          </View>}
       </View>
     </KeyboardAvoidingView>
   )

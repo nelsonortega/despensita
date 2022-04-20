@@ -1,4 +1,3 @@
-import Product from '../../models/product'
 import CartItem from '../../models/cartItem'
 
 import { CREATE_PRODUCT, SET_PRODUTS, ADD_CART, UPDATE_CART, DELETE_CART, EDIT_CART, RESET_CART, FILTER_PRODUCTS, DELETE_PRODUCT } from '../actions/ProductActions'
@@ -30,53 +29,45 @@ const ProductReducer = (state = initialState, action) => {
         filteredProducts: action.filteredProducts
       }
     case CREATE_PRODUCT:
-      const newProduct = new Product(
-        action.productData.response,
-        action.productData.title,
-        action.productData.description,
-        action.productData.category,
-        action.productData.price,
-        action.productData.img
-      )
       return {
         ...state,
-        filteredProducts: [newProduct].concat(state.products),
-        products: [newProduct].concat(state.products)
+        filteredProducts: [action.productAdded, ...state.products],
+        products: [action.productAdded, ...state.products]
       }
     case ADD_CART:
-      const newItem = new CartItem(
-        action.product.id,
-        action.product.title,
-        action.product.quantity,
-        action.product.price,
-        action.product.img
-      )
       return {
         ...state,
         totalPrice: state.totalPrice + parseInt(action.product.price) * parseInt(action.product.quantity),
-        cart: [newItem].concat(state.cart)
+        cart: [new CartItem(
+          action.product.id,
+          action.product.title,
+          action.product.quantity,
+          action.product.price,
+          action.product.img
+        ), ...state.cart]
       }
-    case DELETE_CART:
-      let price = 0
-      let filteredCart = state.cart.filter(product => product.id !== action.product.id)
-      filteredCart.map(product => {
-        price = price + parseInt(product.price) * parseInt(product.quantity)
-      })
+    case DELETE_CART: {
+      const filteredCart = state.cart.filter(product => product.id !== action.product.id)
+      const price = filteredCart.reduce((acc, product) => {
+        return acc + parseInt(product.price) * parseInt(product.quantity)
+      }, 0)
       return {
         ...state,
         totalPrice: price,
         cart: filteredCart
       }
-    case DELETE_PRODUCT:
-      let filterProducts = state.products.filter(product => product.id !== action.id)
+    }
+    case DELETE_PRODUCT: {
+      const filterProducts = state.products.filter(product => product.id !== action.id)
       return {
         ...state,
         products: filterProducts,
         filteredProducts: filterProducts
       }
-    case EDIT_CART:
+    }
+    case EDIT_CART: {
       let priceEdit = 0
-      let editedCart = state.cart.map(product => {
+      const editedCart = state.cart.map(product => {
         if (product.id === action.product.id) {
           return new CartItem(
             product.id,
@@ -85,12 +76,11 @@ const ProductReducer = (state = initialState, action) => {
             product.price,
             product.img
           )
-        }
-        else {
+        } else {
           return product
         }
       })
-      editedCart.map(product => {
+      editedCart.forEach(product => {
         priceEdit = priceEdit + parseInt(product.price) * parseInt(product.quantity)
       })
       return {
@@ -98,9 +88,10 @@ const ProductReducer = (state = initialState, action) => {
         totalPrice: priceEdit,
         cart: editedCart
       }
-    case UPDATE_CART:
+    }
+    case UPDATE_CART: {
       let priceUpdate = 0
-      let updatedCart = state.cart.map(product => {
+      const updatedCart = state.cart.map(product => {
         if (product.id === action.product.id) {
           return new CartItem(
             product.id,
@@ -109,12 +100,11 @@ const ProductReducer = (state = initialState, action) => {
             product.price,
             product.img
           )
-        }
-        else {
+        } else {
           return product
         }
       })
-      updatedCart.map(product => {
+      updatedCart.forEach(product => {
         priceUpdate = priceUpdate + parseInt(product.price) * parseInt(product.quantity)
       })
       return {
@@ -122,6 +112,7 @@ const ProductReducer = (state = initialState, action) => {
         totalPrice: priceUpdate,
         cart: updatedCart
       }
+    }
   }
   return state
 }

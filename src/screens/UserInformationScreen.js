@@ -112,14 +112,13 @@ const UserInformationScreen = props => {
             <Picker.Item label='No' value={2} />
           </Picker>
         </View>
-        {express === 1 ?
+        {express === 1 &&
           <CustomInput
             placeholder='Dirección'
             placeholderTextColor='grey'
             value={direction}
             onChangeText={text => setDirection(text)}
-          /> : <View/>
-        }
+          />}
       </View>
       <View style={styles.loginContainer}>
         <Button style={styles.loginButton} mode='contained' onPress={confirmOrder} color={Colors.primary} dark uppercase={false}>

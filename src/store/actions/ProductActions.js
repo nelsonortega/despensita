@@ -71,25 +71,21 @@ export const editItemFromCart = (id, quantity) => {
 
 export const fetchProducts = () => {
   return async dispatch => {
-    try {
-      const loadedProducts = []
-      const responseData = await getAllDocuments(productCollection)
+    const loadedProducts = []
+    const responseData = await getAllDocuments(productCollection)
 
-      responseData.forEach(product => {
-        loadedProducts.push(new Product(
-          product.id,
-          product.title,
-          product.description,
-          product.category,
-          product.price,
-          product.img
-        ))
-      })
+    responseData.forEach(product => {
+      loadedProducts.push(new Product(
+        product.id,
+        product.title,
+        product.description,
+        product.category,
+        product.price,
+        product.img
+      ))
+    })
 
-      dispatch ({ type: SET_PRODUTS, products: loadedProducts })
-    } catch (error) {
-      throw error
-    }
+    dispatch({ type: SET_PRODUTS, products: loadedProducts })
   }
 }
 
@@ -103,18 +99,18 @@ export const createProduct = (title, description, category, price, img) => {
       img: img
     }
 
-    const response = await createDocument(productCollection, newProduct)
+    const responseId = await createDocument(productCollection, newProduct)
 
     dispatch({
       type: CREATE_PRODUCT,
-      productData: {
-        response,
+      productAdded: new Product(
+        responseId,
         title,
         description,
         category,
         price,
         img
-      }
+      )
     })
   }
 }

@@ -11,10 +11,13 @@ const HomeStack = () => {
 
   return (
     <HomeStack.Navigator screenOptions={screenOptions}>
-      <HomeStack.Screen name='HomeScreen' component={HomeScreen} options={{
-        headerLeft: () => <HeaderIcon iconName='md-menu' />,
-        headerRight: () => <HeaderIcon cart iconName='md-cart' />
-      }}
+      <HomeStack.Screen
+        name='HomeScreen'
+        component={HomeScreen}
+        options={{
+          headerLeft: () => <HeaderIcon iconName='md-menu' />,
+          headerRight: () => <HeaderIcon cart iconName='md-cart' />
+        }}
       />
       <HomeStack.Screen name='Cart' component={CartScreen} />
       <HomeStack.Screen name='CreateProduct' component={CreateProductScreen} />
