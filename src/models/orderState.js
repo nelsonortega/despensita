@@ -1,8 +1,8 @@
-class State {
+class OrderState {
   constructor (id, name) {
     this.id = id
     this.name = name
   }
 }
 
-export default State
+export default OrderState

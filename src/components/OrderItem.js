@@ -1,12 +1,10 @@
 import CustomText from './CustomText'
-import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
+import { ORDER_STATES } from '../constants/OrderStates'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const OrderItem = props => {
-  const orderStates = useSelector(state => state.data.states)
-
   const [total, setTotal] = useState(0)
   const [orderState, setOrderState] = useState()
 
@@ -17,7 +15,7 @@ const OrderItem = props => {
     })
     setTotal(totalPrice)
 
-    const stateObject = orderStates.find(state => state.id === props.order.state.toString())
+    const stateObject = ORDER_STATES.find(state => state.id === props.order.state.toString())
     setOrderState(stateObject.name)
   }, [props.order])
 

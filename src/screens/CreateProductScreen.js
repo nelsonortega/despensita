@@ -6,6 +6,7 @@ import * as ImagePicker from 'expo-image-picker'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
+import { CATEGORIES } from '../constants/Categories'
 import { firestoreStorage } from '../firebase/firebase'
 import * as ProductActions from '../store/actions/ProductActions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
@@ -138,6 +139,10 @@ const CreateProductScreen = props => {
     )
   }
 
+  const pickerCategoryItems = CATEGORIES.map(category =>
+    <Picker.Item label={category.name} value={category.id} key={category.id} />
+  )
+
   return (
     <ScrollView style={styles.screen}>
       <CustomText style={styles.text}>Publicar un producto</CustomText>
@@ -167,12 +172,7 @@ const CreateProductScreen = props => {
             selectedValue={category}
             onValueChange={itemValue => setCategory(itemValue)}
           >
-            <Picker.Item label='Selecciona una categoría' value={0} />
-            <Picker.Item label='Alimentos' value={1} />
-            <Picker.Item label='Bebidas' value={2} />
-            <Picker.Item label='Higiene' value={3} />
-            <Picker.Item label='Mascotas' value={4} />
-
+            {pickerCategoryItems}
           </Picker>
         </View>
       </View>

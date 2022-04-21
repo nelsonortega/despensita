@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import AppLoading from 'expo-app-loading'
 import { StatusBar } from 'expo-status-bar'
 import AuthReducer from './src/store/reducers/AuthReducer'
-import DataReducer from './src/store/reducers/DataReducer'
 import RootNavigator from './src/navigation/RootNavigator'
 import OrderReducer from './src/store/reducers/OrderReducer'
 import { Provider as PaperProvider } from 'react-native-paper'
@@ -14,7 +13,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
-  data: DataReducer,
   orders: OrderReducer,
   products: ProductReducer
 })

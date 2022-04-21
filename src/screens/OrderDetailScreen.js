@@ -4,6 +4,7 @@ import CustomText from '../components/CustomText'
 import ProductItem from '../components/ProductItem'
 import { Picker } from '@react-native-picker/picker'
 import { useSelector, useDispatch } from 'react-redux'
+import { ORDER_STATES } from '../constants/OrderStates'
 import { View, StyleSheet, ScrollView } from 'react-native'
 import * as OrderActions from '../store/actions/OrderActions'
 
@@ -11,7 +12,6 @@ const OrderDetailScreen = props => {
   const dispatch = useDispatch()
 
   const { order } = props.route.params
-  const orderStates = useSelector(state => state.data.states)
   const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
 
   const [totalPrice, setTotalPrice] = useState(0)
@@ -25,7 +25,7 @@ const OrderDetailScreen = props => {
     setTotalPrice(total)
   }, [])
 
-  const pickerList = orderStates.map(state =>
+  const pickerList = ORDER_STATES.map(state =>
     <Picker.Item label={state.name} value={state.id} key={state.id} />
   )
 
