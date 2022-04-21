@@ -107,3 +107,26 @@ export async function getOrders (isUserAdmin, userId) {
     return ordersResponse
   }
 }
+
+export async function getProducts () {
+  const productsResponse = {
+    success: true,
+    products: []
+  }
+
+  try {
+    const documentsResponse = await getAllDocuments(productCollection)
+
+    if (!documentsResponse.success) {
+      productsResponse.success = false
+    } else {
+      productsResponse.products = documentsResponse.documents
+    }
+
+    return productsResponse
+  } catch (error) {
+    productsResponse.success = false
+
+    return productsResponse
+  }
+}

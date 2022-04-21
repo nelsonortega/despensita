@@ -1,11 +1,11 @@
-import Colors from '../constants/Colors'
 import Product from '../components/Product'
+import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import HomeHeader from '../components/HomeHeader'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect, useCallback } from 'react'
+import { View, StyleSheet, FlatList } from 'react-native'
 import * as ProductActions from '../store/actions/ProductActions'
-import { View, StyleSheet, Button, FlatList } from 'react-native'
+import { getProducts } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
 const HomeScreen = props => {
@@ -14,72 +14,68 @@ const HomeScreen = props => {
   const products = useSelector(state => state.products.filteredProducts)
 
   const [error, setError] = useState()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
 
-  const loadProducts = useCallback(async () => {
-    setLoading(true)
+  const loadProducts = async () => {
     setError(null)
-    setRefreshing(true)
-    try {
-      dispatch(ProductActions.fetchProducts())
-    } catch (error) {
-      setError(error.message)
-    }
-    setLoading(false)
-    setRefreshing(false)
-  }, [dispatch, setError, setRefreshing])
+    const productsResponse = await getProducts()
 
-  const loadProductsError = useCallback(async () => {
-    setError(null)
-    setLoading(true)
-    try {
-      dispatch(ProductActions.fetchProducts())
-    } catch (error) {
-      setError(error.message)
+    if (!productsResponse.success) {
+      setError('Error al cargar los productos')
     }
-    setLoading(false)
-  }, [dispatch, setError, setRefreshing])
+
+    if (productsResponse.success) {
+      dispatch(ProductActions.setProducts(productsResponse.products))
+    }
+  }
+
+  const loadProductsOnRefresh = async () => {
+    setRefreshing(true)
+    await loadProducts()
+    setRefreshing(false)
+  }
 
   useEffect(async () => {
-    loadProducts()
+    await loadProducts()
+    setLoading(false)
   }, [])
 
   const createProduct = () => {
     props.navigation.navigate('CreateProduct')
   }
 
-  if (loading) {
-    return <CustomActivityIndicator />
-  }
-
   const renderGridItem = productItem => {
     return <Product productItem={productItem} />
-  }
-
-  if (error) {
-    return (
-      <View style={styles.center}>
-        <CustomText bold style={styles.text}>Error al cargar los productos</CustomText>
-        <Button title='Intentar de nuevo' color={Colors.primary} onPress={loadProductsError} />
-      </View>
-    )
   }
 
   return (
     <View>
       <FlatList
-        onRefresh={loadProducts}
+        ListHeaderComponent={
+          <HomeHeader handleCreateProduct={createProduct} />
+        }
+        onRefresh={loadProductsOnRefresh}
         refreshing={refreshing}
-        ListHeaderComponent={<HomeHeader handleCreateProduct={createProduct} />}
         keyExtractor={item => item.id}
         data={products}
         renderItem={renderGridItem}
         style={styles.screen}
       />
-      {products.length === 0 && !error &&
+
+      {loading &&
+        <View style={styles.center}>
+          <CustomActivityIndicator small />
+        </View>}
+
+      {products.length === 0 && !error && !loading &&
         <View style={styles.center}>
           <CustomText bold style={styles.text}>No hay productos registrados</CustomText>
+        </View>}
+
+      {error &&
+        <View style={styles.center}>
+          <CustomText bold>{error}</CustomText>
         </View>}
     </View>
   )
