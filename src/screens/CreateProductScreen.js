@@ -7,10 +7,9 @@ import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { CATEGORIES } from '../constants/Categories'
-import { firestoreStorage } from '../firebase/firebase'
 import * as ProductActions from '../store/actions/ProductActions'
+import { uploadImage } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { View, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native'
 
 const CreateProductScreen = props => {
@@ -30,27 +29,9 @@ const CreateProductScreen = props => {
     }
   }, [error])
 
-  const uploadImage = async (uri) => {
-    const response = await fetch(uri)
-    const blob = await response.blob()
-
-    const storageRef = ref(firestoreStorage, 'images/' + Math.round(new Date().valueOf()).toString())
-    const uploadTask = uploadBytesResumable(storageRef, blob)
-
-    uploadTask.on('state_changed', (snapshot) => {
-      // const prog = Math.round(
-      //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      // )
-      // console.log(prog)
-    },
-    (err) => console.log(err),
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref)
-        .then(url => {
-          dispatch(ProductActions.createProduct(title, description, category, price, url))
-        })
-    }
-    )
+  const handleUploadImage = async (uri) => {
+    const imageUrl = await uploadImage(uri)
+    dispatch(ProductActions.createProduct(title, description, category, price, imageUrl))
   }
 
   const validateInputs = () => {
@@ -79,7 +60,7 @@ const CreateProductScreen = props => {
     setError(null)
     setLoading(true)
     try {
-      await uploadImage(image)
+      await handleUploadImage(image)
       setLoading(false)
       Alert.alert(
         'Éxito', 'Producto añadido correctamente', [

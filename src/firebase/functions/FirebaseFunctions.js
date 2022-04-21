@@ -1,4 +1,5 @@
-import { firebaseAuth } from '../firebase'
+import { firebaseAuth, firestoreStorage } from '../firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export async function loginUser (email, password) {
@@ -47,4 +48,16 @@ export async function logoutUser () {
 
 export async function isUserAdmin () {
   // TO DO
+}
+
+export async function uploadImage (imageUri) {
+  const response = await fetch(imageUri)
+  const blob = await response.blob()
+
+  const storageRef = ref(firestoreStorage, 'images/' + Math.round(new Date().valueOf()).toString())
+  await uploadBytes(storageRef, blob)
+
+  const url = await getDownloadURL(storageRef)
+
+  return url
 }
