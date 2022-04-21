@@ -15,7 +15,7 @@ const OrderItem = props => {
     })
     setTotal(totalPrice)
 
-    const stateObject = ORDER_STATES.find(state => state.id === props.order.state.toString())
+    const stateObject = ORDER_STATES.find(state => state.id === props.order.state)
     setOrderState(stateObject.name)
   }, [props.order])
 

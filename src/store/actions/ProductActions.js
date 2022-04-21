@@ -74,7 +74,7 @@ export const fetchProducts = () => {
     const loadedProducts = []
     const responseData = await getAllDocuments(productCollection)
 
-    responseData.forEach(product => {
+    responseData.documents.forEach(product => {
       loadedProducts.push(new Product(
         product.id,
         product.title,

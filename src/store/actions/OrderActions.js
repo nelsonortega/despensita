@@ -1,27 +1,25 @@
 import Order from '../../models/order'
 import { orderCollection } from '../../firebase/functions/FirebaseFunctions'
-import { createDocument, getAllDocuments, updateDocument } from '../../firebase/functions/FirestoreFunctions'
+import { createDocument, updateDocument } from '../../firebase/functions/FirestoreFunctions'
 
 export const SET_ORDERS = 'SET_ORDERS'
 export const CREATE_ORDER = 'CREATE_ORDER'
 export const UPDATE_ORDER = 'UPDATE_ORDER'
 export const FINISH_ORDER = 'FINISH_ORDER'
 
-export const fetchOrders = () => {
-  return async dispatch => {
-    const loadedOrders = []
-    const responseData = await getAllDocuments(orderCollection)
+export const setOrders = (orders) => {
+  const loadedOrders = orders.map(order => {
+    return new Order(
+      order.id,
+      order.products,
+      order.clientData,
+      order.state
+    )
+  })
 
-    responseData.forEach(order => {
-      loadedOrders.push(new Order(
-        order.id,
-        order.products,
-        order.clientData,
-        order.state
-      ))
-    })
-
-    dispatch({ type: SET_ORDERS, orders: loadedOrders })
+  return {
+    type: SET_ORDERS,
+    orders: loadedOrders
   }
 }
 

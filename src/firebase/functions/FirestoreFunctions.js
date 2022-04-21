@@ -60,17 +60,22 @@ export async function deleteDocument (collection, documentId) {
 }
 
 export async function getAllDocuments (collection) {
-  const documents = []
+  const documentsResponse = {
+    success: true,
+    documents: []
+  }
 
   try {
     const documentsFetched = await getDocs(collection)
 
     documentsFetched.forEach((document) => {
-      documents.push(document.data())
+      documentsResponse.documents.push(document.data())
     })
-  } catch (error) {
-    console.log(error)
-  }
 
-  return documents
+    return documentsResponse
+  } catch (error) {
+    documentsResponse.success = false
+
+    return documentsResponse
+  }
 }

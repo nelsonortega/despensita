@@ -1,37 +1,45 @@
+import { useState, useEffect } from 'react'
 import OrderItem from '../components/OrderItem'
 import CustomText from '../components/CustomText'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect, useCallback } from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
 import * as OrderActions from '../store/actions/OrderActions'
+import { getOrders } from '../firebase/functions/FirebaseFunctions'
+import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
 const OrdersScreen = props => {
   const dispatch = useDispatch()
 
   const auth = useSelector(state => state.auth)
-  const orders = auth.isUserAdmin
-    ? useSelector(state => state.orders.orders.filter(order => order.state !== '4'))
-    : useSelector(state => state.orders.orders.filter(order => order.state !== '4' && order.clientData.userId === auth.userId))
+  const orders = useSelector(state => state.orders.orders)
 
   const [error, setError] = useState()
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
-  const loadOrders = useCallback(async () => {
-    setLoading(true)
+  const loadOrders = async () => {
     setError(null)
-    setRefreshing(true)
-    try {
-      dispatch(OrderActions.fetchOrders())
-    } catch (error) {
-      setError(error.message)
-    }
-    setRefreshing(false)
-    setLoading(false)
-  }, [dispatch, setError, setRefreshing])
+    const ordersResponse = await getOrders(auth.isUserAdmin, auth.userId)
 
-  useEffect(() => {
-    loadOrders()
+    if (!ordersResponse.success) {
+      setError('Error al cargar las órdenes')
+    }
+
+    if (ordersResponse.success) {
+      dispatch(OrderActions.setOrders(ordersResponse.orders))
+    }
+  }
+
+  const loadOrdersOnRefresh = async () => {
+    setRefreshing(true)
+    await loadOrders()
+    setRefreshing(false)
+  }
+
+  useEffect(async () => {
+    setLoading(true)
+    await loadOrders()
+    setLoading(false)
   }, [])
 
   const renderOrderItem = orderItem => {
@@ -44,16 +52,24 @@ const OrdersScreen = props => {
         ListHeaderComponent={
           <CustomText bold style={styles.title}>Órdenes</CustomText>
         }
-        onRefresh={loadOrders}
+        onRefresh={loadOrdersOnRefresh}
         refreshing={refreshing}
         keyExtractor={item => item.id}
         data={orders}
         renderItem={renderOrderItem}
         style={styles.list}
       />
+      {loading &&
+        <View style={styles.center}>
+          <CustomActivityIndicator small />
+        </View>}
       {orders.length === 0 && !error && !loading &&
         <View style={styles.center}>
           <CustomText bold>No hay órdenes pendientes</CustomText>
+        </View>}
+      {error &&
+        <View style={styles.center}>
+          <CustomText bold>{error}</CustomText>
         </View>}
     </View>
   )

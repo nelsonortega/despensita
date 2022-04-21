@@ -1,5 +1,5 @@
-import { collection } from 'firebase/firestore'
 import { getAllDocuments } from './FirestoreFunctions'
+import { collection, query, where } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { firebaseAuth, firestoreDB, firestoreStorage } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
@@ -53,10 +53,20 @@ export async function logoutUser () {
 }
 
 export async function isUserAdmin (user) {
-  const [adminUsersResponse] = await getAllDocuments(userCollection)
-  const isUserAdmin = adminUsersResponse.adminUsers.find(adminUserId => adminUserId === user.uid)
+  try {
+    const adminUsersResponse = await getAllDocuments(userCollection)
 
-  return isUserAdmin !== undefined
+    if (!adminUsersResponse.success) {
+      return false
+    }
+
+    const [adminUsers] = adminUsersResponse.documents
+    const isUserAdmin = adminUsers.adminUsers.find(adminUserId => adminUserId === user.uid)
+
+    return isUserAdmin !== undefined
+  } catch (error) {
+    return false
+  }
 }
 
 export async function uploadImage (imageUri) {
@@ -69,4 +79,31 @@ export async function uploadImage (imageUri) {
   const url = await getDownloadURL(storageRef)
 
   return url
+}
+
+export async function getOrders (isUserAdmin, userId) {
+  const ordersResponse = {
+    success: true,
+    orders: []
+  }
+
+  const ordersQuery = isUserAdmin
+    ? query(orderCollection, where('state', '<', 4))
+    : query(orderCollection, where('clientData.userId', '==', userId), where('state', '<', 4))
+
+  try {
+    const documentsResponse = await getAllDocuments(ordersQuery)
+
+    if (!documentsResponse.success) {
+      ordersResponse.success = false
+    } else {
+      ordersResponse.orders = documentsResponse.documents
+    }
+
+    return ordersResponse
+  } catch (error) {
+    ordersResponse.success = false
+
+    return ordersResponse
+  }
 }
