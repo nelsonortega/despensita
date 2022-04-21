@@ -1,9 +1,10 @@
-import { useState } from 'react'
 import * as Font from 'expo-font'
+import { Alert } from 'react-native'
 import ReduxThunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import AppLoading from 'expo-app-loading'
 import { StatusBar } from 'expo-status-bar'
+import { useState, useEffect } from 'react'
 import AuthReducer from './src/store/reducers/AuthReducer'
 import RootNavigator from './src/navigation/RootNavigator'
 import OrderReducer from './src/store/reducers/OrderReducer'
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
 const App = () => {
+  const [fontError, setFontError] = useState()
   const [fontLoaded, setFontLoaded] = useState(false)
 
   const fetchFonts = () => {
@@ -29,12 +31,18 @@ const App = () => {
     })
   }
 
+  useEffect(() => {
+    if (fontError) {
+      Alert.alert('Error', 'Error al cargar las fuentes', [{ text: 'Ok', onPress: () => setFontError(null) }])
+    }
+  }, [fontError])
+
   if (!fontLoaded) {
     return (
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
-        onError={error => console.log(error)}
+        onError={error => setFontError(error)}
       />
     )
   }
