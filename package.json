@@ -45,5 +45,8 @@
       "fetch": false 
     }
   },
+  "standard": {
+    "globals": [ "fetch" ]
+  },
   "private": true
 }
