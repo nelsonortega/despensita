@@ -1,6 +1,12 @@
-import { firebaseAuth, firestoreStorage } from '../firebase'
+import { collection } from 'firebase/firestore'
+import { getAllDocuments } from './FirestoreFunctions'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { firebaseAuth, firestoreDB, firestoreStorage } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+
+const userCollection = collection(firestoreDB, 'users')
+export const orderCollection = collection(firestoreDB, 'orders')
+export const productCollection = collection(firestoreDB, 'products')
 
 export async function loginUser (email, password) {
   const loginResponse = {
@@ -46,8 +52,11 @@ export async function logoutUser () {
   }
 }
 
-export async function isUserAdmin () {
-  // TO DO
+export async function isUserAdmin (user) {
+  const [adminUsersResponse] = await getAllDocuments(userCollection)
+  const isUserAdmin = adminUsersResponse.adminUsers.find(adminUserId => adminUserId === user.uid)
+
+  return isUserAdmin !== undefined
 }
 
 export async function uploadImage (imageUri) {
