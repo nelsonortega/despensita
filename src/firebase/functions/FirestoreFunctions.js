@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, getDocs, deleteDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, getDocs } from 'firebase/firestore'
 
 export async function createDocument (collection, newDocument) {
   try {
@@ -13,16 +13,6 @@ export async function createDocument (collection, newDocument) {
     await setDoc(documentRef, documentToAddWithId)
 
     return documentRefId
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function getDocument (collection, documentId) {
-  try {
-    const document = await getDoc(doc(collection, documentId))
-
-    return document.data()
   } catch (error) {
     console.log(error)
   }
@@ -43,17 +33,6 @@ export async function updateDocument (collection, documentId, newDocument) {
       ...document.data(),
       ...newDocument
     }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function deleteDocument (collection, documentId) {
-  try {
-    const documentRef = doc(collection, documentId)
-    await deleteDoc(documentRef)
-
-    return 'Deleted'
   } catch (error) {
     console.log(error)
   }

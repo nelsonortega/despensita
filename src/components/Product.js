@@ -48,10 +48,10 @@ const Product = props => {
     }
   }
 
-  const deleteProduct = (id) => {
+  const deleteProduct = (id, image) => {
     Alert.alert(
       'Atención', '¿Desea eliminar este producto?', [
-        { text: 'Sí', onPress: () => dispatch(ProductActions.deleteProduct(id)) },
+        { text: 'Sí', onPress: () => dispatch(ProductActions.deleteProduct(id, image)) },
         { text: 'No' }
       ]
     )
@@ -78,7 +78,7 @@ const Product = props => {
 
           <View style={styles.actionButtons}>
             {isUserAdmin &&
-              <Button style={styles.deleteButton} mode='contained' onPress={() => deleteProduct(props.productItem.item.id)} color='red' dark uppercase={false}>
+              <Button style={styles.deleteButton} mode='contained' onPress={() => deleteProduct(props.productItem.item.id, props.productItem.item.img)} color='red' dark uppercase={false}>
                 <Icon name='trash-o' size={28} />
               </Button>}
             <Button mode='contained' onPress={openModal} color={Colors.primary} dark uppercase={false}>

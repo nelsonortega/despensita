@@ -1,7 +1,7 @@
 import { getAllDocuments } from './FirestoreFunctions'
-import { collection, query, where } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { firebaseAuth, firestoreDB, firestoreStorage } from '../firebase'
+import { collection, deleteDoc, doc, query, where } from 'firebase/firestore'
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 const userCollection = collection(firestoreDB, 'users')
@@ -53,20 +53,16 @@ export async function logoutUser () {
 }
 
 export async function isUserAdmin (user) {
-  try {
-    const adminUsersResponse = await getAllDocuments(userCollection)
+  const adminUsersResponse = await getAllDocuments(userCollection)
 
-    if (!adminUsersResponse.success) {
-      return false
-    }
-
-    const [adminUsers] = adminUsersResponse.documents
-    const isUserAdmin = adminUsers.adminUsers.find(adminUserId => adminUserId === user.uid)
-
-    return isUserAdmin !== undefined
-  } catch (error) {
+  if (!adminUsersResponse.success) {
     return false
   }
+
+  const [adminUsers] = adminUsersResponse.documents
+  const isUserAdmin = adminUsers.adminUsers.find(adminUserId => adminUserId === user.uid)
+
+  return isUserAdmin !== undefined
 }
 
 export async function uploadImage (imageUri) {
@@ -91,21 +87,15 @@ export async function getOrders (isUserAdmin, userId) {
     ? query(orderCollection, where('state', '<', 4))
     : query(orderCollection, where('clientData.userId', '==', userId), where('state', '<', 4))
 
-  try {
-    const documentsResponse = await getAllDocuments(ordersQuery)
+  const documentsResponse = await getAllDocuments(ordersQuery)
 
-    if (!documentsResponse.success) {
-      ordersResponse.success = false
-    } else {
-      ordersResponse.orders = documentsResponse.documents
-    }
-
-    return ordersResponse
-  } catch (error) {
+  if (!documentsResponse.success) {
     ordersResponse.success = false
-
-    return ordersResponse
+  } else {
+    ordersResponse.orders = documentsResponse.documents
   }
+
+  return ordersResponse
 }
 
 export async function getProducts () {
@@ -114,19 +104,32 @@ export async function getProducts () {
     products: []
   }
 
-  try {
-    const documentsResponse = await getAllDocuments(productCollection)
+  const documentsResponse = await getAllDocuments(productCollection)
 
-    if (!documentsResponse.success) {
-      productsResponse.success = false
-    } else {
-      productsResponse.products = documentsResponse.documents
-    }
-
-    return productsResponse
-  } catch (error) {
+  if (!documentsResponse.success) {
     productsResponse.success = false
+  } else {
+    productsResponse.products = documentsResponse.documents
+  }
 
-    return productsResponse
+  return productsResponse
+}
+
+export async function deleteProductAndImage (id, image) {
+  const deleteResponse = {
+    success: true
+  }
+
+  const imageToDelete = ref(firestoreStorage, image)
+  const productToDelete = doc(productCollection, id)
+
+  try {
+    await deleteDoc(productToDelete)
+    await deleteObject(imageToDelete)
+
+    return deleteResponse
+  } catch (error) {
+    deleteResponse.success = false
+    return deleteResponse
   }
 }
