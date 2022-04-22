@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '../firebase/firebase'
 import * as AuthActions from '../store/actions/AuthActions'
@@ -18,15 +18,17 @@ const useLogin = () => {
     dispatch(AuthActions.logout())
   }
 
-  onAuthStateChanged(firebaseAuth, async (user) => {
-    if (user) {
-      await authenticateUser(user)
-    } else {
-      logoutUser()
-    }
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
+      if (user) {
+        await authenticateUser(user)
+      } else {
+        logoutUser()
+      }
 
-    setLoading(false)
-  })
+      setLoading(false)
+    })
+  }, [])
 
   return [loading]
 }
