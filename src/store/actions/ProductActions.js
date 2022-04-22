@@ -13,8 +13,8 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
 
 export const resetCart = () => {
-  return async dispatch => {
-    dispatch({ type: RESET_CART })
+  return {
+    type: RESET_CART
   }
 }
 
@@ -47,25 +47,18 @@ export const addItemToCart = (id, title, quantity, price, img) => {
 }
 
 export const deleteItemFromCart = (id) => {
-  return async dispatch => {
-    dispatch({
-      type: DELETE_CART,
-      product: {
-        id
-      }
-    })
+  return {
+    type: DELETE_CART,
+    product: {
+      id
+    }
   }
 }
 
 export const editItemFromCart = (id, quantity) => {
-  return async dispatch => {
-    dispatch({
-      type: EDIT_CART,
-      product: {
-        id,
-        quantity
-      }
-    })
+  return {
+    type: EDIT_CART,
+    product: { id, quantity }
   }
 }
 
@@ -125,10 +118,8 @@ export const deleteProduct = (id, image) => {
 }
 
 export const filterProducts = (filteredProducts) => {
-  return async dispatch => {
-    dispatch({
-      type: FILTER_PRODUCTS,
-      filteredProducts: filteredProducts
-    })
+  return {
+    type: FILTER_PRODUCTS,
+    filteredProducts: filteredProducts
   }
 }

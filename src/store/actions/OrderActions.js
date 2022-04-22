@@ -61,7 +61,7 @@ export const updateOrderState = (order, newState) => {
 }
 
 export const finishOrder = () => {
-  return async dispatch => {
-    dispatch({ type: FINISH_ORDER })
+  return {
+    type: FINISH_ORDER
   }
 }
