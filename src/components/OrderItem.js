@@ -2,9 +2,12 @@ import CustomText from './CustomText'
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { ORDER_STATES } from '../constants/OrderStates'
+import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const OrderItem = props => {
+  const navigation = useNavigation()
+
   const [total, setTotal] = useState(0)
   const [orderState, setOrderState] = useState()
 
@@ -20,7 +23,7 @@ const OrderItem = props => {
   }, [props.order])
 
   const openDetail = () => {
-    props.navigation.navigate('OrderDetail', {
+    navigation.navigate('OrderDetail', {
       order: props.order
     })
   }

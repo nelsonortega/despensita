@@ -43,7 +43,7 @@ const OrdersScreen = props => {
   }, [])
 
   const renderOrderItem = orderItem => {
-    return <OrderItem order={orderItem.item} navigation={props.navigation} />
+    return <OrderItem order={orderItem.item} />
   }
 
   return (
