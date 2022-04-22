@@ -17,23 +17,6 @@ const ProductReducer = (state = initialState, action) => {
         totalPrice: 0,
         cart: []
       }
-    case SET_PRODUTS:
-      return {
-        ...state,
-        filteredProducts: action.products,
-        products: action.products
-      }
-    case FILTER_PRODUCTS:
-      return {
-        ...state,
-        filteredProducts: action.filteredProducts
-      }
-    case CREATE_PRODUCT:
-      return {
-        ...state,
-        filteredProducts: [action.productAdded, ...state.products],
-        products: [action.productAdded, ...state.products]
-      }
     case ADD_CART:
       return {
         ...state,
@@ -46,25 +29,6 @@ const ProductReducer = (state = initialState, action) => {
           action.product.img
         ), ...state.cart]
       }
-    case DELETE_CART: {
-      const filteredCart = state.cart.filter(product => product.id !== action.product.id)
-      const price = filteredCart.reduce((acc, product) => {
-        return acc + parseInt(product.price) * parseInt(product.quantity)
-      }, 0)
-      return {
-        ...state,
-        totalPrice: price,
-        cart: filteredCart
-      }
-    }
-    case DELETE_PRODUCT: {
-      const filterProducts = state.products.filter(product => product.id !== action.id)
-      return {
-        ...state,
-        products: filterProducts,
-        filteredProducts: filterProducts
-      }
-    }
     case EDIT_CART: {
       let priceEdit = 0
       const editedCart = state.cart.map(product => {
@@ -111,6 +75,42 @@ const ProductReducer = (state = initialState, action) => {
         ...state,
         totalPrice: priceUpdate,
         cart: updatedCart
+      }
+    }
+    case DELETE_CART: {
+      const filteredCart = state.cart.filter(product => product.id !== action.product.id)
+      const price = filteredCart.reduce((acc, product) => {
+        return acc + parseInt(product.price) * parseInt(product.quantity)
+      }, 0)
+      return {
+        ...state,
+        totalPrice: price,
+        cart: filteredCart
+      }
+    }
+    case SET_PRODUTS:
+      return {
+        ...state,
+        filteredProducts: action.products,
+        products: action.products
+      }
+    case FILTER_PRODUCTS:
+      return {
+        ...state,
+        filteredProducts: action.filteredProducts
+      }
+    case CREATE_PRODUCT:
+      return {
+        ...state,
+        filteredProducts: [action.productAdded, ...state.products],
+        products: [action.productAdded, ...state.products]
+      }
+    case DELETE_PRODUCT: {
+      const filterProducts = state.products.filter(product => product.id !== action.id)
+      return {
+        ...state,
+        products: filterProducts,
+        filteredProducts: filterProducts
       }
     }
   }
