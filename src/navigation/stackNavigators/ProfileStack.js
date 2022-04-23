@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import ProfileScreen from '../../screens/ProfileScreen'
 import UpdateUserScreen from '../../screens/UpdateUserScreen'
-import { headerIcon, screenOptions } from '../options/options'
+import { screenHeaderIcon, screenOptions } from '../options/options'
 import AuthenticationScreen from '../../screens/AuthenticationScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -13,11 +13,11 @@ const ProfileStack = () => {
     <ProfileStack.Navigator screenOptions={screenOptions}>
       {isUserLoggedIn &&
         <>
-          <ProfileStack.Screen name='ProfileScreen' component={ProfileScreen} options={headerIcon} />
+          <ProfileStack.Screen name='ProfileScreen' component={ProfileScreen} options={screenHeaderIcon} />
           <ProfileStack.Screen name='UpdateUser' component={UpdateUserScreen} />
         </>}
       {!isUserLoggedIn &&
-        <ProfileStack.Screen name='Authentication' component={AuthenticationScreen} options={headerIcon} />}
+        <ProfileStack.Screen name='Authentication' component={AuthenticationScreen} options={screenHeaderIcon} />}
     </ProfileStack.Navigator>
   )
 }

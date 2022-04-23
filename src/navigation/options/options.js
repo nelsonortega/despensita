@@ -1,6 +1,5 @@
 import Colors from '../../constants/Colors'
 import HeaderIcon from '../../components/HeaderIcon'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 export const screenOptions = {
   title: 'La Despensita',
@@ -16,46 +15,11 @@ export const screenOptions = {
   animation: 'slide_from_right'
 }
 
-export const drawerScreenOptions = {
-  ...screenOptions,
-  drawerActiveTintColor: 'white',
-  drawerActiveBackgroundColor: Colors.primary,
-  drawerLabelStyle: {
-    fontFamily: 'open-sans-bold'
-  }
-}
-
-export const drawerHomeOptions = {
-  headerShown: false,
-  drawerLabel: 'Inicio',
-  drawerIcon: ({ color }) => <Icon name='home' size={20} color={color} />
-}
-
-export const drawerOrdersOptions = {
-  headerShown: false,
-  drawerLabel: 'Pedidos',
-  drawerIcon: ({ color }) => <Icon name='shopping-cart' size={20} color={color} />
-}
-
-export const drawerContactOptions = {
-  drawerLabel: 'Contacto',
-  drawerIcon: ({ color }) => <Icon name='phone' size={24} color={color} />
-}
-
-export const drawerAboutUsOptions = {
-  drawerLabel: 'Quienes somos',
-  drawerIcon: ({ color }) => <Icon name='info' size={20} color={color} />,
-  drawerItemStyle: {
-    paddingLeft: 10
-  }
-}
-
-export const drawerProfileOptions = {
-  headerShown: false,
-  drawerLabel: 'Perfil',
-  drawerIcon: ({ color }) => <Icon name='user-o' size={20} color={color} />
-}
-
-export const headerIcon = {
+export const screenHeaderIcon = {
   headerLeft: () => <HeaderIcon iconName='md-menu' />
+}
+
+export const homeScreenHeaderIcons = {
+  ...screenHeaderIcon,
+  headerRight: () => <HeaderIcon cart iconName='md-cart' />
 }
