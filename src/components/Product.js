@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import CustomText from './CustomText'
 import Colors from '../constants/Colors'
+import CartItem from '../models/cartItem'
 import ChangeQuantity from './ChangeQuantity'
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,13 +19,15 @@ const Product = props => {
   const [modalVisible, setModalVisible] = useState(false)
 
   const addItemToCart = () => {
-    dispatch(ProductActions.addItemToCart(
+    const productToAdd = new CartItem(
       props.productItem.item.id,
       props.productItem.item.title,
       quantity,
       props.productItem.item.price,
       props.productItem.item.img
-    ))
+    )
+
+    dispatch(ProductActions.addItemToCart(productToAdd))
     setModalVisible(false)
   }
 
