@@ -11,7 +11,7 @@ const useLogin = () => {
 
   const authenticateUser = async (user) => {
     const isAdmin = await isUserAdmin(user)
-    dispatch(AuthActions.autoAuthenticate(user.uid, user.stsTokenManager.accessToken, isAdmin))
+    dispatch(AuthActions.authenticate(user.uid, user.stsTokenManager.accessToken, isAdmin))
   }
 
   const logoutUser = () => {

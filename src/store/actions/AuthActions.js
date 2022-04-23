@@ -1,7 +1,7 @@
 export const LOGOUT = 'LOGOUT'
 export const AUTHENTICATE = 'AUTHENTICATE'
 
-export const autoAuthenticate = (userId, token, isUserAdmin) => {
+export const authenticate = (userId, token, isUserAdmin) => {
   return {
     type: AUTHENTICATE,
     userId: userId,
