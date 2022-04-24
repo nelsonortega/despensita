@@ -1,6 +1,6 @@
 import Order from '../../models/order'
+import { createDocument } from '../../firebase/functions/FirestoreFunctions'
 import { orderCollection } from '../../firebase/functions/FirebaseFunctions'
-import { createDocument, updateDocument } from '../../firebase/functions/FirestoreFunctions'
 
 export const SET_ORDERS = 'SET_ORDERS'
 export const CREATE_ORDER = 'CREATE_ORDER'
@@ -47,16 +47,10 @@ export const createOrder = (cart, name, phone, express, direction, notes) => {
   }
 }
 
-export const updateOrderState = (order, newState) => {
-  return async dispatch => {
-    const orderUpdated = {
-      ...order,
-      state: newState
-    }
-
-    await updateDocument(orderCollection, order.id, orderUpdated)
-
-    dispatch({ type: UPDATE_ORDER, updatedOrder: orderUpdated })
+export const updateOrderState = (updatedOrder) => {
+  return {
+    type: UPDATE_ORDER,
+    updatedOrder: updatedOrder
   }
 }
 

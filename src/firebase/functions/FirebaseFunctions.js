@@ -1,4 +1,4 @@
-import { getAllDocuments } from './FirestoreFunctions'
+import { getAllDocuments, updateDocument } from './FirestoreFunctions'
 import { firebaseAuth, firestoreDB, firestoreStorage } from '../firebase'
 import { collection, deleteDoc, doc, query, where } from 'firebase/firestore'
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage'
@@ -132,4 +132,18 @@ export async function deleteProductAndImage (id, image) {
     deleteResponse.success = false
     return deleteResponse
   }
+}
+
+export async function updateOrder (newOrder) {
+  const updateOrderResponse = {
+    success: true
+  }
+
+  const updateResponse = await updateDocument(orderCollection, newOrder.id, newOrder)
+
+  if (!updateResponse.success) {
+    updateOrderResponse.success = false
+  }
+
+  return updateOrderResponse
 }

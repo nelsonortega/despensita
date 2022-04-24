@@ -1,40 +1,58 @@
 import { doc, getDoc, setDoc, getDocs } from 'firebase/firestore'
 
 export async function createDocument (collection, newDocument) {
+  const createResponse = {
+    success: true,
+    documentId: ''
+  }
+
+  const documentRefId = doc(collection).id
+  const documentRef = doc(collection, documentRefId)
+
+  const documentToAddWithId = {
+    id: documentRefId,
+    ...newDocument
+  }
+
   try {
-    const documentRefId = doc(collection).id
-    const documentRef = doc(collection, documentRefId)
-
-    const documentToAddWithId = {
-      id: documentRefId,
-      ...newDocument
-    }
-
     await setDoc(documentRef, documentToAddWithId)
 
-    return documentRefId
+    createResponse.documentId = documentRefId
+
+    return createResponse
   } catch (error) {
-    console.log(error)
+    createResponse.success = false
+    return createResponse
   }
 }
 
 export async function updateDocument (collection, documentId, newDocument) {
+  const updateResponse = {
+    success: true,
+    document: {}
+  }
+
+  const documentRef = doc(collection, documentId)
+
   try {
-    const documentRef = doc(collection, documentId)
     const document = await getDoc(documentRef)
 
     if (!document.exists()) {
-      return undefined
+      updateResponse.success = false
+      return updateResponse
     }
 
     await setDoc(documentRef, newDocument, { merge: true })
 
-    return {
+    updateResponse.document = {
       ...document.data(),
       ...newDocument
     }
+
+    return updateResponse
   } catch (error) {
-    console.log(error)
+    updateResponse.success = false
+    return updateResponse
   }
 }
 

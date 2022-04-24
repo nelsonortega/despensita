@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ORDER_STATES } from '../constants/OrderStates'
 import { View, StyleSheet, ScrollView } from 'react-native'
 import * as OrderActions from '../store/actions/OrderActions'
+import { updateOrder } from '../firebase/functions/FirebaseFunctions'
 
 const OrderDetailScreen = props => {
   const dispatch = useDispatch()
@@ -35,7 +36,14 @@ const OrderDetailScreen = props => {
 
   const handleStateChange = itemValue => {
     setOrderState(itemValue)
-    dispatch(OrderActions.updateOrderState(order, itemValue))
+
+    const updatedOrder = {
+      ...order,
+      state: itemValue
+    }
+
+    dispatch(OrderActions.updateOrderState(updatedOrder))
+    updateOrder(updatedOrder)
   }
 
   return (

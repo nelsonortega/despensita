@@ -68,12 +68,12 @@ export const createProduct = (title, description, category, price, img) => {
       img: img
     }
 
-    const responseId = await createDocument(productCollection, newProduct)
+    const response = await createDocument(productCollection, newProduct)
 
     dispatch({
       type: CREATE_PRODUCT,
       productAdded: new Product(
-        responseId,
+        response.documentId,
         title,
         description,
         category,
