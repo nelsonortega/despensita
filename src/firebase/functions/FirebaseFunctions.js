@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 
 const userCollection = collection(firestoreDB, 'users')
 export const orderCollection = collection(firestoreDB, 'orders')
-export const productCollection = collection(firestoreDB, 'products')
+const productCollection = collection(firestoreDB, 'products')
 
 export async function loginUser (email, password) {
   const loginResponse = {
