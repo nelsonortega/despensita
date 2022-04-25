@@ -1,3 +1,4 @@
+import Product from '../models/product'
 import Colors from '../constants/Colors'
 import { useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
@@ -8,8 +9,8 @@ import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { CATEGORIES } from '../constants/Categories'
 import * as ProductActions from '../store/actions/ProductActions'
-import { uploadImage } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { createProduct, uploadImage } from '../firebase/functions/FirebaseFunctions'
 import { View, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native'
 
 const CreateProductScreen = props => {
@@ -30,8 +31,30 @@ const CreateProductScreen = props => {
   }, [error])
 
   const handleUploadImage = async (uri) => {
-    const imageUrl = await uploadImage(uri)
-    dispatch(ProductActions.createProduct(title, description, category, price, imageUrl))
+    const imageResponse = await uploadImage(uri)
+
+    if (imageResponse.success) {
+      const newProduct = {
+        title: title,
+        description: description,
+        category: category,
+        price: price,
+        img: imageResponse.url
+      }
+
+      const { success, productId } = await createProduct(newProduct)
+
+      if (success) {
+        dispatch(ProductActions.createProduct(new Product(
+          productId,
+          title,
+          description,
+          category,
+          price,
+          imageResponse.url
+        )))
+      }
+    }
   }
 
   const validateInputs = () => {
@@ -52,7 +75,7 @@ const CreateProductScreen = props => {
     }
   }
 
-  const createProduct = async () => {
+  const handleCreateProduct = async () => {
     if (validateInputs()) {
       return
     }
@@ -170,7 +193,7 @@ const CreateProductScreen = props => {
         </TouchableOpacity>}
       {loading && <CustomActivityIndicator small />}
       {!loading &&
-        <TouchableOpacity style={styles.buttonContainer} onPress={createProduct}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={handleCreateProduct}>
           <View style={styles.button}>
             <CustomText style={styles.buttonText}>Crear Producto</CustomText>
           </View>

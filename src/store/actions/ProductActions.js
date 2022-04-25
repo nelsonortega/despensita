@@ -1,6 +1,5 @@
 import Product from '../../models/product'
-import { createDocument } from '../../firebase/functions/FirestoreFunctions'
-import { deleteProductAndImage, productCollection } from '../../firebase/functions/FirebaseFunctions'
+import { deleteProductAndImage } from '../../firebase/functions/FirebaseFunctions'
 
 export const RESET_CART = 'RESET_CART'
 export const UPDATE_CART = 'UPDATE_CART'
@@ -58,29 +57,10 @@ export const setProducts = (products) => {
   }
 }
 
-export const createProduct = (title, description, category, price, img) => {
-  return async dispatch => {
-    const newProduct = {
-      title: title,
-      description: description,
-      category: category,
-      price: price,
-      img: img
-    }
-
-    const response = await createDocument(productCollection, newProduct)
-
-    dispatch({
-      type: CREATE_PRODUCT,
-      productAdded: new Product(
-        response.documentId,
-        title,
-        description,
-        category,
-        price,
-        img
-      )
-    })
+export const createProduct = (newProduct) => {
+  return {
+    type: CREATE_PRODUCT,
+    productAdded: newProduct
   }
 }
 

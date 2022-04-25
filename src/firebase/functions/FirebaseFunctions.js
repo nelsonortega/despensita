@@ -1,7 +1,7 @@
-import { getAllDocuments, updateDocument } from './FirestoreFunctions'
 import { firebaseAuth, firestoreDB, firestoreStorage } from '../firebase'
 import { collection, deleteDoc, doc, query, where } from 'firebase/firestore'
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { createDocument, getAllDocuments, updateDocument } from './FirestoreFunctions'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 const userCollection = collection(firestoreDB, 'users')
@@ -66,15 +66,28 @@ export async function isUserAdmin (user) {
 }
 
 export async function uploadImage (imageUri) {
-  const response = await fetch(imageUri)
-  const blob = await response.blob()
+  const imageUploadResponse = {
+    success: true,
+    url: ''
+  }
 
-  const storageRef = ref(firestoreStorage, 'images/' + Math.round(new Date().valueOf()).toString())
-  await uploadBytes(storageRef, blob)
+  try {
+    const response = await fetch(imageUri)
+    const blob = await response.blob()
 
-  const url = await getDownloadURL(storageRef)
+    const storageRef = ref(firestoreStorage, 'images/' + Math.round(new Date().valueOf()).toString())
+    await uploadBytes(storageRef, blob)
 
-  return url
+    const url = await getDownloadURL(storageRef)
+
+    imageUploadResponse.url = url
+
+    return imageUploadResponse
+  } catch (error) {
+    imageUploadResponse.success = false
+
+    return imageUploadResponse
+  }
 }
 
 export async function getOrders (isUserAdmin, userId) {
@@ -146,4 +159,21 @@ export async function updateOrder (newOrder) {
   }
 
   return updateOrderResponse
+}
+
+export async function createProduct (newProduct) {
+  const createProductResponse = {
+    success: true,
+    productId: ''
+  }
+
+  const documentResponse = await createDocument(productCollection, newProduct)
+
+  if (documentResponse.success) {
+    createProductResponse.productId = documentResponse.documentId
+  } else {
+    createProductResponse.success = false
+  }
+
+  return createProductResponse
 }
