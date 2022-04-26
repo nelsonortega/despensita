@@ -1,5 +1,4 @@
 import Product from '../../models/product'
-import { deleteProductAndImage } from '../../firebase/functions/FirebaseFunctions'
 
 export const RESET_CART = 'RESET_CART'
 export const UPDATE_CART = 'UPDATE_CART'
@@ -64,14 +63,10 @@ export const createProduct = (newProduct) => {
   }
 }
 
-export const deleteProduct = (id, image) => {
-  return async dispatch => {
-    await deleteProductAndImage(id, image)
-
-    dispatch({
-      type: DELETE_PRODUCT,
-      id
-    })
+export const deleteProduct = (id) => {
+  return {
+    type: DELETE_PRODUCT,
+    id
   }
 }
 

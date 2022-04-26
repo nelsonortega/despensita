@@ -9,9 +9,11 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { StyleSheet, View, Modal, Alert } from 'react-native'
 import * as ProductActions from '../store/actions/ProductActions'
 import { Button, Card, Title, Paragraph } from 'react-native-paper'
+import { deleteProductAndImage } from '../firebase/functions/FirebaseFunctions'
 
 const Product = props => {
   const dispatch = useDispatch()
+  const { id, title, price, img, description } = props.productItem.item
 
   const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
 
@@ -19,24 +21,19 @@ const Product = props => {
   const [modalVisible, setModalVisible] = useState(false)
 
   const addItemToCart = () => {
-    const productToAdd = new CartItem(
-      props.productItem.item.id,
-      props.productItem.item.title,
-      quantity,
-      props.productItem.item.price,
-      props.productItem.item.img
-    )
+    const productToAdd = new CartItem(id, title, quantity, price, img)
 
     dispatch(ProductActions.addItemToCart(productToAdd))
-    setModalVisible(false)
+    handleCloseModal()
   }
 
-  const openModal = () => {
+  const handleOpenModal = () => {
     setModalVisible(true)
   }
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setModalVisible(false)
+    setQuantity(1)
   }
 
   const moreQuantity = () => {
@@ -51,10 +48,15 @@ const Product = props => {
     }
   }
 
-  const deleteProduct = (id, image) => {
+  const handleDeleteProductAndImage = () => {
+    dispatch(ProductActions.deleteProduct(id))
+    deleteProductAndImage(id, img)
+  }
+
+  const handleDeleteProduct = () => {
     Alert.alert(
       'Atención', '¿Desea eliminar este producto?', [
-        { text: 'Sí', onPress: () => dispatch(ProductActions.deleteProduct(id, image)) },
+        { text: 'Sí', onPress: handleDeleteProductAndImage },
         { text: 'No' }
       ]
     )
@@ -63,28 +65,28 @@ const Product = props => {
   return (
     <View style={styles.container}>
       <Card>
-        <Card.Cover source={{ uri: props.productItem.item.img }} />
-        <Card.Content style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+        <Card.Cover source={{ uri: img }} />
+        <Card.Content style={styles.cardContent}>
           <View>
             <Title>
-              <CustomText bold>{props.productItem.item.title}</CustomText>
+              <CustomText bold>{title}</CustomText>
             </Title>
             <Paragraph>
-              <CustomText numberOfLines={2} style={styles.description}>{props.productItem.item.description}</CustomText>
+              <CustomText numberOfLines={2} style={styles.description}>{description}</CustomText>
             </Paragraph>
             <Paragraph>
-              {props.productItem.item.price === '0'
+              {price === '0'
                 ? <CustomText bold style={styles.free}>Gratis</CustomText>
-                : <CustomText bold>₡{props.productItem.item.price}</CustomText>}
+                : <CustomText bold>₡{price}</CustomText>}
             </Paragraph>
           </View>
 
           <View style={styles.actionButtons}>
             {isUserAdmin &&
-              <Button style={styles.deleteButton} mode='contained' onPress={() => deleteProduct(props.productItem.item.id, props.productItem.item.img)} color='red' dark uppercase={false}>
+              <Button style={styles.deleteButton} mode='contained' onPress={handleDeleteProduct} color='red' dark uppercase={false}>
                 <Icon name='trash-o' size={28} />
               </Button>}
-            <Button mode='contained' onPress={openModal} color={Colors.primary} dark uppercase={false}>
+            <Button mode='contained' onPress={handleOpenModal} color={Colors.primary} dark uppercase={false}>
               <Ionicons size={30} color='white' name='md-add' style={styles.icon} />
             </Button>
           </View>
@@ -95,7 +97,7 @@ const Product = props => {
         <ChangeQuantity
           handleLessQuantity={lessQuantity}
           handleMoreQuantity={moreQuantity}
-          handleCloseModal={closeModal}
+          handleCloseModal={handleCloseModal}
           quantity={quantity}
           handleAddItemToCart={addItemToCart}
         />
@@ -108,6 +110,13 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 30,
     marginHorizontal: 20
+  },
+  cardContent: {
+    marginTop: 10,
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   actionButtons: {
     flexDirection: 'row'
