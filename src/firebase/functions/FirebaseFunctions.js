@@ -5,7 +5,7 @@ import { createDocument, getAllDocuments, updateDocument } from './FirestoreFunc
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 const userCollection = collection(firestoreDB, 'users')
-export const orderCollection = collection(firestoreDB, 'orders')
+const orderCollection = collection(firestoreDB, 'orders')
 const productCollection = collection(firestoreDB, 'products')
 
 export async function loginUser (email, password) {
@@ -176,4 +176,21 @@ export async function createProduct (newProduct) {
   }
 
   return createProductResponse
+}
+
+export async function createOrder (newOrder) {
+  const createOrderResponse = {
+    success: true,
+    orderId: ''
+  }
+
+  const documentResponse = await createDocument(orderCollection, newOrder)
+
+  if (documentResponse.success) {
+    createOrderResponse.orderId = documentResponse.documentId
+  } else {
+    createOrderResponse.success = false
+  }
+
+  return createOrderResponse
 }

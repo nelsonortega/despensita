@@ -9,12 +9,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as OrderActions from '../store/actions/OrderActions'
 import * as ProductActions from '../store/actions/ProductActions'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { createOrder } from '../firebase/functions/FirebaseFunctions'
 
 const UserInformationScreen = props => {
   const dispatch = useDispatch()
-  const auth = useSelector(state => state.auth)
+  const userId = useSelector(state => state.auth.userId)
   const cart = useSelector(state => state.products.cart)
-  const orderCreated = useSelector(state => state.orders.orderCreated)
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -23,7 +23,7 @@ const UserInformationScreen = props => {
   const [direction, setDirection] = useState('')
 
   const getUserData = async () => {
-    const userData = await AsyncStorage.getItem('userProfileData' + auth.userId)
+    const userData = await AsyncStorage.getItem('userProfileData' + userId)
 
     if (userData !== null) {
       const transformedData = JSON.parse(userData)
@@ -37,7 +37,27 @@ const UserInformationScreen = props => {
 
   const confirmOrder = async () => {
     if (validateInputs()) {
-      dispatch(OrderActions.createOrder(cart, name, phone, express, direction, notes))
+      const newOrder = {
+        products: cart.map(item => ({
+          id: item.id,
+          img: item.img,
+          price: item.price,
+          quantity: item.quantity,
+          title: item.title
+        })),
+        clientData: { name, phone, direction, express, notes, userId },
+        state: 1
+      }
+
+      await createOrder(newOrder)
+
+      dispatch(OrderActions.createOrder())
+
+      Alert.alert(
+        'Éxito', 'Su orden ha sido creada', [
+          { text: 'Volver a Inicio', onPress: finishOrder }
+        ]
+      )
     }
   }
 
@@ -60,21 +80,10 @@ const UserInformationScreen = props => {
   }
 
   useEffect(() => {
-    if (orderCreated) {
-      Alert.alert(
-        'Éxito', 'Su orden ha sido creada', [
-          { text: 'Volver a Inicio', onPress: finishOrder }
-        ]
-      )
-    }
-  }, [orderCreated])
-
-  useEffect(() => {
     getUserData()
   }, [])
 
   const finishOrder = () => {
-    dispatch(OrderActions.finishOrder())
     dispatch(ProductActions.resetCart())
     props.navigation.popToTop()
   }

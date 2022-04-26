@@ -1,9 +1,8 @@
 import OrderItem from '../../models/order'
-import { CREATE_ORDER, FINISH_ORDER, SET_ORDERS, UPDATE_ORDER } from '../actions/OrderActions'
+import { CREATE_ORDER, SET_ORDERS, UPDATE_ORDER } from '../actions/OrderActions'
 
 const initialState = {
-  orders: [],
-  orderCreated: false
+  orders: []
 }
 
 const OrderReducer = (state = initialState, action) => {
@@ -15,8 +14,7 @@ const OrderReducer = (state = initialState, action) => {
       }
     case CREATE_ORDER:
       return {
-        ...state,
-        orderCreated: true
+        ...state
       }
     case UPDATE_ORDER: {
       const updatedOrders = state.orders.map(order => {
@@ -37,11 +35,6 @@ const OrderReducer = (state = initialState, action) => {
         orders: updatedOrders
       }
     }
-    case FINISH_ORDER:
-      return {
-        ...state,
-        orderCreated: false
-      }
   }
   return state
 }

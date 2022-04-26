@@ -6,7 +6,7 @@ const initialState = {
   isUserAdmin: false
 }
 
-export default (state = initialState, action) => {
+const AuthReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTHENTICATE:
       return {
@@ -20,3 +20,5 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+export default AuthReducer
