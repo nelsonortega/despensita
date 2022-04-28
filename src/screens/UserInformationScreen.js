@@ -13,8 +13,9 @@ import { createOrder } from '../firebase/functions/FirebaseFunctions'
 
 const UserInformationScreen = props => {
   const dispatch = useDispatch()
-  const userId = useSelector(state => state.auth.userId)
+
   const cart = useSelector(state => state.products.cart)
+  const userId = useSelector(state => state.auth.userId)
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -49,9 +50,12 @@ const UserInformationScreen = props => {
         state: 1
       }
 
-      await createOrder(newOrder)
+      const response = await createOrder(newOrder)
 
-      dispatch(OrderActions.createOrder())
+      dispatch(OrderActions.createOrder({
+        ...newOrder,
+        id: response.orderId
+      }))
 
       Alert.alert(
         'Éxito', 'Su orden ha sido creada', [

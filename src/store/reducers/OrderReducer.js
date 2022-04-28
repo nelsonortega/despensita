@@ -14,7 +14,8 @@ const OrderReducer = (state = initialState, action) => {
       }
     case CREATE_ORDER:
       return {
-        ...state
+        ...state,
+        orders: [...state.orders, action.newOrder]
       }
     case UPDATE_ORDER: {
       const updatedOrders = state.orders.map(order => {

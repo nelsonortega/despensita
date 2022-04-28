@@ -20,9 +20,10 @@ export const setOrders = (orders) => {
   }
 }
 
-export const createOrder = () => {
+export const createOrder = (newOrder) => {
   return {
-    type: CREATE_ORDER
+    type: CREATE_ORDER,
+    newOrder
   }
 }
 
