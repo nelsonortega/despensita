@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const UserInformationStack = () => {
   const UserInformationStack = createNativeStackNavigator()
-  const isUserLoggedIn = useSelector(state => state.auth.userId)
+  const isUserLoggedIn = useSelector(state => state.user.userId)
 
   return (
     <UserInformationStack.Navigator screenOptions={screenOptions}>

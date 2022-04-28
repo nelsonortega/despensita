@@ -10,12 +10,12 @@ import { logoutUser } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
 const ProfileScreen = props => {
-  const auth = useSelector(state => state.auth)
+  const userId = useSelector(state => state.user.userId)
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [direction, setDirection] = useState('')
-  const [getUserData,, loading] = useUserData(auth.userId)
+  const [getUserData,, loading] = useUserData(userId)
 
   useEffect(async () => {
     const userData = await getUserData()

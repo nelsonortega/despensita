@@ -1,4 +1,4 @@
-import { AUTHENTICATE, LOGOUT } from '../actions/AuthActions'
+import { LOGIN, LOGOUT } from '../actions/UserActions'
 
 const initialState = {
   token: null,
@@ -6,9 +6,9 @@ const initialState = {
   isUserAdmin: false
 }
 
-const AuthReducer = (state = initialState, action) => {
+const UserReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTHENTICATE:
+    case LOGIN:
       return {
         token: action.token,
         userId: action.userId,
@@ -21,4 +21,4 @@ const AuthReducer = (state = initialState, action) => {
   }
 }
 
-export default AuthReducer
+export default UserReducer

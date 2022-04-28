@@ -15,7 +15,7 @@ const UserInformationScreen = props => {
   const dispatch = useDispatch()
 
   const cart = useSelector(state => state.products.cart)
-  const userId = useSelector(state => state.auth.userId)
+  const userId = useSelector(state => state.user.userId)
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')

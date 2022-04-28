@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const ProfileStack = () => {
   const ProfileStack = createNativeStackNavigator()
-  const isUserLoggedIn = useSelector(state => state.auth.userId)
+  const isUserLoggedIn = useSelector(state => state.user.userId)
 
   return (
     <ProfileStack.Navigator screenOptions={screenOptions}>

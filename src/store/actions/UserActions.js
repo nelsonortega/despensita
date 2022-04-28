@@ -1,9 +1,9 @@
+export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
-export const AUTHENTICATE = 'AUTHENTICATE'
 
-export const authenticate = (userId, token, isUserAdmin) => {
+export const login = (userId, token, isUserAdmin) => {
   return {
-    type: AUTHENTICATE,
+    type: LOGIN,
     userId: userId,
     token: token,
     isUserAdmin: isUserAdmin

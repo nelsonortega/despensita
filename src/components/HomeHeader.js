@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 
 const HomeHeader = props => {
-  const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
+  const isUserAdmin = useSelector(state => state.user.isUserAdmin)
 
   return (
     <View>

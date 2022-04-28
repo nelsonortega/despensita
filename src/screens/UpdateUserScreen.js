@@ -8,14 +8,14 @@ import CustomInput from '../components/CustomInput'
 import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 const UpdateUserScreen = props => {
-  const auth = useSelector(state => state.auth)
+  const userId = useSelector(state => state.user.userId)
 
   const { userData } = props.route.params
 
   const [name, setName] = useState(userData.name)
   const [phone, setPhone] = useState(userData.phone)
   const [direction, setDirection] = useState(userData.direction)
-  const [, setUserData, loading] = useUserData(auth.userId)
+  const [, setUserData, loading] = useUserData(userId)
 
   const handleUpdateInfo = async () => {
     if (validateInputs()) {

@@ -10,7 +10,7 @@ import CustomActivityIndicator from '../components/CustomActivityIndicator'
 const OrdersScreen = props => {
   const dispatch = useDispatch()
 
-  const auth = useSelector(state => state.auth)
+  const user = useSelector(state => state.user)
   const orders = useSelector(state => state.orders.orders)
 
   const [error, setError] = useState()
@@ -19,7 +19,7 @@ const OrdersScreen = props => {
 
   const loadOrders = async () => {
     setError(null)
-    const ordersResponse = await getOrders(auth.isUserAdmin, auth.userId)
+    const ordersResponse = await getOrders(user.isUserAdmin, user.userId)
 
     if (!ordersResponse.success) {
       setError('Error al cargar las órdenes')

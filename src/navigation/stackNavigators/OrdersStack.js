@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const OrdersStack = () => {
   const OrdersStack = createNativeStackNavigator()
-  const isUserLoggedIn = useSelector(state => state.auth.userId)
+  const isUserLoggedIn = useSelector(state => state.user.userId)
 
   return (
     <OrdersStack.Navigator screenOptions={screenOptions}>

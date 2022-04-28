@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '../firebase/firebase'
-import * as AuthActions from '../store/actions/AuthActions'
+import * as UserActions from '../store/actions/UserActions'
 import { isUserAdmin } from '../firebase/functions/FirebaseFunctions'
 
 const useLogin = () => {
@@ -11,11 +11,11 @@ const useLogin = () => {
 
   const authenticateUser = async (user) => {
     const isAdmin = await isUserAdmin(user)
-    dispatch(AuthActions.authenticate(user.uid, user.stsTokenManager.accessToken, isAdmin))
+    dispatch(UserActions.login(user.uid, user.stsTokenManager.accessToken, isAdmin))
   }
 
   const logoutUser = () => {
-    dispatch(AuthActions.logout())
+    dispatch(UserActions.logout())
   }
 
   useEffect(() => {

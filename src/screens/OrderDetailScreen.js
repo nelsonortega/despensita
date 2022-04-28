@@ -13,7 +13,7 @@ const OrderDetailScreen = props => {
   const dispatch = useDispatch()
 
   const { order } = props.route.params
-  const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
+  const isUserAdmin = useSelector(state => state.user.isUserAdmin)
 
   const [totalPrice, setTotalPrice] = useState(0)
   const [orderState, setOrderState] = useState(order.state)

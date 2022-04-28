@@ -15,7 +15,7 @@ const Product = props => {
   const dispatch = useDispatch()
   const { id, title, price, img, description } = props.productItem.item
 
-  const isUserAdmin = useSelector(state => state.auth.isUserAdmin)
+  const isUserAdmin = useSelector(state => state.user.isUserAdmin)
 
   const [quantity, setQuantity] = useState(1)
   const [modalVisible, setModalVisible] = useState(false)
