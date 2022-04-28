@@ -1,12 +1,13 @@
 import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
+import { useState, useEffect } from 'react'
+import useUserData from '../hooks/useUserData'
 import CustomText from '../components/CustomText'
-import { useState, useEffect, Fragment } from 'react'
 import { View, StyleSheet, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { logoutUser } from '../firebase/functions/FirebaseFunctions'
+import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
 const ProfileScreen = props => {
   const auth = useSelector(state => state.auth)
@@ -14,25 +15,17 @@ const ProfileScreen = props => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [direction, setDirection] = useState('')
+  const [getUserData,, loading] = useUserData(auth.userId)
 
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem('userProfileData' + auth.userId)
+  useEffect(async () => {
+    const userData = await getUserData()
 
-    if (userData !== null) {
-      const transformedData = JSON.parse(userData)
-      const { name, phone, direction } = transformedData
-
-      setName(name)
-      setPhone(phone)
-      setDirection(direction)
+    if (userData) {
+      setName(userData.name)
+      setPhone(userData.phone)
+      setDirection(userData.direction)
     }
-  }
-
-  useEffect(() => {
-    const focus = props.navigation.addListener('focus', getUserData)
-
-    return focus
-  }, [getUserData])
+  }, [])
 
   const logout = async () => {
     const response = await logoutUser()
@@ -42,19 +35,19 @@ const ProfileScreen = props => {
     }
   }
 
-  const logoutAlert = () => {
+  const handleLogoutAlert = () => {
     Alert.alert(
-      'Atención',
-      'Desea cerrar su sesión?',
-      [
+      'Atención', 'Desea cerrar su sesión?', [
         { text: 'Cancelar', style: 'cancel' },
         { text: 'Sí', onPress: logout }
       ]
     )
   }
 
-  const updateUserInformation = () => {
-    props.navigation.navigate('UpdateUser')
+  const handleUpdateUserInformation = () => {
+    props.navigation.navigate('UpdateUser', {
+      userData: { name, phone, direction }
+    })
   }
 
   return (
@@ -64,20 +57,25 @@ const ProfileScreen = props => {
         <CustomText bold style={styles.userTitle}>Mi información predeterminada</CustomText>
       </View>
       <View style={styles.screen}>
-        <View style={styles.userContainer}>
-          <CustomText bold style={styles.userText}>Nombre</CustomText>
-          <CustomText style={styles.userTextInfo}>{name.length === 0 ? 'No hay información' : name}</CustomText>
-          <CustomText bold style={styles.userText}>Teléfono</CustomText>
-          <CustomText style={styles.userTextInfo}>{phone.length === 0 ? 'No hay información' : phone}</CustomText>
-          <CustomText bold style={styles.userText}>Dirección</CustomText>
-          <CustomText style={styles.userTextInfo}>{direction.length === 0 ? 'No hay información' : direction}</CustomText>
-          <View style={styles.updateUserButtonContainer}>
-            <Button style={styles.updateUserButton} mode='contained' onPress={updateUserInformation} color={Colors.primary} dark uppercase={false}>
-              <CustomText>Actualizar</CustomText>
-            </Button>
-          </View>
-        </View>
-        <Button style={styles.buttonContainer} mode='contained' onPress={logoutAlert} color={Colors.primary} dark uppercase={false}>
+        {!loading &&
+          <View style={styles.userContainer}>
+            <CustomText bold style={styles.userText}>Nombre</CustomText>
+            <CustomText style={styles.userTextInfo}>{!name ? 'No hay información' : name}</CustomText>
+            <CustomText bold style={styles.userText}>Teléfono</CustomText>
+            <CustomText style={styles.userTextInfo}>{!phone ? 'No hay información' : phone}</CustomText>
+            <CustomText bold style={styles.userText}>Dirección</CustomText>
+            <CustomText style={styles.userTextInfo}>{!direction ? 'No hay información' : direction}</CustomText>
+            <View style={styles.updateUserButtonContainer}>
+              <Button style={styles.updateUserButton} mode='contained' onPress={handleUpdateUserInformation} color={Colors.primary} dark uppercase={false}>
+                <CustomText>Actualizar</CustomText>
+              </Button>
+            </View>
+          </View>}
+        {loading &&
+          <View style={styles.activityIndicator}>
+            <CustomActivityIndicator />
+          </View>}
+        <Button style={styles.buttonContainer} mode='contained' onPress={handleLogoutAlert} color={Colors.primary} dark uppercase={false}>
           <CustomText>Cerrar Sesión</CustomText>
         </Button>
       </View>
@@ -123,6 +121,9 @@ const styles = StyleSheet.create({
   },
   updateUserButton: {
     width: '50%'
+  },
+  activityIndicator: {
+    marginTop: '50%'
   }
 })
 

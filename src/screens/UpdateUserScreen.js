@@ -1,47 +1,32 @@
+import { useState } from 'react'
 import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
-import { useState, useEffect } from 'react'
+import useUserData from '../hooks/useUserData'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 const UpdateUserScreen = props => {
   const auth = useSelector(state => state.auth)
 
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [direction, setDirection] = useState('')
+  const { userData } = props.route.params
 
-  const confirmOrder = async () => {
+  const [name, setName] = useState(userData.name)
+  const [phone, setPhone] = useState(userData.phone)
+  const [direction, setDirection] = useState(userData.direction)
+  const [, setUserData, loading] = useUserData(auth.userId)
+
+  const handleUpdateInfo = async () => {
     if (validateInputs()) {
-      await AsyncStorage.setItem('userProfileData' + auth.userId, JSON.stringify({
-        name: name,
-        phone: phone,
-        direction: direction
-      }))
-
+      await setUserData(name, phone, direction)
       Alert.alert('Éxito', 'Campos actualizados correctamente', [{ text: 'Ok' }])
     }
   }
 
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem('userProfileData' + auth.userId)
-
-    if (userData !== null) {
-      const transformedData = JSON.parse(userData)
-      const { name, phone, direction } = transformedData
-
-      setName(name)
-      setPhone(phone)
-      setDirection(direction)
-    }
+  if (loading) {
+    // TO DO
   }
-
-  useEffect(() => {
-    getUserData()
-  }, [])
 
   const validateInputs = () => {
     if (name.trim().length < 10) {
@@ -82,8 +67,8 @@ const UpdateUserScreen = props => {
         />
       </View>
       <View style={styles.loginContainer}>
-        <TouchableOpacity style={styles.loginContainer} onPress={confirmOrder}>
-          <Button style={styles.loginButton} mode='contained' onPress={confirmOrder} color={Colors.primary} dark uppercase={false}>
+        <TouchableOpacity style={styles.loginContainer}>
+          <Button style={styles.loginButton} mode='contained' onPress={handleUpdateInfo} color={Colors.primary} dark uppercase={false}>
             <CustomText>Actualizar Información</CustomText>
           </Button>
         </TouchableOpacity>
