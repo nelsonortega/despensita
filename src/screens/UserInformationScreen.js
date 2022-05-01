@@ -1,40 +1,29 @@
+import { useState } from 'react'
 import Colors from '../constants/Colors'
 import { Button } from 'react-native-paper'
-import { useState, useEffect } from 'react'
+import useUserData from '../hooks/useUserData'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { View, StyleSheet, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import * as UserActions from '../store/actions/UserActions'
 import * as OrderActions from '../store/actions/OrderActions'
 import * as ProductActions from '../store/actions/ProductActions'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createOrder } from '../firebase/functions/FirebaseFunctions'
 
 const UserInformationScreen = props => {
   const dispatch = useDispatch()
 
+  const user = useSelector(state => state.user)
   const cart = useSelector(state => state.products.cart)
-  const userId = useSelector(state => state.user.userId)
 
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
+  const [, setUserData] = useUserData()
   const [notes, setNotes] = useState('')
   const [express, setExpress] = useState(0)
-  const [direction, setDirection] = useState('')
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem('userProfileData' + userId)
-
-    if (userData !== null) {
-      const transformedData = JSON.parse(userData)
-      const { name, phone, direction } = transformedData
-
-      setName(name)
-      setPhone(phone)
-      setDirection(direction)
-    }
-  }
+  const [name, setName] = useState(user.userInformation.name)
+  const [phone, setPhone] = useState(user.userInformation.phone)
+  const [direction, setDirection] = useState(user.userInformation.direction)
 
   const confirmOrder = async () => {
     if (validateInputs()) {
@@ -46,7 +35,7 @@ const UserInformationScreen = props => {
           quantity: item.quantity,
           title: item.title
         })),
-        clientData: { name, phone, direction, express, notes, userId },
+        clientData: { name, phone, direction, express, notes, userId: user.userId },
         state: 1
       }
 
@@ -59,7 +48,7 @@ const UserInformationScreen = props => {
 
       Alert.alert(
         'Éxito', 'Su orden ha sido creada', [
-          { text: 'Volver a Inicio', onPress: finishOrder }
+          { text: 'Ok', onPress: checkUserInformation }
         ]
       )
     }
@@ -83,9 +72,32 @@ const UserInformationScreen = props => {
     }
   }
 
-  useEffect(() => {
-    getUserData()
-  }, [])
+  const saveInformationAndfinishOrder = async () => {
+    await setUserData(name, phone, direction)
+    dispatch(UserActions.setUserInformation(name, phone, direction))
+    finishOrder()
+  }
+
+  const checkUserInformation = () => {
+    if (isUserInformationEmpty()) {
+      Alert.alert(
+        'Alerta', 'Desea guardar esta información para futuros pedidos?', [
+          { text: 'No', style: 'cancel', onPress: finishOrder },
+          { text: 'Si', onPress: saveInformationAndfinishOrder }
+        ]
+      )
+    } else {
+      finishOrder()
+    }
+  }
+
+  const isUserInformationEmpty = () => {
+    return (
+      user.userInformation.name === '' &&
+      user.userInformation.phone === '' &&
+      user.userInformation.direction === ''
+    )
+  }
 
   const finishOrder = () => {
     dispatch(ProductActions.resetCart())

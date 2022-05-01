@@ -1,10 +1,14 @@
+import { useEffect } from 'react'
 import useLogin from '../hooks/useLogin'
+import { useDispatch } from 'react-redux'
 import SideMenu from '../components/SideMenu'
+import useUserData from '../hooks/useUserData'
 import HomeStack from './stackNavigators/HomeStack'
 import OrdersStack from './stackNavigators/OrdersStack'
 import ProfileStack from './stackNavigators/ProfileStack'
 import ContactStack from './stackNavigators/ContactStack'
 import AboutUsStack from './stackNavigators/AboutUsStack'
+import * as UserActions from '../store/actions/UserActions'
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
@@ -12,9 +16,22 @@ import { drawerAboutUsOptions, drawerContactOptions, drawerHomeOptions, drawerOr
 
 const RootNavigator = () => {
   const Drawer = createDrawerNavigator()
-  const [loading] = useLogin()
 
-  if (loading) {
+  const dispatch = useDispatch()
+  const [userId, loading] = useLogin()
+  const [getUserData,, userLoading] = useUserData()
+
+  useEffect(async () => {
+    if (userId) {
+      const userData = await getUserData(userId)
+
+      if (userData) {
+        dispatch(UserActions.setUserInformation(userData.name, userData.phone, userData.direction))
+      }
+    }
+  }, [userId])
+
+  if (loading || userLoading) {
     return <CustomActivityIndicator />
   }
 

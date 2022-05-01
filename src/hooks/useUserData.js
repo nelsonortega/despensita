@@ -1,17 +1,22 @@
 import { Alert } from 'react-native'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const useUserData = (userId) => {
+const useUserData = () => {
+  const userId = useSelector(state => state.user.userId)
+
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const getUserData = async () => {
+  const getUserData = async (id) => {
     setError(false)
     setLoading(true)
 
+    const storageId = id || userId
+
     try {
-      const userData = await AsyncStorage.getItem('userProfileData' + userId)
+      const userData = await AsyncStorage.getItem('userProfileData' + storageId)
 
       if (userData !== null) {
         const transformedData = JSON.parse(userData)

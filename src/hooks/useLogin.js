@@ -7,6 +7,7 @@ import { isUserAdmin } from '../firebase/functions/FirebaseFunctions'
 
 const useLogin = () => {
   const dispatch = useDispatch()
+  const [userId, setUserId] = useState('')
   const [loading, setLoading] = useState(true)
 
   const authenticateUser = async (user) => {
@@ -21,6 +22,7 @@ const useLogin = () => {
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, async (user) => {
       if (user) {
+        setUserId(user.uid)
         await authenticateUser(user)
       } else {
         logoutUser()
@@ -30,7 +32,7 @@ const useLogin = () => {
     })
   }, [])
 
-  return [loading]
+  return [userId, loading]
 }
 
 export default useLogin
