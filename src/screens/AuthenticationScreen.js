@@ -6,7 +6,7 @@ import CustomActivityIndicator from '../components/CustomActivityIndicator'
 import { loginUser, registerUser } from '../firebase/functions/FirebaseFunctions'
 import { StyleSheet, View, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
 
-const AuthenticationScreen = props => {
+const AuthenticationScreen = () => {
   const [error, setError] = useState()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

@@ -1,7 +1,7 @@
 import CustomText from '../components/CustomText'
 import { View, StyleSheet, Image } from 'react-native'
 
-const ContactScreen = props => {
+const ContactScreen = () => {
   return (
     <View style={styles.screen}>
       <Image source={require('../assets/icon.png')} style={styles.icon} />

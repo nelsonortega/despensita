@@ -7,7 +7,7 @@ import * as OrderActions from '../store/actions/OrderActions'
 import { getOrders } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
-const OrdersScreen = props => {
+const OrdersScreen = () => {
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.user)

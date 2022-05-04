@@ -1,7 +1,7 @@
 import CustomText from '../components/CustomText'
 import { View, StyleSheet, Image } from 'react-native'
 
-const AboutUsScreen = props => {
+const AboutUsScreen = () => {
   return (
     <View style={styles.screen}>
       <Image source={require('../assets/about_us.jpg')} style={styles.icon} />

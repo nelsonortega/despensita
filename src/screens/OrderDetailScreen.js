@@ -2,6 +2,7 @@ import Colors from '../constants/Colors'
 import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import ProductItem from '../components/ProductItem'
+import { useRoute } from '@react-navigation/native'
 import { Picker } from '@react-native-picker/picker'
 import { useSelector, useDispatch } from 'react-redux'
 import { ORDER_STATES } from '../constants/OrderStates'
@@ -9,10 +10,11 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 import * as OrderActions from '../store/actions/OrderActions'
 import { updateOrder } from '../firebase/functions/FirebaseFunctions'
 
-const OrderDetailScreen = props => {
+const OrderDetailScreen = () => {
+  const route = useRoute()
   const dispatch = useDispatch()
 
-  const { order } = props.route.params
+  const { order } = route.params
   const isUserAdmin = useSelector(state => state.user.isUserAdmin)
 
   const [totalPrice, setTotalPrice] = useState(0)
