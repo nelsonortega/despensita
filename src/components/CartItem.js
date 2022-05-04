@@ -5,14 +5,16 @@ import ChangeQuantity from './ChangeQuantity'
 import { StyleSheet, View, Image, TouchableOpacity, Modal } from 'react-native'
 
 const CartItem = props => {
-  const [quantity, setQuantity] = useState(props.cartItem.item.quantity)
+  const { cartItem } = props
+
+  const [quantity, setQuantity] = useState(cartItem.quantity)
   const [modalVisible, setModalVisible] = useState(false)
 
   const editCartItem = () => {
     if (quantity === 0) {
-      props.delete(props.cartItem.item.id)
+      props.delete(cartItem.id)
     } else {
-      props.edit(props.cartItem.item.id, quantity)
+      props.edit(cartItem.id, quantity)
     }
     setModalVisible(false)
   }
@@ -23,7 +25,7 @@ const CartItem = props => {
 
   const closeModal = () => {
     setModalVisible(false)
-    setQuantity(props.cartItem.item.quantity)
+    setQuantity(cartItem.quantity)
   }
 
   const moreQuantity = () => {
@@ -44,19 +46,19 @@ const CartItem = props => {
         <View style={styles.productContainer}>
           <Image
             style={styles.productImage}
-            source={{ uri: props.cartItem.item.img }}
+            source={{ uri: cartItem.img }}
           />
           <View style={styles.detailsContainer}>
-            <CustomText bold style={styles.title}>{props.cartItem.item.title}</CustomText>
-            <CustomText>Cantidad: {props.cartItem.item.quantity}</CustomText>
-            <CustomText bold>₡{props.cartItem.item.price}</CustomText>
+            <CustomText bold style={styles.title}>{cartItem.title}</CustomText>
+            <CustomText>Cantidad: {cartItem.quantity}</CustomText>
+            <CustomText bold>₡{cartItem.price}</CustomText>
           </View>
         </View>
         <View style={styles.actionButtons}>
           <TouchableOpacity style={styles.editButton} onPress={openModal}>
             <Ionicons size={20} color='white' name='md-create' />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.deleteButton} onPress={() => props.delete(props.cartItem.item.id)}>
+          <TouchableOpacity style={styles.deleteButton} onPress={() => props.delete(cartItem.id)}>
             <Ionicons size={20} color='white' name='md-trash' />
           </TouchableOpacity>
         </View>

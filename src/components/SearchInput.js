@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as ProductActions from '../store/actions/ProductActions'
 
-const SearchInput = props => {
+const SearchInput = () => {
   const dispatch = useDispatch()
 
   const products = useSelector(state => state.products.products)

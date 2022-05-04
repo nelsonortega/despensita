@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import CustomText from './CustomText'
-import { useState, useEffect } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { ORDER_STATES } from '../constants/OrderStates'
 import { useNavigation } from '@react-navigation/native'
@@ -8,22 +8,17 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 const OrderItem = props => {
   const navigation = useNavigation()
 
-  const [total, setTotal] = useState(0)
-  const [orderState, setOrderState] = useState()
+  const orderState = ORDER_STATES[props.order.state - 1].name
 
-  useEffect(() => {
-    let totalPrice = 0
-    props.order.products.forEach(product => {
-      totalPrice = totalPrice + (parseInt(product.price) * product.quantity)
-    })
-    setTotal(totalPrice)
-
-    const stateObject = ORDER_STATES.find(state => state.id === props.order.state)
-    setOrderState(stateObject.name)
-  }, [props.order])
+  const [totalPrice] = useState(() => {
+    return props.order.products.reduce((acc, product) => {
+      return acc + (parseInt(product.price) * product.quantity)
+    }, 0)
+  })
 
   const openDetail = () => {
     navigation.navigate('OrderDetail', {
+      totalPrice,
       order: props.order
     })
   }
@@ -41,7 +36,7 @@ const OrderItem = props => {
               ? props.order.clientData.name.substr(0, 15 - 1) + '...'
               : props.order.clientData.name}
           </CustomText>
-          <CustomText bold>₡{total}</CustomText>
+          <CustomText bold>₡{totalPrice}</CustomText>
           {props.order.clientData.express === 1 &&
             <CustomText bold>Express</CustomText>}
         </View>

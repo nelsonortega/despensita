@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import Colors from '../constants/Colors'
-import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import ProductItem from '../components/ProductItem'
 import { useRoute } from '@react-navigation/native'
@@ -14,19 +14,10 @@ const OrderDetailScreen = () => {
   const route = useRoute()
   const dispatch = useDispatch()
 
-  const { order } = route.params
+  const { order, totalPrice } = route.params
   const isUserAdmin = useSelector(state => state.user.isUserAdmin)
 
-  const [totalPrice, setTotalPrice] = useState(0)
   const [orderState, setOrderState] = useState(order.state)
-
-  useEffect(() => {
-    let total = 0
-    order.products.forEach(product => {
-      total = total + (parseInt(product.price) * product.quantity)
-    })
-    setTotalPrice(total)
-  }, [])
 
   const pickerList = ORDER_STATES.map(state =>
     <Picker.Item label={state.name} value={state.id} key={state.id} />

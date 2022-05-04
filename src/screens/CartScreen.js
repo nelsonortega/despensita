@@ -22,7 +22,7 @@ const CartScreen = () => {
   }
 
   const renderCartItem = cartItem => {
-    return <CartItem cartItem={cartItem} delete={deleteCartItem} edit={editCartItem} />
+    return <CartItem cartItem={cartItem.item} delete={deleteCartItem} edit={editCartItem} />
   }
 
   const continueOrder = () => {
