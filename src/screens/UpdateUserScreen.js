@@ -1,27 +1,24 @@
 import { useState } from 'react'
 import Colors from '../constants/Colors'
+import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
 import useUserData from '../hooks/useUserData'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
-import { useDispatch, useSelector } from 'react-redux'
-import * as UserActions from '../store/actions/UserActions'
 import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
-const UpdateUserScreen = props => {
-  const dispatch = useDispatch()
+const UpdateUserScreen = () => {
   const userInformation = useSelector(state => state.user.userInformation)
 
-  const [, setUserData, loading] = useUserData()
+  const { saveUserData, loading } = useUserData()
   const [name, setName] = useState(userInformation.name)
   const [phone, setPhone] = useState(userInformation.phone)
   const [direction, setDirection] = useState(userInformation.direction)
 
   const handleUpdateInfo = async () => {
     if (validateInputs()) {
-      await setUserData(name, phone, direction)
-      dispatch(UserActions.setUserInformation(name, phone, direction))
+      await saveUserData(name, phone, direction)
       Alert.alert('Éxito', 'Campos actualizados correctamente', [{ text: 'Ok' }])
     }
   }

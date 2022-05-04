@@ -1,9 +1,11 @@
 import { Alert } from 'react-native'
-import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import * as UserActions from '../store/actions/UserActions'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const useUserData = () => {
+  const dispatch = useDispatch()
   const userId = useSelector(state => state.user.userId)
 
   const [error, setError] = useState(false)
@@ -19,8 +21,8 @@ const useUserData = () => {
       const userData = await AsyncStorage.getItem('userProfileData' + storageId)
 
       if (userData !== null) {
-        const transformedData = JSON.parse(userData)
-        return transformedData
+        const { name, phone, direction } = JSON.parse(userData)
+        dispatch(UserActions.setUserInformation(name, phone, direction))
       }
     } catch (error) {
       setError(true)
@@ -29,7 +31,7 @@ const useUserData = () => {
     }
   }
 
-  const setUserData = async (newName, newPhone, newDirection) => {
+  const saveUserData = async (newName, newPhone, newDirection) => {
     setLoading(true)
     setError(false)
 
@@ -41,6 +43,7 @@ const useUserData = () => {
       })
 
       await AsyncStorage.setItem('userProfileData' + userId, userDataJSON)
+      dispatch(UserActions.setUserInformation(newName, newPhone, newDirection))
     } catch (error) {
       setError(true)
     } finally {
@@ -54,7 +57,7 @@ const useUserData = () => {
     }
   }, [error])
 
-  return [getUserData, setUserData, loading]
+  return { getUserData, saveUserData, loading }
 }
 
 export default useUserData

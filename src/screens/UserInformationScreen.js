@@ -7,7 +7,6 @@ import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { View, StyleSheet, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import * as UserActions from '../store/actions/UserActions'
 import * as OrderActions from '../store/actions/OrderActions'
 import * as ProductActions from '../store/actions/ProductActions'
 import { createOrder } from '../firebase/functions/FirebaseFunctions'
@@ -18,7 +17,7 @@ const UserInformationScreen = props => {
   const user = useSelector(state => state.user)
   const cart = useSelector(state => state.products.cart)
 
-  const [, setUserData] = useUserData()
+  const { saveUserData } = useUserData()
   const [notes, setNotes] = useState('')
   const [express, setExpress] = useState(0)
   const [name, setName] = useState(user.userInformation.name)
@@ -73,8 +72,7 @@ const UserInformationScreen = props => {
   }
 
   const saveInformationAndfinishOrder = async () => {
-    await setUserData(name, phone, direction)
-    dispatch(UserActions.setUserInformation(name, phone, direction))
+    await saveUserData(name, phone, direction)
     finishOrder()
   }
 
