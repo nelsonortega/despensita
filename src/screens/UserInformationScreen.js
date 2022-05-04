@@ -7,12 +7,14 @@ import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { View, StyleSheet, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 import * as OrderActions from '../store/actions/OrderActions'
 import * as ProductActions from '../store/actions/ProductActions'
 import { createOrder } from '../firebase/functions/FirebaseFunctions'
 
-const UserInformationScreen = props => {
+const UserInformationScreen = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
 
   const user = useSelector(state => state.user)
   const cart = useSelector(state => state.products.cart)
@@ -99,7 +101,7 @@ const UserInformationScreen = props => {
 
   const finishOrder = () => {
     dispatch(ProductActions.resetCart())
-    props.navigation.popToTop()
+    navigation.popToTop()
   }
 
   return (

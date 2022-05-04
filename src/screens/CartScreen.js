@@ -2,11 +2,13 @@ import Colors from '../constants/Colors'
 import CartItem from '../components/CartItem'
 import CustomText from '../components/CustomText'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 import * as ProductActions from '../store/actions/ProductActions'
 import { View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native'
 
-const CartScreen = props => {
+const CartScreen = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
 
   const cart = useSelector(state => state.products.cart)
   const totalPrice = useSelector(state => state.products.totalPrice)
@@ -25,7 +27,7 @@ const CartScreen = props => {
 
   const continueOrder = () => {
     if (cart.length !== 0) {
-      props.navigation.navigate('UserInformation')
+      navigation.navigate('UserInformation')
     } else {
       Alert.alert('Atención', 'No hay productos en el carrito', [{ text: 'Ok' }])
     }

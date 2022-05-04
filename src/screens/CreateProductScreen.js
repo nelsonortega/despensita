@@ -8,13 +8,15 @@ import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { CATEGORIES } from '../constants/Categories'
+import { useNavigation } from '@react-navigation/native'
 import * as ProductActions from '../store/actions/ProductActions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 import { createProduct, uploadImage } from '../firebase/functions/FirebaseFunctions'
 import { View, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native'
 
-const CreateProductScreen = props => {
+const CreateProductScreen = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
 
   const [error, setError] = useState()
   const [title, setTitle] = useState('')
@@ -88,7 +90,7 @@ const CreateProductScreen = props => {
       Alert.alert(
         'Éxito', 'Producto añadido correctamente', [
           { text: 'Agregar otro', onPress: addOtherProduct },
-          { text: 'Volver a Inicio', onPress: () => { props.navigation.popToTop() } }
+          { text: 'Volver a Inicio', onPress: () => { navigation.popToTop() } }
         ]
       )
     } catch (error) {

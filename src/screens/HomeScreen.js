@@ -3,13 +3,15 @@ import { useState, useEffect } from 'react'
 import CustomText from '../components/CustomText'
 import HomeHeader from '../components/HomeHeader'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 import { View, StyleSheet, FlatList } from 'react-native'
 import * as ProductActions from '../store/actions/ProductActions'
 import { getProducts } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
-const HomeScreen = props => {
+const HomeScreen = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
 
   const products = useSelector(state => state.products.filteredProducts)
 
@@ -42,7 +44,7 @@ const HomeScreen = props => {
   }, [])
 
   const createProduct = () => {
-    props.navigation.navigate('CreateProduct')
+    navigation.navigate('CreateProduct')
   }
 
   const renderGridItem = productItem => {
