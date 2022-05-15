@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native'
-import Colors from '../../constants/Colors'
+import { COLORS } from '../../constants/Colors'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { WINDOW_SIZES } from '../../constants/WindowSizes'
 
@@ -8,7 +8,7 @@ const windowWidth = Dimensions.get('window').width
 export const drawerNavigatorOptions = {
   headerShown: false,
   drawerActiveTintColor: 'white',
-  drawerActiveBackgroundColor: Colors.primary,
+  drawerActiveBackgroundColor: COLORS.primary,
   drawerType: windowWidth >= WINDOW_SIZES.maxWidth ? 'permanent' : 'front',
   drawerLabelStyle: {
     fontFamily: 'open-sans-bold'

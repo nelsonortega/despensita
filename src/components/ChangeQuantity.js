@@ -1,6 +1,6 @@
 import CustomText from './CustomText'
-import Colors from '../constants/Colors'
 import { Button } from 'react-native-paper'
+import { COLORS } from '../constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 
@@ -18,10 +18,10 @@ const ChangeQuantity = props => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
-          <Button color={Colors.primary} onPress={props.handleAddItemToCart}>
+          <Button color={COLORS.primary} onPress={props.handleAddItemToCart}>
             <CustomText bold>Agregar</CustomText>
           </Button>
-          <Button color={Colors.primary} onPress={props.handleCloseModal}>
+          <Button color={COLORS.primary} onPress={props.handleCloseModal}>
             <CustomText bold>Cancelar</CustomText>
           </Button>
         </View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.primary
+    backgroundColor: COLORS.primary
   },
   minusIcon: {
     fontSize: 50,

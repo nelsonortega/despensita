@@ -1,4 +1,4 @@
-import Colors from '../constants/Colors'
+import { COLORS } from '../constants/Colors'
 import { StyleSheet, TextInput } from 'react-native'
 
 const CustomInput = props => {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 15,
     fontFamily: 'open-sans',
-    backgroundColor: Colors.secondary
+    backgroundColor: COLORS.secondary
   }
 })
 

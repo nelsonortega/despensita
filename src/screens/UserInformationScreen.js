@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Colors from '../constants/Colors'
 import { Button } from 'react-native-paper'
+import { COLORS } from '../constants/Colors'
 import useUserData from '../hooks/useUserData'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
@@ -146,7 +146,7 @@ const UserInformationScreen = () => {
           />}
       </View>
       <View style={styles.loginContainer}>
-        <Button style={styles.loginButton} mode='contained' onPress={confirmOrder} color={Colors.primary} dark uppercase={false}>
+        <Button style={styles.loginButton} mode='contained' onPress={confirmOrder} color={COLORS.primary} dark uppercase={false}>
           <CustomText>Finalizar pedido</CustomText>
         </Button>
       </View>
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     borderRadius: 10,
-    backgroundColor: Colors.primary
+    backgroundColor: COLORS.primary
   },
   buttonText: {
     color: 'white',
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 7,
     width: '90%',
-    backgroundColor: Colors.secondary,
+    backgroundColor: COLORS.secondary,
     marginBottom: 20
   },
   picker: {

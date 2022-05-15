@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
+import { COLORS } from '../constants/Colors'
 import useUserData from '../hooks/useUserData'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
@@ -65,7 +65,7 @@ const UpdateUserScreen = () => {
         {loading && <CustomActivityIndicator small />}
         {!loading &&
           <TouchableOpacity style={styles.loginContainer}>
-            <Button style={styles.loginButton} mode='contained' onPress={handleUpdateInfo} color={Colors.primary} dark uppercase={false}>
+            <Button style={styles.loginButton} mode='contained' onPress={handleUpdateInfo} color={COLORS.primary} dark uppercase={false}>
               <CustomText>Actualizar Información</CustomText>
             </Button>
           </TouchableOpacity>}
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     borderRadius: 10,
-    backgroundColor: Colors.primary
+    backgroundColor: COLORS.primary
   }
 })
 

@@ -1,6 +1,6 @@
-import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
+import { COLORS } from '../constants/Colors'
 import CustomText from '../components/CustomText'
 import { View, StyleSheet, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -45,12 +45,12 @@ const ProfileScreen = props => {
           <CustomText bold style={styles.userText}>Dirección</CustomText>
           <CustomText style={styles.userTextInfo}>{!direction ? 'No hay información' : direction}</CustomText>
           <View style={styles.updateUserButtonContainer}>
-            <Button style={styles.updateUserButton} mode='contained' onPress={handleUpdateUserInformation} color={Colors.primary} dark uppercase={false}>
+            <Button style={styles.updateUserButton} mode='contained' onPress={handleUpdateUserInformation} color={COLORS.primary} dark uppercase={false}>
               <CustomText>Actualizar</CustomText>
             </Button>
           </View>
         </View>
-        <Button style={styles.buttonContainer} mode='contained' onPress={handleLogoutAlert} color={Colors.primary} dark uppercase={false}>
+        <Button style={styles.buttonContainer} mode='contained' onPress={handleLogoutAlert} color={COLORS.primary} dark uppercase={false}>
           <CustomText>Cerrar Sesión</CustomText>
         </Button>
       </View>

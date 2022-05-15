@@ -1,4 +1,4 @@
-import Colors from '../constants/Colors'
+import { COLORS } from '../constants/Colors'
 import CartItem from '../components/CartItem'
 import CustomText from '../components/CustomText'
 import { useSelector, useDispatch } from 'react-redux'
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     height: '60%',
     borderRadius: 7,
     justifyContent: 'center',
-    backgroundColor: Colors.primary
+    backgroundColor: COLORS.primary
   },
   buttonText: {
     color: 'white',

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Colors from '../constants/Colors'
+import { COLORS } from '../constants/Colors'
 import CustomText from '../components/CustomText'
 import ProductItem from '../components/ProductItem'
 import { useRoute } from '@react-navigation/native'
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     marginLeft: '5%',
     marginBottom: 20,
-    backgroundColor: Colors.secondary
+    backgroundColor: COLORS.secondary
   },
   picker: {
     height: 60,

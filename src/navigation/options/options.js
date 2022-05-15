@@ -1,11 +1,11 @@
-import Colors from '../../constants/Colors'
+import { COLORS } from '../../constants/Colors'
 import HeaderIcon from '../../components/HeaderIcon'
 
 export const screenOptions = {
   title: 'La Despensita',
   headerTitleAlign: 'center',
   headerStyle: {
-    backgroundColor: Colors.primary
+    backgroundColor: COLORS.primary
   },
   headerTitleStyle: {
     color: 'white',

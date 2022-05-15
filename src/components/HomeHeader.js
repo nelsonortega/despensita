@@ -1,8 +1,8 @@
 import CustomText from './CustomText'
 import SearchInput from './SearchInput'
-import Colors from '../constants/Colors'
 import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
+import { COLORS } from '../constants/Colors'
 import { StyleSheet, View } from 'react-native'
 
 const HomeHeader = props => {
@@ -17,7 +17,7 @@ const HomeHeader = props => {
           mode='contained'
           uppercase={false}
           style={styles.button}
-          color={Colors.primary}
+          color={COLORS.primary}
           onPress={props.handleCreateProduct}
         >
           <CustomText>Crear Producto</CustomText>

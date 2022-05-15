@@ -1,10 +1,10 @@
-import Colors from '../constants/Colors'
+import { COLORS } from '../constants/Colors'
 import { StyleSheet, View, ActivityIndicator } from 'react-native'
 
 const LoginActivityIndicator = props => {
   return (
     <View style={props.small ? styles.smallIndicator : styles.screen}>
-      <ActivityIndicator size='large' color={Colors.primary} />
+      <ActivityIndicator size='large' color={COLORS.primary} />
     </View>
   )
 }

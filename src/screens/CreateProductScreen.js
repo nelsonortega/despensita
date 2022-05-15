@@ -1,7 +1,7 @@
 import Product from '../models/product'
-import Colors from '../constants/Colors'
 import { useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
+import { COLORS } from '../constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 import CustomText from '../components/CustomText'
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 7,
     width: '90%',
-    backgroundColor: Colors.secondary,
+    backgroundColor: COLORS.secondary,
     marginBottom: 20
   },
   picker: {
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.secondary
+    backgroundColor: COLORS.secondary
   },
   buttonContainer: {
     marginVertical: 20,
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   button: {
     width: '90%',
     borderRadius: 7,
-    backgroundColor: Colors.primary
+    backgroundColor: COLORS.primary
   },
   buttonText: {
     color: 'white',

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import CustomText from './CustomText'
-import Colors from '../constants/Colors'
 import CartItem from '../models/cartItem'
+import { COLORS } from '../constants/Colors'
 import ChangeQuantity from './ChangeQuantity'
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -86,7 +86,7 @@ const Product = props => {
               <Button style={styles.deleteButton} mode='contained' onPress={handleDeleteProduct} color='red' dark uppercase={false}>
                 <Icon name='trash-o' size={28} />
               </Button>}
-            <Button mode='contained' onPress={handleOpenModal} color={Colors.primary} dark uppercase={false}>
+            <Button mode='contained' onPress={handleOpenModal} color={COLORS.primary} dark uppercase={false}>
               <Ionicons size={30} color='white' name='md-add' style={styles.icon} />
             </Button>
           </View>

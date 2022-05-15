@@ -1,5 +1,5 @@
-import Colors from '../constants/Colors'
 import { useState, useEffect } from 'react'
+import { COLORS } from '../constants/Colors'
 import CustomText from '../components/CustomText'
 import CustomInput from '../components/CustomInput'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   loginButton: {
     width: '90%',
     borderRadius: 50,
-    backgroundColor: Colors.primary
+    backgroundColor: COLORS.primary
   },
   buttonText: {
     color: 'white',
