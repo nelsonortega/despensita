@@ -1,4 +1,4 @@
-import OrderItem from '../../models/order'
+import Order from '../../models/order'
 import { CREATE_ORDER, SET_ORDERS, UPDATE_ORDER } from '../actions/OrderActions'
 
 const initialState = {
@@ -20,7 +20,7 @@ const OrderReducer = (state = initialState, action) => {
     case UPDATE_ORDER: {
       const updatedOrders = state.orders.map(order => {
         if (order.id === action.updatedOrder.id) {
-          return new OrderItem(
+          return new Order(
             action.updatedOrder.id,
             action.updatedOrder.products,
             action.updatedOrder.clientData,
