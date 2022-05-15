@@ -48,7 +48,7 @@ export const productSlice = createSlice({
         updatedCart = [action.payload, ...state.cart]
       }
 
-      state.totalPrice = updatedCart.reduce((acc, product) => acc + product.price * product.quantity, 0)
+      state.totalPrice = updatedCart.reduce((acc, cartItem) => acc + cartItem.price * cartItem.quantity, 0)
       state.cart = updatedCart
     },
     editItemFromCart: (state, action: PayloadAction<IEditAction>) => {
@@ -63,10 +63,15 @@ export const productSlice = createSlice({
         return cartItem
       })
 
-      state.totalPrice = updatedCart.reduce((acc, product) => acc + product.price * product.quantity, 0)
+      state.totalPrice = updatedCart.reduce((acc, cartItem) => acc + cartItem.price * cartItem.quantity, 0)
       state.cart = updatedCart
     },
-    deleteItemFromCart: (state, action) => {},
+    deleteItemFromCart: (state, action: PayloadAction<string>) => {
+      const updatedCart: ICartItem[] = state.cart.filter(cartItem => cartItem.id !== action.payload)
+
+      state.totalPrice = updatedCart.reduce((acc, cartItem) => acc + cartItem.price * cartItem.quantity, 0)
+      state.cart = updatedCart
+    },
     setProducts: (state, action) => {},
     createProduct: (state, action) => {},
     deleteProduct: (state, action) => {},
