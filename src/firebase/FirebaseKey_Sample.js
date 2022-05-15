@@ -1,8 +1,9 @@
-export default {
+export const FirebaseKey = {
   apiKey: '',
   authDomain: '',
   projectId: '',
   storageBucket: '',
   messagingSenderId: '',
-  appId: ''
+  appId: '',
+  measurementId: ''
 }
