@@ -1,4 +1,4 @@
 export interface IOrderState {
-  id: string
+  id: number
   name: string
 }
