@@ -9,7 +9,7 @@ const useCustomFonts = (): [boolean] => {
   })
 
   useEffect(() => {
-    if (error === null) {
+    if (error !== null) {
       Alert.alert('Error', 'Error al cargar las fuentes', [{ text: 'Ok' }])
     }
   }, [error])
