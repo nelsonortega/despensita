@@ -19,15 +19,15 @@ const ProductReducer = (state = initialState, action) => {
       const isProductAlreadyAdded = state.cart.some(product => product.id === action.product.id)
       const updatedCart = isProductAlreadyAdded
         ? state.cart.map(product => {
-            if (product.id === action.product.id) {
-              return {
-                ...product,
-                quantity: action.edit ? action.product.quantity : product.quantity + action.product.quantity
-              }
+          if (product.id === action.product.id) {
+            return {
+              ...product,
+              quantity: action.edit ? action.product.quantity : product.quantity + action.product.quantity
             }
+          }
 
-            return product
-          })
+          return product
+        })
         : [action.product, ...state.cart]
 
       return {
