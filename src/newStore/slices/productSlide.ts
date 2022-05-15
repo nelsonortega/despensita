@@ -1,11 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { IProduct } from '../../interfaces/IProduct'
+import { ICartItem } from '../../interfaces/ICartItem'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+interface IEditAction {
+  id: string
+  quantity: number
+}
 
 interface IProductInitialState {
   filteredProducts: IProduct[]
   totalPrice: number
   products: IProduct[]
-  cart: IProduct[]
+  cart: ICartItem[]
 }
 
 const initialState: IProductInitialState = {
@@ -19,9 +25,47 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    resetCart: (state, action) => {},
-    addItemToCart: (state, action) => {},
-    editItemFromCart: (state, action) => {},
+    resetCart: (state) => {
+      state.totalPrice = 0
+      state.cart = []
+    },
+    addItemToCart: (state, action: PayloadAction<ICartItem>) => {
+      let updatedCart: ICartItem[]
+      const isProductAlreadyAdded = state.cart.some(cartItem => cartItem.id === action.payload.id)
+
+      if (isProductAlreadyAdded) {
+        updatedCart = state.cart.map(cartItem => {
+          if (cartItem.id === action.payload.id) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity + action.payload.quantity
+            }
+          }
+
+          return cartItem
+        })
+      } else {
+        updatedCart = [action.payload, ...state.cart]
+      }
+
+      state.totalPrice = updatedCart.reduce((acc, product) => acc + product.price * product.quantity, 0)
+      state.cart = updatedCart
+    },
+    editItemFromCart: (state, action: PayloadAction<IEditAction>) => {
+      const updatedCart: ICartItem[] = state.cart.map(cartItem => {
+        if (cartItem.id === action.payload.id) {
+          return {
+            ...cartItem,
+            quantity: action.payload.quantity
+          }
+        }
+
+        return cartItem
+      })
+
+      state.totalPrice = updatedCart.reduce((acc, product) => acc + product.price * product.quantity, 0)
+      state.cart = updatedCart
+    },
     deleteItemFromCart: (state, action) => {},
     setProducts: (state, action) => {},
     createProduct: (state, action) => {},
