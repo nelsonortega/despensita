@@ -1,24 +1,16 @@
-import { useState } from 'react'
 import store from './src/store/store'
 import { Provider } from 'react-redux'
-import AppLoading from 'expo-app-loading'
-import useFonts from './src/hooks/useFonts'
 import { StatusBar } from 'expo-status-bar'
+import useCustomFonts from './src/hooks/useCustomFonts'
 import RootNavigator from './src/navigation/RootNavigator'
 import { Provider as PaperProvider } from 'react-native-paper'
+import CustomActivityIndicator from './src/components/CustomActivityIndicator'
 
 const App = () => {
-  const [fontLoaded, setFontLoaded] = useState(false)
-  const [fetchFonts, setFontError] = useFonts()
+  const [isFontLoaded] = useCustomFonts()
 
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setFontLoaded(true)}
-        onError={error => setFontError(error)}
-      />
-    )
+  if (!isFontLoaded) {
+    return <CustomActivityIndicator />
   }
 
   return (
