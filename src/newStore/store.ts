@@ -6,7 +6,9 @@ import { productReducer } from './slices/productSlide'
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    order: orderReducer,
-    product: productReducer
+    orders: orderReducer,
+    products: productReducer
   }
 })
+
+export type IStoreState = ReturnType<typeof store.getState>

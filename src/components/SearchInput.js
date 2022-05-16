@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Searchbar } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import * as ProductActions from '../store/actions/ProductActions'
+import { filterProducts } from '../newStore/slices/productSlide'
 
 const SearchInput = () => {
   const dispatch = useDispatch()
@@ -15,10 +15,10 @@ const SearchInput = () => {
     setSearchText(text)
 
     if (text.trim().length === 0) {
-      dispatch(ProductActions.filterProducts(products))
+      dispatch(filterProducts(products))
     } else {
       const filteredProducts = products.filter(product => product.title.toLowerCase().includes(text.toLowerCase()))
-      dispatch(ProductActions.filterProducts(filteredProducts))
+      dispatch(filterProducts(filteredProducts))
     }
   }
 

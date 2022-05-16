@@ -22,7 +22,7 @@ const initialState: IProductInitialState = {
 }
 
 export const productSlice = createSlice({
-  name: 'product',
+  name: 'products',
   initialState,
   reducers: {
     resetCart: (state) => {

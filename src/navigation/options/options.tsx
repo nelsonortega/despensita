@@ -1,7 +1,8 @@
 import { COLORS } from '../../constants/Colors'
 import HeaderIcon from '../../components/HeaderIcon'
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 
-export const screenOptions = {
+export const screenOptions: NativeStackNavigationOptions = {
   title: 'La Despensita',
   headerTitleAlign: 'center',
   headerStyle: {

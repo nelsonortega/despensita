@@ -1,4 +1,3 @@
-import Product from '../models/product'
 import { useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { COLORS } from '../constants/Colors'
@@ -9,10 +8,10 @@ import CustomInput from '../components/CustomInput'
 import { Picker } from '@react-native-picker/picker'
 import { CATEGORIES } from '../constants/Categories'
 import { useNavigation } from '@react-navigation/native'
-import * as ProductActions from '../store/actions/ProductActions'
+import { createProduct } from '../newStore/slices/productSlide'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
-import { createProduct, uploadImage } from '../firebase/functions/FirebaseFunctions'
 import { View, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native'
+import { createProduct as createProductFirestore, uploadImage } from '../firebase/functions/FirebaseFunctions'
 
 const CreateProductScreen = () => {
   const dispatch = useDispatch()
@@ -44,17 +43,13 @@ const CreateProductScreen = () => {
         img: imageResponse.url
       }
 
-      const { success, productId } = await createProduct(newProduct)
+      const { success, productId } = await createProductFirestore(newProduct)
 
       if (success) {
-        dispatch(ProductActions.createProduct(new Product(
-          productId,
-          title,
-          description,
-          category,
-          price,
-          imageResponse.url
-        )))
+        dispatch(createProduct({
+          id: productId,
+          ...newProduct
+        }))
       }
     }
   }

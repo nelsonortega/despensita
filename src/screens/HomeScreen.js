@@ -5,7 +5,7 @@ import HomeHeader from '../components/HomeHeader'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { View, StyleSheet, FlatList } from 'react-native'
-import * as ProductActions from '../store/actions/ProductActions'
+import { setProducts } from '../newStore/slices/productSlide'
 import { getProducts } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
@@ -28,7 +28,7 @@ const HomeScreen = () => {
     }
 
     if (productsResponse.success) {
-      dispatch(ProductActions.setProducts(productsResponse.products))
+      dispatch(setProducts(productsResponse.products))
     }
   }
 

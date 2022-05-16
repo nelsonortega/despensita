@@ -7,16 +7,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const OrdersStack = () => {
   const OrdersStack = createNativeStackNavigator()
-  const isUserLoggedIn = useSelector(state => state.user.userId)
+  const user = useSelector(state => state.user)
 
   return (
     <OrdersStack.Navigator screenOptions={screenOptions}>
-      {isUserLoggedIn &&
+      {user.userId !== '' &&
         <>
           <OrdersStack.Screen name='OrdersScreen' component={OrdersScreen} options={screenHeaderIcon} />
           <OrdersStack.Screen name='OrderDetail' component={OrderDetailScreen} />
         </>}
-      {!isUserLoggedIn &&
+      {user.userId === '' &&
         <OrdersStack.Screen name='Authentication' component={AuthenticationScreen} options={screenHeaderIcon} />}
     </OrdersStack.Navigator>
   )

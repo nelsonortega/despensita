@@ -1,14 +1,14 @@
-import UserReducer from './reducers/UserReducer'
-import OrderReducer from './reducers/OrderReducer'
-import { createStore, combineReducers } from 'redux'
-import ProductReducer from './reducers/ProductReducer'
+// import UserReducer from './reducers/UserReducer'
+// import OrderReducer from './reducers/OrderReducer'
+// import { createStore, combineReducers } from 'redux'
+// import ProductReducer from './reducers/ProductReducer'
 
-const rootReducer = combineReducers({
-  user: UserReducer,
-  orders: OrderReducer,
-  products: ProductReducer
-})
+// const rootReducer = combineReducers({
+//   user: UserReducer,
+//   orders: OrderReducer,
+//   products: ProductReducer
+// })
 
-const store = createStore(rootReducer)
+// const store = createStore(rootReducer)
 
-export default store
+// export default store

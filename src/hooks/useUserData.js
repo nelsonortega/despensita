@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import * as UserActions from '../store/actions/UserActions'
+import { setUserInformation } from '../newStore/slices/userSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const useUserData = () => {
@@ -22,7 +22,7 @@ const useUserData = () => {
 
       if (userData !== null) {
         const { name, phone, direction } = JSON.parse(userData)
-        dispatch(UserActions.setUserInformation(name, phone, direction))
+        dispatch(setUserInformation({ name, phone, direction }))
       }
     } catch (error) {
       setError(true)
@@ -36,14 +36,16 @@ const useUserData = () => {
     setError(false)
 
     try {
-      const userDataJSON = JSON.stringify({
+      const userData = {
         name: newName,
         phone: newPhone,
         direction: newDirection
-      })
+      }
+
+      const userDataJSON = JSON.stringify(userData)
 
       await AsyncStorage.setItem('userProfileData' + userId, userDataJSON)
-      dispatch(UserActions.setUserInformation(newName, newPhone, newDirection))
+      dispatch(setUserInformation(userData))
     } catch (error) {
       setError(true)
     } finally {

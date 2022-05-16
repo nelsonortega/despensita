@@ -10,7 +10,7 @@ const initialState: IOrderInitialState = {
 }
 
 export const orderSlice = createSlice({
-  name: 'order',
+  name: 'orders',
   initialState,
   reducers: {
     setOrders: (state, action: PayloadAction<IOrder[]>) => {

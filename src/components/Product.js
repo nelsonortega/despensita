@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import CustomText from './CustomText'
-import CartItem from '../models/cartItem'
 import { COLORS } from '../constants/Colors'
 import ChangeQuantity from './ChangeQuantity'
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { StyleSheet, View, Modal, Alert } from 'react-native'
-import * as ProductActions from '../store/actions/ProductActions'
 import { Button, Card, Title, Paragraph } from 'react-native-paper'
+import { addItemToCart, deleteProduct } from '../newStore/slices/productSlide'
 import { deleteProductAndImage } from '../firebase/functions/FirebaseFunctions'
 
 const Product = props => {
@@ -20,10 +19,8 @@ const Product = props => {
   const [quantity, setQuantity] = useState(1)
   const [modalVisible, setModalVisible] = useState(false)
 
-  const addItemToCart = () => {
-    const productToAdd = new CartItem(id, title, quantity, price, img)
-
-    dispatch(ProductActions.addItemToCart(productToAdd))
+  const handleAddItemToCart = () => {
+    dispatch(addItemToCart({ id, title, quantity, price, img }))
     handleCloseModal()
   }
 
@@ -49,7 +46,7 @@ const Product = props => {
   }
 
   const handleDeleteProductAndImage = () => {
-    dispatch(ProductActions.deleteProduct(id))
+    dispatch(deleteProduct(id))
     deleteProductAndImage(id, img)
   }
 
@@ -99,7 +96,7 @@ const Product = props => {
           handleMoreQuantity={moreQuantity}
           handleCloseModal={handleCloseModal}
           quantity={quantity}
-          handleAddItemToCart={addItemToCart}
+          handleAddItemToCart={handleAddItemToCart}
         />
       </Modal>
     </View>

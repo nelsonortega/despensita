@@ -8,9 +8,9 @@ import { Picker } from '@react-native-picker/picker'
 import { View, StyleSheet, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import * as OrderActions from '../store/actions/OrderActions'
-import * as ProductActions from '../store/actions/ProductActions'
-import { createOrder } from '../firebase/functions/FirebaseFunctions'
+import { resetCart } from '../newStore/slices/productSlide'
+import { createOrder } from '../newStore/slices/orderSlice'
+import { createOrder as createOrderFirestore } from '../firebase/functions/FirebaseFunctions'
 
 const UserInformationScreen = () => {
   const dispatch = useDispatch()
@@ -40,9 +40,9 @@ const UserInformationScreen = () => {
         state: 1
       }
 
-      const response = await createOrder(newOrder)
+      const response = await createOrderFirestore(newOrder)
 
-      dispatch(OrderActions.createOrder({
+      dispatch(createOrder({
         ...newOrder,
         id: response.orderId
       }))
@@ -100,7 +100,7 @@ const UserInformationScreen = () => {
   }
 
   const finishOrder = () => {
-    dispatch(ProductActions.resetCart())
+    dispatch(resetCart())
     navigation.popToTop()
   }
 

@@ -43,7 +43,14 @@ export const userSlice = createSlice({
       state.userInformation = action.payload
     },
     logout: (state) => {
-      state = initialState
+      state.token = ''
+      state.userId = ''
+      state.isUserAdmin = false
+      state.userInformation = {
+        name: '',
+        phone: '',
+        direction: ''
+      }
     }
   }
 })

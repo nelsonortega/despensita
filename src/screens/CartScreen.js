@@ -3,8 +3,8 @@ import CartItem from '../components/CartItem'
 import CustomText from '../components/CustomText'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import * as ProductActions from '../store/actions/ProductActions'
 import { View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native'
+import { deleteItemFromCart, editItemFromCart } from '../newStore/slices/productSlide'
 
 const CartScreen = () => {
   const dispatch = useDispatch()
@@ -14,11 +14,11 @@ const CartScreen = () => {
   const totalPrice = useSelector(state => state.products.totalPrice)
 
   const deleteCartItem = id => {
-    dispatch(ProductActions.deleteItemFromCart(id))
+    dispatch(deleteItemFromCart(id))
   }
 
   const editCartItem = async (id, quantity) => {
-    dispatch(ProductActions.editItemFromCart(id, quantity))
+    dispatch(editItemFromCart({ id, quantity }))
   }
 
   const renderCartItem = cartItem => {

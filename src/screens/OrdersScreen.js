@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import OrderItem from '../components/OrderItem'
 import CustomText from '../components/CustomText'
 import { useSelector, useDispatch } from 'react-redux'
+import { setOrders } from '../newStore/slices/orderSlice'
 import { View, StyleSheet, FlatList } from 'react-native'
-import * as OrderActions from '../store/actions/OrderActions'
 import { getOrders } from '../firebase/functions/FirebaseFunctions'
 import CustomActivityIndicator from '../components/CustomActivityIndicator'
 
@@ -26,7 +26,7 @@ const OrdersScreen = () => {
     }
 
     if (ordersResponse.success) {
-      dispatch(OrderActions.setOrders(ordersResponse.orders))
+      dispatch(setOrders(ordersResponse.orders))
     }
   }
 

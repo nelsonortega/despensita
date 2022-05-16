@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
-import store from './src/store/store'
 import { Provider } from 'react-redux'
 import { StatusBar } from 'expo-status-bar'
+import { store } from './src/newStore/store'
 import useCustomFonts from './src/hooks/useCustomFonts'
 import RootNavigator from './src/navigation/RootNavigator'
 import { Provider as PaperProvider } from 'react-native-paper'
