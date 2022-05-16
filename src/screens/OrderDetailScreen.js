@@ -7,7 +7,7 @@ import { Picker } from '@react-native-picker/picker'
 import { useSelector, useDispatch } from 'react-redux'
 import { ORDER_STATES } from '../constants/OrderStates'
 import { View, StyleSheet, ScrollView } from 'react-native'
-import { updateOrderState } from '../newStore/slices/orderSlice'
+import { updateOrderState } from '../store/slices/orderSlice'
 import { updateOrder } from '../firebase/functions/FirebaseFunctions'
 
 const OrderDetailScreen = () => {

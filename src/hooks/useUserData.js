@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUserInformation } from '../newStore/slices/userSlice'
+import { setUserInformation } from '../store/slices/userSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const useUserData = () => {

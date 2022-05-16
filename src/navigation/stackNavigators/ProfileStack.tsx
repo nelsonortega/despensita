@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { useSelector } from 'react-redux'
-import { IStoreState } from '../../newStore/store'
+import { IStoreState } from '../../store/store'
 import ProfileScreen from '../../screens/ProfileScreen'
 import UpdateUserScreen from '../../screens/UpdateUserScreen'
 import { screenHeaderIcon, screenOptions } from '../options/options'

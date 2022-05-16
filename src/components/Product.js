@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { StyleSheet, View, Modal, Alert } from 'react-native'
 import { Button, Card, Title, Paragraph } from 'react-native-paper'
-import { addItemToCart, deleteProduct } from '../newStore/slices/productSlide'
+import { addItemToCart, deleteProduct } from '../store/slices/productSlide'
 import { deleteProductAndImage } from '../firebase/functions/FirebaseFunctions'
 
 const Product = props => {

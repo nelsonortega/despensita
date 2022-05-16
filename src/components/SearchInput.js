@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Searchbar } from 'react-native-paper'
 import { StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { filterProducts } from '../newStore/slices/productSlide'
+import { filterProducts } from '../store/slices/productSlide'
 
 const SearchInput = () => {
   const dispatch = useDispatch()

@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '../firebase/firebase'
-import { login, logout } from '../newStore/slices/userSlice'
+import { login, logout } from '../store/slices/userSlice'
 import { isUserAdmin } from '../firebase/functions/FirebaseFunctions'
 
 const useLogin = () => {

@@ -4,7 +4,7 @@ import CustomText from '../components/CustomText'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native'
-import { deleteItemFromCart, editItemFromCart } from '../newStore/slices/productSlide'
+import { deleteItemFromCart, editItemFromCart } from '../store/slices/productSlide'
 
 const CartScreen = () => {
   const dispatch = useDispatch()

@@ -8,8 +8,8 @@ import { Picker } from '@react-native-picker/picker'
 import { View, StyleSheet, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { resetCart } from '../newStore/slices/productSlide'
-import { createOrder } from '../newStore/slices/orderSlice'
+import { resetCart } from '../store/slices/productSlide'
+import { createOrder } from '../store/slices/orderSlice'
 import { createOrder as createOrderFirestore } from '../firebase/functions/FirebaseFunctions'
 
 const UserInformationScreen = () => {
