@@ -1,39 +1,40 @@
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '../firebase/firebase'
+import { onAuthStateChanged, User } from 'firebase/auth'
 import { login, logout } from '../store/slices/userSlice'
 import { isUserAdmin } from '../firebase/functions/FirebaseFunctions'
 
-const useLogin = () => {
+const useLogin = (): [string, boolean] => {
   const dispatch = useDispatch()
   const [userId, setUserId] = useState('')
   const [loading, setLoading] = useState(true)
 
-  const authenticateUser = async (user) => {
+  const authenticateUser = async (user: User): Promise<void> => {
+    const userToken = await user.getIdToken()
     const isAdmin = await isUserAdmin(user)
 
     dispatch(login({
       userId: user.uid,
-      token: user.stsTokenManager.accessToken,
+      token: userToken,
       isUserAdmin: isAdmin
     }))
   }
 
-  const logoutUser = () => {
+  const logoutUser = (): void => {
     dispatch(logout())
+    setUserId('')
   }
 
   useEffect(() => {
-    onAuthStateChanged(firebaseAuth, async (user) => {
-      if (user) {
+    onAuthStateChanged(firebaseAuth, (user) => {
+      if (user !== null) {
         setUserId(user.uid)
-        await authenticateUser(user)
+        authenticateUser(user).finally(() => { setLoading(false) })
       } else {
         logoutUser()
+        setLoading(false)
       }
-
-      setLoading(false)
     })
   }, [])
 

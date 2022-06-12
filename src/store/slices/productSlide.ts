@@ -77,8 +77,8 @@ export const productSlice = createSlice({
       state.filteredProducts = action.payload
     },
     createProduct: (state, action: PayloadAction<IProduct>) => {
-      state.products = [action.payload, ...state.products]
-      state.filteredProducts = [action.payload, ...state.products]
+      state.products.push(action.payload)
+      state.filteredProducts.push(action.payload)
     },
     deleteProduct: (state, action: PayloadAction<string>) => {
       const filterProducts = state.products.filter(product => product.id !== action.payload)
