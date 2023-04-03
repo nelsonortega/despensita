@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux'
 import { screenOptions } from '../options/options'
-import AuthenticationScreen from '../../screens/AuthenticationScreen'
-import UserInformationScreen from '../../screens/UserInformationScreen'
+import { AuthenticationScreen, UserInformationScreen } from '../../screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const UserInformationStack = () => {

@@ -1,9 +1,7 @@
-import HomeScreen from '../../screens/HomeScreen'
-import CartScreen from '../../screens/CartScreen'
 import UserInformationStack from './UserInformationStack'
-import CreateProductScreen from '../../screens/CreateProductScreen'
 import { homeScreenHeaderIcons, screenOptions } from '../options/options'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { CreateProductScreen, CartScreen, HomeScreen } from '../../screens'
 
 const HomeStack = () => {
   const HomeStack = createNativeStackNavigator()

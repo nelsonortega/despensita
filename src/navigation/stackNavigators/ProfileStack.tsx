@@ -1,11 +1,9 @@
-import React, { ReactElement } from 'react'
 import { useSelector } from 'react-redux'
+import React, { ReactElement } from 'react'
 import { IStoreState } from '../../store/store'
-import ProfileScreen from '../../screens/ProfileScreen'
-import UpdateUserScreen from '../../screens/UpdateUserScreen'
 import { screenHeaderIcon, screenOptions } from '../options/options'
-import AuthenticationScreen from '../../screens/AuthenticationScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { AuthenticationScreen, ProfileScreen, UpdateUserScreen } from '../../screens'
 
 const ProfileStack = (): ReactElement => {
   const ProfileStack = createNativeStackNavigator()

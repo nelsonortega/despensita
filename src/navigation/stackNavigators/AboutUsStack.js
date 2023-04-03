@@ -1,4 +1,4 @@
-import AboutUsScreen from '../../screens/AboutUsScreen'
+import { AboutUsScreen } from '../../screens'
 import { screenHeaderIcon, screenOptions } from '../options/options'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 

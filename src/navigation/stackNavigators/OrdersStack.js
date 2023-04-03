@@ -1,9 +1,7 @@
 import { useSelector } from 'react-redux'
-import OrdersScreen from '../../screens/OrdersScreen'
-import OrderDetailScreen from '../../screens/OrderDetailScreen'
 import { screenHeaderIcon, screenOptions } from '../options/options'
-import AuthenticationScreen from '../../screens/AuthenticationScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { AuthenticationScreen, OrderDetailScreen, OrdersScreen } from '../../screens'
 
 const OrdersStack = () => {
   const OrdersStack = createNativeStackNavigator()

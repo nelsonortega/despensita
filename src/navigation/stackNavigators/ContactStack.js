@@ -1,4 +1,4 @@
-import ContactScreen from '../../screens/ContactScreen'
+import { ContactScreen } from '../../screens'
 import { screenHeaderIcon, screenOptions } from '../options/options'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
