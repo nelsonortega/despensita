@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { useSelector } from 'react-redux'
 import { IStoreState } from '../../store/store'
 import ProfileScreen from '../../screens/ProfileScreen'
