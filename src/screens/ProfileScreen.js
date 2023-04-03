@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
+import { CustomText } from '../components'
 import { Button } from 'react-native-paper'
 import { COLORS } from '../constants/Colors'
-import CustomText from '../components/CustomText'
 import { View, StyleSheet, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { logoutUser } from '../firebase/functions/FirebaseFunctions'

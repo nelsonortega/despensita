@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
-import OrderItem from '../components/OrderItem'
-import CustomText from '../components/CustomText'
 import { setOrders } from '../store/slices/orderSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { View, StyleSheet, FlatList } from 'react-native'
 import { getOrders } from '../firebase/functions/FirebaseFunctions'
-import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { CustomActivityIndicator, CustomText, OrderItem } from '../components'
 
 const OrdersScreen = () => {
   const dispatch = useDispatch()
@@ -36,10 +34,14 @@ const OrdersScreen = () => {
     setRefreshing(false)
   }
 
-  useEffect(async () => {
-    setLoading(true)
-    await loadOrders()
-    setLoading(false)
+  useEffect(() => {
+    async function load () {
+      setLoading(true)
+      await loadOrders()
+      setLoading(false)
+    }
+
+    load()
   }, [])
 
   const renderOrderItem = orderItem => {

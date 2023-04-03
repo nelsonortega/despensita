@@ -1,4 +1,4 @@
-import CustomText from '../components/CustomText'
+import { CustomText } from '../components'
 import { View, StyleSheet, Image } from 'react-native'
 
 const ContactScreen = () => {

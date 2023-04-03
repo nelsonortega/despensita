@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react'
 import { Provider } from 'react-redux'
 import { store } from './src/store/store'
 import { StatusBar } from 'expo-status-bar'
+import React, { ReactElement } from 'react'
 import useCustomFonts from './src/hooks/useCustomFonts'
 import RootNavigator from './src/navigation/RootNavigator'
+import { CustomActivityIndicator } from './src/components'
 import { Provider as PaperProvider } from 'react-native-paper'
-import CustomActivityIndicator from './src/components/CustomActivityIndicator'
 
 const App = (): ReactElement => {
   const [isFontLoaded] = useCustomFonts()

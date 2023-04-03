@@ -1,6 +1,5 @@
 import { COLORS } from '../constants/Colors'
-import CartItem from '../components/CartItem'
-import CustomText from '../components/CustomText'
+import { CartItem, CustomText } from '../components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native'

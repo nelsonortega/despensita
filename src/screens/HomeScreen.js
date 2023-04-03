@@ -1,13 +1,10 @@
-import Product from '../components/Product'
 import { useState, useEffect } from 'react'
-import CustomText from '../components/CustomText'
-import HomeHeader from '../components/HomeHeader'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { View, StyleSheet, FlatList } from 'react-native'
 import { setProducts } from '../store/slices/productSlide'
 import { getProducts } from '../firebase/functions/FirebaseFunctions'
-import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { CustomActivityIndicator, Product, CustomText, HomeHeader } from '../components'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()

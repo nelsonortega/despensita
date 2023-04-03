@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux'
 import { Button } from 'react-native-paper'
 import { COLORS } from '../constants/Colors'
 import useUserData from '../hooks/useUserData'
-import CustomText from '../components/CustomText'
-import CustomInput from '../components/CustomInput'
 import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native'
-import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { CustomActivityIndicator, CustomText, CustomInput } from '../components'
 
 const UpdateUserScreen = () => {
   const userInformation = useSelector(state => state.user.userInformation)

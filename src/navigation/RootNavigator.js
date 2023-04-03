@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import useLogin from '../hooks/useLogin'
-import SideMenu from '../components/SideMenu'
 import useUserData from '../hooks/useUserData'
 import HomeStack from './stackNavigators/HomeStack'
 import OrdersStack from './stackNavigators/OrdersStack'
@@ -9,7 +8,7 @@ import ContactStack from './stackNavigators/ContactStack'
 import AboutUsStack from './stackNavigators/AboutUsStack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import CustomActivityIndicator from '../components/CustomActivityIndicator'
+import { CustomActivityIndicator, SideMenu } from '../components'
 import { drawerAboutUsOptions, drawerContactOptions, drawerHomeOptions, drawerOrdersOptions, drawerProfileOptions, drawerNavigatorOptions } from './options/drawerOptions'
 
 const RootNavigator = () => {
