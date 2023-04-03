@@ -1,3 +1,4 @@
+import React from 'react'
 import { COLORS } from '../../constants/Colors'
 import HeaderIcon from '../../components/HeaderIcon'
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack'

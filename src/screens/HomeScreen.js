@@ -38,9 +38,13 @@ const HomeScreen = () => {
     setRefreshing(false)
   }
 
-  useEffect(async () => {
-    await loadProducts()
-    setLoading(false)
+  useEffect(() => {
+    async function load() {
+      await loadProducts()
+      setLoading(false)
+    }
+
+    load()
   }, [])
 
   const createProduct = () => {
