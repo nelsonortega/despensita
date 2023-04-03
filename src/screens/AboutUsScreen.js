@@ -4,7 +4,7 @@ import { View, StyleSheet, Image } from 'react-native'
 const AboutUsScreen = () => {
   return (
     <View style={styles.screen}>
-      <Image source={require('../assets/about_us.jpg')} style={styles.icon} />
+      <Image source={require('../assets/aboutUs.png')} style={styles.icon} />
       <CustomText bold style={styles.title}>La Despensita</CustomText>
       <CustomText style={styles.description}>Somos un negocio familiar con más de 60 años de estar brindándole a las familias facilidad, innovación y amistad. Queremos solucionar su día a día con nuestros productos y servicios.</CustomText>
     </View>

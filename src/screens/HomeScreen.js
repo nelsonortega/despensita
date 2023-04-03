@@ -39,7 +39,7 @@ const HomeScreen = () => {
   }
 
   useEffect(() => {
-    async function load() {
+    async function load () {
       await loadProducts()
       setLoading(false)
     }
