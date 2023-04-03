@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react'
 import { COLORS } from '../constants/Colors'
+import React, { useState, useEffect, ReactElement } from 'react'
 import { CustomText, CustomInput, CustomActivityIndicator } from '../components'
 import { loginUser, registerUser } from '../firebase/functions/FirebaseFunctions'
 import { StyleSheet, View, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
 
-const AuthenticationScreen = () => {
-  const [error, setError] = useState()
+const AuthenticationScreen = (): ReactElement => {
+  const [error, setError] = useState<string | null>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [loginScreen, setLoginScreen] = useState(true)
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const switchLoginRegisterScreen = () => {
+  const switchLoginRegisterScreen = (): void => {
     setLoginScreen(!loginScreen)
   }
 
   useEffect(() => {
-    if (error) {
+    if (error !== null) {
       Alert.alert('Ocurrió un error', error, [{ text: 'Ok', onPress: () => setError(null) }])
     }
   }, [error])
 
-  const validateRegister = () => {
+  const validateRegister = (): string => {
     if (password.length < 6) {
       return 'La contraseña debe tener al menos 6 caracteres'
     } else if (password !== confirmPassword) {
@@ -32,7 +32,7 @@ const AuthenticationScreen = () => {
     return ''
   }
 
-  const login = async () => {
+  const login = async (): Promise<void> => {
     setLoading(true)
 
     const response = await loginUser(email, password)
@@ -43,10 +43,10 @@ const AuthenticationScreen = () => {
     }
   }
 
-  const register = async () => {
+  const register = async (): Promise<void> => {
     const validationError = validateRegister()
 
-    if (validationError) {
+    if (validationError !== '') {
       Alert.alert('Error', validationError, [{ text: 'Ok' }])
       return
     }
@@ -69,14 +69,14 @@ const AuthenticationScreen = () => {
           placeholder='Correo electrónico'
           placeholderTextColor='grey'
           value={email}
-          onChangeText={text => setEmail(text.replace(/\s/g, ''))}
+          onChangeText={(text: string) => setEmail(text.replace(/\s/g, ''))}
         />
         <CustomInput
           password
           placeholder='Contraseña'
           placeholderTextColor='grey'
           value={password}
-          onChangeText={text => setPassword(text.replace(/\s/g, ''))}
+          onChangeText={(text: string) => setPassword(text.replace(/\s/g, ''))}
         />
         {loginScreen
           ? <View />
@@ -85,7 +85,7 @@ const AuthenticationScreen = () => {
               placeholder='Confirmar contraseña'
               placeholderTextColor='grey'
               value={confirmPassword}
-              onChangeText={text => setConfirmPassword(text.replace(/\s/g, ''))}
+              onChangeText={(text: string) => setConfirmPassword(text.replace(/\s/g, ''))}
             />}
         {loading && <CustomActivityIndicator small />}
         {!loading &&

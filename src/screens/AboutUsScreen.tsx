@@ -1,7 +1,8 @@
 import { CustomText } from '../components'
+import React, { ReactElement } from 'react'
 import { View, StyleSheet, Image } from 'react-native'
 
-const AboutUsScreen = () => {
+const AboutUsScreen = (): ReactElement => {
   return (
     <View style={styles.screen}>
       <Image source={require('../assets/aboutUs.png')} style={styles.icon} />
